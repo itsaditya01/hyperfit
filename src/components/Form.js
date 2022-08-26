@@ -4,6 +4,7 @@ import PersonalInfo from "./PersonalInfo";
 import OtherInfo from "./OtherInfo";
 import ForgotPassword from "./ForgotPassword/ForgotPassword";
 import { useNavigate } from "react-router-dom";
+import "./styles.css";
 
 function Form() {
   const [page, setPage] = useState(0);
