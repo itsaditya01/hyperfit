@@ -12,9 +12,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Form />} />
+        <Route path="/signup" element={<Form />} />
         <Route
-          path="/hero"
+          path="/"
           element={
             <>
               <NavBarHero />

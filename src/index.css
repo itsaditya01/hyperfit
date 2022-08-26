@@ -14,14 +14,19 @@
 
 :root {
   --dark-mode-bg: black;
-  --gradient: {
-    background: #0150ae;
-    background: -webkit-radial-gradient(top left, #0150ae, #ff0185);
-    background: -moz-radial-gradient(top left, #0150ae, #ff0185);
-    background: radial-gradient(to bottom right, #0150ae, #ff0185);
-  }
+  --gradient: linear-gradient(to right, blue, pink);
 }
 
 .cp {
   cursor: pointer;
+}
+
+.gradient-text {
+  background-image: linear-gradient(to right, blue, pink);
+  background-size: 100%;
+  background-repeat: repeat;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
 }

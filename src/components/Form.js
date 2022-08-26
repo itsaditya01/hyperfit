@@ -4,6 +4,7 @@ import PersonalInfo from "./PersonalInfo";
 import OtherInfo from "./OtherInfo";
 import ForgotPassword from "./ForgotPassword/ForgotPassword";
 import { useNavigate } from "react-router-dom";
+import "./styles.css";
 
 function Form() {
   const [page, setPage] = useState(0);
@@ -60,7 +61,7 @@ function Form() {
     }
   };
 
-  const FormTitles = ["Sign Up", "Personal Info"];
+  const FormTitles = ["Sign Up", "Sign Up"];
 
   const PageDisplay = () => {
     if (page === 0) {
@@ -83,10 +84,12 @@ function Form() {
             onClick={() => {
               setPage((currPage) => currPage - 1);
             }}
+            className="prev-btn cp"
           >
-            Prev
+            Previous
           </button>
           <button
+            className="next-btn cp"
             onClick={() => {
               if (page === FormTitles.length - 1) {
                 createUser();
@@ -101,19 +104,12 @@ function Form() {
           {err.isError && <div>{err.ErrMessage}</div>}
           {success.isSuccess && <div>{success.SuccessMessage}</div>}
         </div>
-
-        <button
-          className="forgot-pass cp"
-          style={{
-            background: "pink",
-            width: "50%",
-            margin: "auto",
-            border: "none",
-          }}
-          onClick={() => navigate("/forgotpass")}
-        >
-          Forgot Password
-        </button>
+        <p style={{ marginTop: "15px", textAlign: "center", fontSize: 18 }}>
+          Already have an account ?{" "}
+          <span className="cp gradient-text" style={{ fontWeight: 600 }}>
+            Log In
+          </span>
+        </p>
       </div>
     </div>
   );
