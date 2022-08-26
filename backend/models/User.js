@@ -18,21 +18,18 @@ const userSchema = mongoose.Schema(
     },
     weight: {
       type: Number,
-      default: 60,
       required: true,
     },
     height: {
       type: Number,
-      default: 150,
       required: true,
     },
     age: {
       type: Number,
-      default: 20,
+      required: true,
     },
     goalWeight: {
       type: Number,
-      default: 60,
       required: true,
     },
     streak: {
@@ -57,6 +54,20 @@ const userSchema = mongoose.Schema(
     },
     lastActive: {
       type: Date,
+    },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    resetPasswordToken: {
+      type: String,
+    },
+    resetPasswordExpires: {
+      type: Date,
+    },
+    bmi: {
+      type: Number,
+      default: 3,
     },
   },
   { timestamps: true }

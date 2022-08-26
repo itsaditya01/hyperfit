@@ -8,9 +8,6 @@ const password = process.env.EMAIL_PASSWORD;
 
 let transporter = nodemailer.createTransport({
   service: "gmail",
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
   auth: {
     user: email,
     pass: password,
@@ -28,7 +25,6 @@ exports.sendEmail = async (recipient, message) => {
       subject: message.subject,
       html: message.text,
     });
-
     return info;
   } catch (err) {
     console.log("error", err);
