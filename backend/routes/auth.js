@@ -231,7 +231,7 @@ exports.ResetPassword = async (request, response) => {
       resetPasswordToken: request.params.token,
       resetPasswordExpires: { $gt: Date.now() },
     },
-    (err, resetuser) => {
+    async (err, resetuser) => {
       if (!resetuser) {
         return response.status(200).json({
           success: false,
@@ -241,133 +241,38 @@ exports.ResetPassword = async (request, response) => {
         });
       }
 
-       //Create Hashing of password
-    const salt = await bcrypt.genSalt(10);
-      const secPass = await bcrypt.hash(password, salt);
-      
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(request.body.newpassword, salt, (err, hash) => {
-          if (err) {
-            return response.status(200).json({
-              success: false,
-              message:
-                "Your request could not be processed as entered. Please try again.",
-              severity: "info",
-            });
-          }
+      //Create Hashing of password
+      const salt = await bcrypt.genSalt(10);
+      console.log(request.body.newpassword);
+      const secPass = await bcrypt.hash(request.body.newpassword, salt);
 
-          request.body.newpassword = hash;
+      resetuser.password = secPass;
+      resetuser.resetPasswordToken = undefined;
+      resetuser.resetPasswordExpires = undefined;
 
-          resetuser.password = request.body.newpassword;
-          resetuser.resetPasswordToken = undefined;
-          resetuser.resetPasswordExpires = undefined;
-
-          resetuser.save(async (err) => {
-            if (err) {
-              return response.status(200).json({
-                success: false,
-                message:
-                  "Your request could not be processed as entered. Please try again.",
-                severity: "info",
-              });
-            }
-
-            var message = {
-              subject: "Reset Confirmation",
-              text: "Your Password changed successfully. Please login with your new password",
-            };
-            await nodemailer.sendEmail(resetuser.email, message);
-
-            response.status(200).json({
-              success: true,
-              message:
-                "Password changed successfully. Please login with your new password.",
-              severity: "success",
-            });
+      resetuser.save(async (err) => {
+        if (err) {
+          return response.status(200).json({
+            success: false,
+            message:
+              "Your request could not be processed as entered. Please try again.",
+            severity: "info",
           });
+        }
+
+        var message = {
+          subject: "Reset Confirmation",
+          text: "Your Password changed successfully. Please login with your new password",
+        };
+        await nodemailer.sendEmail(resetuser.email, message);
+
+        response.status(200).json({
+          success: true,
+          message:
+            "Password changed successfully. Please login with your new password.",
+          severity: "success",
         });
       });
     }
   );
-};
-
-// reset the account
-exports.ResetAccount = async (request, response) => {
-  const email = request.body.email;
-  const password = request.body.password;
-
-  User.findOne({ email }, (err, existingUser) => {
-    if (err || existingUser === null) {
-      return response.status(200).json({
-        success: false,
-        error:
-          "Your request could not be processed as entered. Please try again.",
-      });
-    }
-
-    bcrypt.genSalt(10, (err, salt) => {
-      bcrypt.hash(request.body.password, salt, (err, hash) => {
-        if (err) {
-          return response.status(200).json({
-            success: false,
-            error:
-              "Your request could not be processed as entered. Please try again.",
-          });
-        }
-
-        request.body.password = hash;
-
-        existingUser.passport = request.body.password;
-
-        existingUser.save(async (err) => {
-          if (err) {
-            return response.status(200).json({
-              success: false,
-              error:
-                "Your request could not be processed as entered. Please try again.",
-            });
-          }
-
-          await nodemailer.sendEmail(existingUser.email, "reset-confirmation");
-
-          response.status(200).json({
-            success: true,
-            message:
-              "Password changed successfully. Please login with your new password.",
-          });
-        });
-      });
-    });
-  });
-};
-
-// resending Email for verification
-exports.ResendVerificationEmail = async (request, response) => {
-  User.findOne({ email: request.params.email }).then(async (user) => {
-    if (!user) {
-      response
-        .status(200)
-        .json({ success: false, error: "Email Not Registered" });
-    } else if (user.isVerified == true) {
-      response
-        .status(200)
-        .json({ success: false, error: "Email Already Verified" });
-    } else {
-      var link = process.env.BASE_SERVER_URL + `/auth/verify/${user._id}`;
-
-      var message = {
-        subject: "Resend Email for Verification",
-        text: `Hi ${user.name}! Here is your link to verify your account ${link}`,
-      };
-
-      await nodemailer.sendEmail(user.email, message);
-
-      response.status(200).json({
-        success: true,
-        email: user.email,
-        uid: user._id,
-        message: "Email send successfully.",
-      });
-    }
-  });
 };

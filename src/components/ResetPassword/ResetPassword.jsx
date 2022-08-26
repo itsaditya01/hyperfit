@@ -9,6 +9,7 @@ const ResetPassword = () => {
   const token = new URLSearchParams(search).get("token");
   const [success, setSuccess] = useState(false);
   const [mess, setMess] = useState("");
+  const [newPass, setNewPass] = useState("");
   const [pass, setPass] = useState({
     password: "",
     cpass: "",
@@ -22,7 +23,7 @@ const ResetPassword = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        newpassword: pass,
+        newpassword: newPass,
       }),
     });
     const data = await response.json();
@@ -45,7 +46,10 @@ const ResetPassword = () => {
       <input
         type="password"
         value={pass.password}
-        onChange={(e) => setPass({ ...pass, password: e.target.value })}
+        onChange={(e) => {
+          setPass({ ...pass, password: e.target.value });
+          setNewPass(e.target.value);
+        }}
       />
       <input
         type="password"
