@@ -3,6 +3,7 @@ import React from "react";
 function PersonalInfo({ formData, setFormData }) {
   return (
     <div className="personal-info-container">
+      <div>Height</div>
       <input
         type="text"
         placeholder="Height"
@@ -11,6 +12,7 @@ function PersonalInfo({ formData, setFormData }) {
           setFormData({ ...formData, height: e.target.value });
         }}
       />
+      <div>Weight</div>
       <input
         type="text"
         placeholder="Weight"
@@ -19,6 +21,7 @@ function PersonalInfo({ formData, setFormData }) {
           setFormData({ ...formData, weight: e.target.value });
         }}
       />
+      <div>Age</div>
       <input
         type="text"
         placeholder="Age"
@@ -27,12 +30,13 @@ function PersonalInfo({ formData, setFormData }) {
           setFormData({ ...formData, age: e.target.value });
         }}
       />
+      <div>Goal weight</div>
       <input
         type="text"
-        placeholder="Enter your Goal weight?"
+        placeholder="Goal weight"
         value={formData.goalWeight}
         onChange={(e) => {
-          setFormData({ ...formData, goalweight: e.target.value });
+          setFormData({ ...formData, goalWeight: e.target.value });
         }}
       />
     </div>

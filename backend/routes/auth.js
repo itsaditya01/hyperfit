@@ -19,7 +19,7 @@ exports.Registration = async (request, response) => {
     return response.status(400).json({ errors: errors.array() });
   }
 
-  const userName = request.body.userName;
+  const name = request.body.name;
   const email = request.body.email;
   const password = request.body.password;
   const weight = request.body.weight;
@@ -42,7 +42,7 @@ exports.Registration = async (request, response) => {
 
     //Create User
     const user = new User({
-      userName,
+      name,
       email,
       password: secPass,
       weight,
@@ -64,7 +64,7 @@ exports.Registration = async (request, response) => {
 
       var message = {
         subject: "signup-authentication",
-        text: `Hi ${user.userName} ! Here is your link to verify your account ${link}`,
+        text: `Hi ${user.name} ! Here is your link to verify your account ${link}`,
       };
 
       await nodemailer.sendEmail(user.email, message);
@@ -129,7 +129,7 @@ exports.Login = async (request, response) => {
             token: `Bearer ${token}`,
             user: {
               id: user._id,
-              userName: user.userName,
+              name: user.name,
               email: user.email,
             },
             message: "Login Successful.",
@@ -225,6 +225,7 @@ exports.ForgetPassword = async (request, response) => {
 
 // reset the password by token
 exports.ResetPassword = async (request, response) => {
+  console.log(request.params.token);
   User.findOne(
     {
       resetPasswordToken: request.params.token,
@@ -239,6 +240,11 @@ exports.ResetPassword = async (request, response) => {
           severity: "warning",
         });
       }
+
+       //Create Hashing of password
+    const salt = await bcrypt.genSalt(10);
+      const secPass = await bcrypt.hash(password, salt);
+      
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(request.body.newpassword, salt, (err, hash) => {
           if (err) {
@@ -351,7 +357,7 @@ exports.ResendVerificationEmail = async (request, response) => {
 
       var message = {
         subject: "Resend Email for Verification",
-        text: `Hi ${user.userName}! Here is your link to verify your account ${link}`,
+        text: `Hi ${user.name}! Here is your link to verify your account ${link}`,
       };
 
       await nodemailer.sendEmail(user.email, message);

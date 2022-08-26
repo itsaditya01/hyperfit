@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SignUpInfo from "./SignUpInfo";
 import PersonalInfo from "./PersonalInfo";
 import OtherInfo from "./OtherInfo";
@@ -7,6 +7,18 @@ import { useNavigate } from "react-router-dom";
 
 function Form() {
   const [page, setPage] = useState(0);
+  const [err, setErr] = useState({ isError: false, ErrMessage: "" });
+  const [success, setSuccess] = useState({
+    isSucsess: false,
+    SuccessMessage: "",
+  });
+
+  useEffect(() => {
+    console.log(formData);
+  }, []);
+
+  const host = "http://localhost:5000";
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -17,6 +29,37 @@ function Form() {
     goalWeight: "",
   });
 
+  const createUser = async () => {
+    // e.preventDefault();
+    const { name, email, password, weight, height, age, goalWeight } = formData;
+    const response = await fetch(`${host}/api/auth/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        password,
+        weight: parseInt(weight),
+        height: parseInt(height),
+        age: parseInt(age),
+        goalWeight: parseInt(goalWeight),
+      }),
+    });
+    const data = await response.json();
+    console.log(data);
+    if (data.success) {
+      localStorage.setItem("token", data.authtoken);
+      setSuccess({
+        sucsess: true,
+        SuccessMessage: "Verification link has been sent to your email account",
+      });
+    } else {
+      setErr({ isError: true, ErrMessage: data.message });
+    }
+  };
+
   const FormTitles = ["Sign Up", "Personal Info"];
 
   const PageDisplay = () => {
@@ -26,7 +69,7 @@ function Form() {
       return <PersonalInfo formData={formData} setFormData={setFormData} />;
     }
   };
-  const navigate = useNavigate();
+
   return (
     <div className="form">
       <div className="form-container">
@@ -46,7 +89,7 @@ function Form() {
           <button
             onClick={() => {
               if (page === FormTitles.length - 1) {
-                alert("FORM SUBMITTED");
+                createUser();
                 console.log(formData);
               } else {
                 setPage((currPage) => currPage + 1);
@@ -55,6 +98,8 @@ function Form() {
           >
             {page === FormTitles.length - 1 ? "Submit" : "Next"}
           </button>
+          {err.isError && <div>{err.ErrMessage}</div>}
+          {success.isSuccess && <div>{success.SuccessMessage}</div>}
         </div>
 
         <button

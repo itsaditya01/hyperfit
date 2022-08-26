@@ -15,7 +15,7 @@ const { body, validationResult } = require("express-validator");
 router.post(
   "/register",
   [
-    body("userName", "Enter a valid Name").isLength({ min: 3 }),
+    body("name", "Enter a valid Name").isLength({ min: 3 }),
     body("email", "Enter a valid Email").isEmail(),
     body("password", "Enter a valid Password").isLength({ min: 6 }),
   ],
@@ -39,6 +39,6 @@ router.post(
   ForgetPassword
 );
 
-router.get("/resetpassword/:token", ResetPassword);
+router.post("/resetpassword/:token", ResetPassword);
 
 module.exports = router;

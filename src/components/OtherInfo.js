@@ -17,6 +17,7 @@ function OtherInfo({ formData, setFormData }) {
         value={formData.other}
         onChange={(e) => {
           setFormData({ ...formData, other: e.target.value });
+          console.log(FormData);
         }}
       />
     </div>
