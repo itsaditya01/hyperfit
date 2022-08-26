@@ -5,10 +5,8 @@ dotenv.config();
 
 const mongoURL = process.env.MONGO_URL;
 
-const connectToMongo = () => {
-  mongoose.connect(mongoURL, () => {
-    console.log("Connected to mongoDB");
-  });
+const connectToMongo = async () => {
+  await mongoose.connect(mongoURL).catch((error) => console.log(error));
 };
 
-module.export = connectToMongo;
+module.exports = { connectToMongo };
