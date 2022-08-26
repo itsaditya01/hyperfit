@@ -202,8 +202,7 @@ exports.ForgetPassword = async (request, response) => {
           });
         }
         var link =
-          process.env.BASE_SERVER_URL +
-          `/api/auth/resetpassword?token=${resetToken}`;
+          process.env.CLIENT_SERVER_URL + `/resetpass?token=${resetToken}`;
 
         var message = {
           subject: "Reset Password",
