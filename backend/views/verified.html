@@ -5,10 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+    </style>
 </head>
 <body>
-    <div style="display: flex; align-items: center; justify-content: center; width: 100vw; height: 100vh">
-        <div style="font-size: 50px;">Your Account has been verified!!</div>
+    <div style="display: flex; align-items: center; justify-content: center; background-color: black; flex-direction: column; max-width: 100vw; width: 100vw; height:100vh; max-height: 100vh; position: absolute; inset: 0;">
+        <div style="font-size: 30px; font-style: popins; color: white;">Your Account has been verified!!</div>
+        <div style="font-size: 20px; font-style: popins; color: white; margin-top: 15px;">You can now login, <a href="http://localhost:3000/login">click here</a></div>
     </div>
 </body>
 </html>
