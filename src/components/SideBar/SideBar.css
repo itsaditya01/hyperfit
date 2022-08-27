@@ -1,0 +1,40 @@
+.home-icon-div {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  background: blue;
+  padding: 5px;
+  border-radius: 0.5rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.meditation-icon-div,
+.report-icon-div {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  padding: 5px;
+  border-radius: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.icon-col {
+  flex: 20%;
+  padding-top: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.home-icon,
+.meditation-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.report-icon {
+  width: 60px;
+  height: auto;
+}

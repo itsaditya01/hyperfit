@@ -1,11 +1,11 @@
 import "./App.css";
 import Hero from "./components/Hero/Hero";
 import NavBarHero from "./components/NavBar/NavBarHero";
-import Signup from "./components/Signup/Signup";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import Form from "./components/Form";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
+import Dashboard from "./components/Dashboard/Dashboard";
 
 function App() {
   return (
@@ -21,6 +21,7 @@ function App() {
             </>
           }
         />
+        <Route path="/dashboard" element={<Dashboard />} />
         {/*
          */}
         <Route path="/forgotpass" element={<ForgotPassword />} />

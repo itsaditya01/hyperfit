@@ -17,15 +17,6 @@ const Hero = () => {
             <span>Workout</span>{" "}
             <span className="gradient-text">anytime, anywhere.</span>
             <br />
-            <button
-              className="get-started-btn cp"
-              onClick={() => nav("/signup")}
-              style={{
-                backgroundImage: "linear-gradient(to right, blue, pink)",
-              }}
-            >
-              Get Started &#8594;
-            </button>
           </div>
           <img src={Squat} className="hero-img-1" />
         </div>
@@ -42,6 +33,7 @@ const Hero = () => {
         <div style={{ marginTop: 100 }}>&nbsp;</div>
         <div className="meditation-bg">
           <div className="blue-ball-2">&nbsp;</div>
+          <div className="blue-ball-3">&nbsp;</div>
           <div className="pink-ball-2">&nbsp;</div>
           <div className="hero-text-1">
             <span>There is no therepy better than </span>
@@ -49,7 +41,17 @@ const Hero = () => {
             <span className="gradient-text">Meditation.</span>
             <br />
           </div>
-          <img src={meditation} alt="meditation" className="hero-img-1" />
+          <img src={meditation} alt="meditation" className="hero-img-3" />
+        </div>
+        <div style={{ marginTop: 50 }}>&nbsp;</div>
+        <div
+          className="get-started-btn cp"
+          onClick={() => nav("/signup")}
+          // style={{
+          //   backgroundImage: "linear-gradient(to right, blue, pink)",
+          // }}
+        >
+          Join the Community &#8594;
         </div>
         <div style={{ marginTop: 100 }}>&nbsp;</div>
       </div>
