@@ -7,12 +7,14 @@ import Form from "./components/Form";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import Dashboard from "./components/Dashboard/Dashboard";
+import Mediapipe from "./components/Mediapipe/Mediapipe";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/signup" element={<Form />} />
+        <Route path="/mediapipe" element={<Mediapipe />} />
         <Route
           path="/"
           element={
