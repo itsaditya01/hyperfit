@@ -2,6 +2,7 @@ import "./App.css";
 import Hero from "./components/Hero/Hero";
 import NavBarHero from "./components/NavBar/NavBarHero";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
+import Login from "./components/Login/Login";
 import Form from "./components/Form";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
@@ -26,6 +27,7 @@ function App() {
          */}
         <Route path="/forgotpass" element={<ForgotPassword />} />
         <Route path="/resetpass" element={<ResetPassword />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </BrowserRouter>
   );

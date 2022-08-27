@@ -9,6 +9,7 @@ const ResetPassword = () => {
   const token = new URLSearchParams(search).get("token");
   const [success, setSuccess] = useState(false);
   const [mess, setMess] = useState("");
+  const [newPass, setNewPass] = useState("");
   const [pass, setPass] = useState({
     password: "",
     cpass: "",
@@ -22,7 +23,7 @@ const ResetPassword = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        newpassword: pass,
+        newpassword: newPass,
       }),
     });
     const data = await response.json();
@@ -32,40 +33,75 @@ const ResetPassword = () => {
       setMess(data.message);
     } else {
       setErr(true);
-      if (mess == "") {
-        setMess(data.message);
-      }
+
+      setMess(data.message);
     }
   };
 
   return (
-    <div className="personal-info-container">
-      <h2>Please enter your new password</h2>
-      {err !== "" ? <p style={{ color: "red" }}>{err}</p> : ""}
-      <input
-        type="password"
-        value={pass.password}
-        onChange={(e) => setPass({ ...pass, password: e.target.value })}
-      />
-      <input
-        type="password"
-        value={pass.cpass}
-        onChange={(e) => setPass({ ...pass, cpass: e.target.value })}
-      />
-      <button
-        onClick={() => {
-          if (pass.password === pass.cpass) {
-            console.log("Okay");
-          } else {
-            setMess("The text in password and confirm password do not match");
-          }
-          resetPassword();
-        }}
-      >
-        Submit
-      </button>
-      {success && <div>{mess}</div>}
-      {err && <div>{mess}</div>}
+    <div className="form">
+      <div className="form-container">
+        <div className="header">
+          <h1>Reset Password</h1>
+        </div>
+        <div style={{ marginTop: "5px", textAlign: "center" }}>
+          {success ? <div style={{ color: "green" }}>{mess}</div> : ""}
+          {err ? <div style={{ color: "red" }}>{mess}</div> : ""}
+        </div>
+        <div className="sign-up-container">
+          <div>New assword</div>
+          <div className="input-container">
+            <input
+              type="password"
+              value={pass.password}
+              onChange={(e) => {
+                setPass({ ...pass, password: e.target.value });
+                setNewPass(e.target.value);
+              }}
+            />
+          </div>
+          <div>Confirm new password</div>
+          <div className="input-container">
+            <input
+              type="password"
+              value={pass.cpass}
+              onChange={(e) => setPass({ ...pass, cpass: e.target.value })}
+            />
+          </div>
+        </div>
+        <div style={{ height: "15px", marginTop: "5px", textAlign: "center" }}>
+          {success.isSuccess ? (
+            <div style={{ color: "green" }}>
+              {success.SuccessMessage} + <a>Click here</a> to login with new
+              password
+            </div>
+          ) : (
+            ""
+          )}
+          {err.isError ? (
+            <div style={{ color: "red" }}>{err.ErrMessage}</div>
+          ) : (
+            ""
+          )}
+        </div>
+        <div style={{ textAlign: "center" }}>
+          <button
+            className="login-btn cp"
+            onClick={() => {
+              if (pass.password === pass.cpass) {
+                resetPassword();
+              } else {
+                setErr(true);
+                setMess(
+                  "The text in password and confirm password do not match"
+                );
+              }
+            }}
+          >
+            Reset
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

@@ -53,11 +53,11 @@ function Form() {
     if (data.success) {
       localStorage.setItem("token", data.authtoken);
       setSuccess({
-        sucsess: true,
+        isSucsess: true,
         SuccessMessage: "Verification link has been sent to your email account",
       });
     } else {
-      setErr({ isError: true, ErrMessage: data.message });
+      setErr({ isError: true, ErrMessage: data.error });
     }
   };
 
@@ -76,6 +76,18 @@ function Form() {
       <div className="form-container">
         <div className="header">
           <h1>{FormTitles[page]}</h1>
+        </div>
+        <div style={{ height: "15px", marginTop: "5px", textAlign: "center" }}>
+          {success.isSuccess ? (
+            <div style={{ color: "green" }}>{success.SuccessMessage}</div>
+          ) : (
+            ""
+          )}
+          {err.isError ? (
+            <div style={{ color: "red" }}>{err.ErrMessage}</div>
+          ) : (
+            ""
+          )}
         </div>
         <div className="body">{PageDisplay()}</div>
         <div className="footer">
@@ -101,12 +113,15 @@ function Form() {
           >
             {page === FormTitles.length - 1 ? "Submit" : "Next"}
           </button>
-          {err.isError && <div>{err.ErrMessage}</div>}
-          {success.isSuccess && <div>{success.SuccessMessage}</div>}
         </div>
-        <p style={{ marginTop: "15px", textAlign: "center", fontSize: 18 }}>
+
+        <p style={{ marginTop: "5px", textAlign: "center", fontSize: 18 }}>
           Already have an account ?{" "}
-          <span className="cp gradient-text" style={{ fontWeight: 600 }}>
+          <span
+            className="cp gradient-text"
+            style={{ fontWeight: 600 }}
+            onClick={() => navigate("/login")}
+          >
             Log In
           </span>
         </p>

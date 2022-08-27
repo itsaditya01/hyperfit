@@ -32,24 +32,38 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div>
-      <h2>Forgot your password? Dont worry we got you</h2>
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      {mess === "" && (
-        <button
-          onClick={() => {
-            forgetPassword();
-          }}
-        >
-          Submit
-        </button>
-      )}
-      {success ? <p style={{ color: "green" }}>{mess}</p> : ""}
-      {err ? <p style={{ color: "green" }}>{mess}</p> : ""}
+    <div className="form">
+      <div className="form-container">
+        <div className="header" style={{ textAlign: "center" }}>
+          <h3>Forgot your password?</h3> <h4>Don't worry we got you</h4>
+        </div>
+        <div className="sign-up-container" style={{ marginTop: "20px" }}>
+          <div style={{ textAlign: "center" }}>
+            Drop an email to get reset passwrd link
+          </div>
+          <div className="input-container">
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+        </div>
+        {success ? <p style={{ color: "green" }}>{mess}</p> : ""}
+        {err ? <p style={{ color: "green" }}>{mess}</p> : ""}
+        <div style={{ textAlign: "center" }}>
+          {mess === "" && (
+            <button
+              className="login-btn cp"
+              onClick={() => {
+                forgetPassword();
+              }}
+            >
+              Submit
+            </button>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
