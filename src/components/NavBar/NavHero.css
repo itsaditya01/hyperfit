@@ -41,8 +41,8 @@
   align-items: center;
 }
 
-.login-btn,
-.signup-btn {
+.login-nav-btn,
+.signup-nav-btn {
   color: white;
   font-size: 25px;
   font-family: "Poppins", sans-serif;

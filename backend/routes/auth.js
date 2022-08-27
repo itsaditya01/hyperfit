@@ -262,7 +262,7 @@ exports.ResetPassword = async (request, response) => {
 
         var message = {
           subject: "Reset Confirmation",
-          text: "Your Password changed successfully. Please login with your new password",
+          text: "Your Password changed successfully.",
         };
         await nodemailer.sendEmail(resetuser.email, message);
 

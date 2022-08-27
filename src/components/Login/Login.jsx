@@ -1,11 +1,11 @@
 import React from "react";
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const host = "http://localhost:5000";
   const [mess, setMess] = useState("");
-
+  const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -27,7 +27,7 @@ const Login = () => {
     const data = await response.json();
     console.log(data);
     if (data.success) {
-      Navigate("/hero");
+      navigate("/hero");
     } else {
       setErr(true);
       setMess(data.message);
@@ -35,31 +35,58 @@ const Login = () => {
   };
 
   return (
-    <div className="personal-info-container">
-      <h2>Please enter your new password</h2>
-      {err !== "" ? <p style={{ color: "red" }}>{err}</p> : ""}
-      <input
-        type="email"
-        value={credentials.email}
-        onChange={(e) => {
-          setCredentials({ ...credentials, email: e.target.value });
-        }}
-      />
-      <input
-        type="password"
-        value={credentials.password}
-        onChange={(e) =>
-          setCredentials({ ...credentials, password: e.target.value })
-        }
-      />
-      <button
-        onClick={() => {
-          login();
-        }}
-      >
-        login
-      </button>
-      {err && <div>{mess}</div>}
+    <div className="form">
+      <div className="form-container">
+        <div className="header">
+          <h1>Login</h1>
+        </div>
+
+        {err !== "" ? <p style={{ color: "red" }}>{err}</p> : ""}
+        <div className="sign-up-container">
+          <div>Email</div>
+          <div className="input-container">
+            <input
+              type="email"
+              value={credentials.email}
+              onChange={(e) => {
+                setCredentials({ ...credentials, email: e.target.value });
+              }}
+            />
+          </div>
+          <div>Password</div>
+          <div className="input-container">
+            <input
+              type="password"
+              value={credentials.password}
+              onChange={(e) =>
+                setCredentials({ ...credentials, password: e.target.value })
+              }
+            />
+          </div>
+        </div>
+        {err && <div>{mess}</div>}
+        <div style={{ textAlign: "center" }}>
+          <button
+            className="login-btn cp"
+            onClick={() => {
+              login();
+            }}
+          >
+            Login
+          </button>
+        </div>
+
+        <p style={{ marginTop: "10px", textAlign: "center", fontSize: 18 }}>
+          Forgot password ?{" "}
+          <span
+            className="cp gradient-text"
+            style={{ fontWeight: 600 }}
+            onClick={() => navigate("/forgotpass")}
+          >
+            click here
+          </span>
+        </p>
+      </div>
     </div>
   );
 };

@@ -197,6 +197,7 @@ input {
   padding: 10px;
 }
 
+.login-btn,
 .prev-btn,
 .next-btn,
 .forgot-pass {
@@ -207,6 +208,13 @@ input {
   border: none;
   border-radius: 0.5rem;
   font-weight: 500;
+}
+
+.login-btn{
+  background: linear-gradient(105deg, blue, pink);
+  margin: 5px;
+  text-align: center;
+  font-size: 16px;
 }
 
 .prev-btn {
