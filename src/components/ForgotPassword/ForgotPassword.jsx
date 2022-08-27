@@ -49,8 +49,12 @@ const ForgotPassword = () => {
             />
           </div>
         </div>
-        {success ? <p style={{ color: "green" }}>{mess}</p> : ""}
-        {err ? <p style={{ color: "green" }}>{mess}</p> : ""}
+        {success ? (
+          <p style={{ color: "green", textAlign: "center" }}>{mess}</p>
+        ) : (
+          ""
+        )}
+        {err ? <p style={{ color: "red", textAlign: "center" }}>{mess}</p> : ""}
         <div style={{ textAlign: "center" }}>
           {mess === "" && (
             <button

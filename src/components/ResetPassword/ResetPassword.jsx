@@ -1,10 +1,10 @@
 import React from "react";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const ResetPassword = () => {
   const host = "http://localhost:5000";
-
+  const navigate = useNavigate();
   const search = useLocation().search;
   const token = new URLSearchParams(search).get("token");
   const [success, setSuccess] = useState(false);
@@ -72,8 +72,9 @@ const ResetPassword = () => {
         <div style={{ height: "15px", marginTop: "5px", textAlign: "center" }}>
           {success.isSuccess ? (
             <div style={{ color: "green" }}>
-              {success.SuccessMessage} + <a>Click here</a> to login with new
-              password
+              {success.SuccessMessage} +{" "}
+              <a onClick={() => navigate("/login")}>Click here</a> to login with
+              new password
             </div>
           ) : (
             ""

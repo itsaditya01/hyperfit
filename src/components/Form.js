@@ -53,7 +53,7 @@ function Form() {
     if (data.success) {
       localStorage.setItem("token", data.authtoken);
       setSuccess({
-        isSucsess: true,
+        isSuccess: true,
         SuccessMessage: "Verification link has been sent to your email account",
       });
     } else {
@@ -79,7 +79,9 @@ function Form() {
         </div>
         <div style={{ height: "15px", marginTop: "5px", textAlign: "center" }}>
           {success.isSuccess ? (
-            <div style={{ color: "green" }}>{success.SuccessMessage}</div>
+            <div style={{ color: "green", fontSize: "10px" }}>
+              {success.SuccessMessage}
+            </div>
           ) : (
             ""
           )}

@@ -27,7 +27,7 @@ const Login = () => {
     const data = await response.json();
     console.log(data);
     if (data.success) {
-      navigate("/hero");
+      navigate("/dashboard");
     } else {
       setErr(true);
       setMess(data.message);
@@ -41,7 +41,11 @@ const Login = () => {
           <h1>Login</h1>
         </div>
 
-        {err !== "" ? <p style={{ color: "red" }}>{err}</p> : ""}
+        {err !== "" ? (
+          <p style={{ color: "red", textAlign: "center" }}>{err}</p>
+        ) : (
+          ""
+        )}
         <div className="sign-up-container">
           <div>Email</div>
           <div className="input-container">
