@@ -1,5 +1,17 @@
 const mongoose = require("mongoose");
 
+const meditationSchema = mongoose.Schema(
+  {
+    meditationDate : {
+      type: Date
+    },
+    meditationDuration : {
+      type: Number,
+      default: 0
+    }
+  }
+)
+
 const userSchema = mongoose.Schema(
   {
     name: {
@@ -44,14 +56,11 @@ const userSchema = mongoose.Schema(
       type: Array,
       default: [],
     },
-    ExerciseReps: {
+    exerciseReps: {
       type: Array,
       default: [],
     },
-    MediatationDuration: {
-      type: Array,
-      default: [],
-    },
+    mediatation: [meditationSchema],
     lastActive: {
       type: Date,
     },
