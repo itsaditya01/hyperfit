@@ -5,15 +5,15 @@ const {
   Login,
   Verification,
   ForgetPassword,
-  ResetPassword,
-  ResetAccount,
-  ResendVerificationEmail,
+  ResetPassword
 } = require("./auth");
+const Mediataion = require('./meditation')
 const { body, validationResult } = require("express-validator");
+const { Mediataion } = require("./meditation");
 
 //Routes from login - Registration
 router.post(
-  "/register",
+  "/auth/register",
   [
     body("name", "Enter a valid Name").isLength({ min: 3 }),
     body("email", "Enter a valid Email").isEmail(),
@@ -23,7 +23,7 @@ router.post(
 );
 
 router.post(
-  "/login",
+  "/auth/login",
   [
     body("email", "Enter a valid Email").isEmail(),
     body("password", "Password cannot be blank").exists(),
@@ -34,11 +34,14 @@ router.post(
 router.get("/verify/:id", Verification);
 
 router.post(
-  "/forgetpassword",
+  "/auth/forgetpassword",
   [body("email", "Enter a valid Email").isEmail()],
   ForgetPassword
 );
 
-router.post("/resetpassword/:token", ResetPassword);
+router.post("/auth/resetpassword/:token", ResetPassword);
+
+//Routes for meditation
+router.post("/meditation", Mediataion)
 
 module.exports = router;

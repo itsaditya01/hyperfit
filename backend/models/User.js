@@ -1,5 +1,40 @@
 const mongoose = require("mongoose");
 
+const meditationSchema = mongoose.Schema(
+  {
+    meditationDate : {
+      type: Date
+    },
+    meditationDuration : {
+      type: Number,
+      default: 0
+    }
+  }
+)
+
+const exerInfoSchema = mongoose.Schema(
+  {
+      exerciseId: Number,
+      exerciseName: String,
+      exerciseDuration: Number,
+      repsPerformed: {
+        type: Number,
+        default: 0
+      },
+      caloriesBurned: {
+        type: Number,
+        default: 0
+      }
+    }
+)
+
+const exerSchema = mongoose.Schema(
+  {
+    day : Date,
+    data : [exerInfoSchema]
+  }
+)
+
 const userSchema = mongoose.Schema(
   {
     name: {
@@ -40,18 +75,8 @@ const userSchema = mongoose.Schema(
       type: Array,
       default: [],
     },
-    caloriesBurned: {
-      type: Array,
-      default: [],
-    },
-    ExerciseReps: {
-      type: Array,
-      default: [],
-    },
-    MediatationDuration: {
-      type: Array,
-      default: [],
-    },
+    exercise: [exerSchema],
+    mediatation: [meditationSchema],
     lastActive: {
       type: Date,
     },
