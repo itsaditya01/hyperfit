@@ -3,17 +3,17 @@ import Hero from "./components/Hero/Hero";
 import NavBarHero from "./components/NavBar/NavBarHero";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import Login from "./components/Login/Login";
-import Form from "./components/Form";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Mediapipe from "./components/Mediapipe/Mediapipe";
+import Signup from "./components/Signup/Signup";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/signup" element={<Form />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/mediapipe" element={<Mediapipe />} />
         <Route
           path="/"

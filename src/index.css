@@ -32,3 +32,40 @@
   -moz-text-fill-color: transparent;
   background-clip: text;
 }
+
+.df {
+  display: flex;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.jcc {
+  justify-content: center;
+}
+
+.jcsb {
+  justify-content: space-between;
+}
+
+.jcsa {
+  justify-content: space-around;
+}
+
+.jsse {
+  justify-content: space-evenly;
+}
+
+.aic {
+  align-items: center;
+}

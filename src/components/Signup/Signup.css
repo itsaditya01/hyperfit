@@ -1,0 +1,32 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.loader{
+    position: relative;
+    width: 150px;
+    height: 150px;
+}
+
+.loader .loader-one span{
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #5989ff;
+    display: block;
+    width: 100%;
+    height: 100%;
+    animation: animate-loader ease-in-out 1s 2s;
+}
+
+.loader .loader-one span:nth-child(2) {
+    left: 50%;
+    background: rgba(56, 109, 241, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@keyframes animate-loader {
+    
+}
