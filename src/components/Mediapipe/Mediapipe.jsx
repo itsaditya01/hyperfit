@@ -3,6 +3,10 @@ import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils";
 import { Camera } from "@mediapipe/camera_utils";
 import { Pose, POSE_CONNECTIONS } from "@mediapipe/pose";
 import { useRef } from "react";
+import squatVid from "../../assets/squats.mp4";
+import { roundRect } from "./DrawingUtility";
+import { squats } from "../ExerciseComponent";
+import "./style.css";
 
 const pose = new Pose({
   locateFile: (file) => {
@@ -18,6 +22,13 @@ pose.setOptions({
   minTrackingConfidence: 0.5,
   selfieMode: true,
 });
+
+let startTimer;
+var state = -1;
+var previous_state = -1;
+var data = {
+  count: 0,
+};
 
 const connections = [
   [0, 1],
@@ -60,25 +71,33 @@ const connections = [
 
 const Mediapipe = () => {
   const videoRef = useRef(null);
+  const squatsRef = useRef(null);
   const canvasRef = useRef(null);
   const connectorColor = "white";
+  const sendFrames = async () => {
+    console.log("frames send");
+    await pose.send({ image: squatsRef.current });
+  };
+  let is_live = false;
   useEffect(() => {
     pose.onResults(onResults);
     const camera = new Camera(videoRef.current, {
       onFrame: async () => {
-        await pose.send({ image: videoRef.current });
+        if (is_live) await pose.send({ image: videoRef.current });
+        else await pose.send({ image: squatsRef.current });
       },
       width: 1280,
       height: 720,
     });
     camera.start();
+    // clearInterval(startTimer);
+    startTimer = setInterval(100, sendFrames);
   }, []);
 
   function onResults(results) {
     if (!results.poseLandmarks) {
       return;
     }
-
     const canvasCtx = canvasRef.current.getContext("2d");
     canvasCtx.save();
     canvasCtx.clearRect(
@@ -121,23 +140,51 @@ const Mediapipe = () => {
         j > 10
       ) {
         canvasCtx.beginPath();
-        canvasCtx.moveTo(point1.x * 1280, point1.y * 720);
-        canvasCtx.lineTo(point2.x * 1280, point2.y * 720);
+        canvasCtx.moveTo(point1.x * 1100, point1.y * 650);
+        canvasCtx.lineTo(point2.x * 1100, point2.y * 650);
         canvasCtx.stroke();
       }
     });
+    squats(results.poseLandmarks, data);
+    canvasCtx.fillStyle = "#FFFFFF";
+    roundRect(canvasCtx, 150, 150, 300, 150, 10);
+    canvasCtx.font = "20px sans-serif";
+    canvasCtx.fillStyle = "#000000";
+    canvasCtx.fillText(`Squat Counter: ${data.count}`, 200, 200);
     canvasCtx.restore();
   }
 
   return (
-    <div>
+    <div className="exerciseContainer df aic">
       <video ref={videoRef} style={{ display: "none" }}></video>
+      {/* <button
+        className="play"
+        onClick={() => {
+          squatsRef.current.play();
+        }}
+      >
+        Play Video
+      </button>
+      <button
+        className="play"
+        onClick={() => {
+          squatsRef.current.pause();
+        }}
+      >
+        Pause Video
+      </button> */}
       <canvas
         ref={canvasRef}
-        width={"1280px"}
-        height={"720px"}
+        width={"1100px"}
+        height={"650px"}
         style={{ borderRadius: "0.75rem" }}
       ></canvas>
+      <video
+        ref={squatsRef}
+        style={{ width: 300, height: 300 }}
+        src={squatVid}
+        controls
+      ></video>
     </div>
   );
 };

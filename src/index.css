@@ -32,3 +32,15 @@
   -moz-text-fill-color: transparent;
   background-clip: text;
 }
+
+.df {
+  display: flex;
+}
+
+.aic {
+  align-items: center;
+}
+
+.jcc {
+  justify-content: center;
+}
