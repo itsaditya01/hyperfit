@@ -76,7 +76,7 @@ function Signup() {
   return (
     <div className="form">
       <div className="form-container">
-        {loader && (
+        {/* {loader && (
           <div className="df jcc aic">
             <div className="loader loader-one">
               <span></span>
@@ -84,7 +84,7 @@ function Signup() {
 
             <div className="loader loader-two"></div>
           </div>
-        )}
+        )} */}
         <div className="header">
           <h1>{FormTitles[page]}</h1>
         </div>

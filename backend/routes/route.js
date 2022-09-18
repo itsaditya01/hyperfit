@@ -5,11 +5,11 @@ const {
   Login,
   Verification,
   ForgetPassword,
-  ResetPassword
+  ResetPassword,
 } = require("./auth");
-const Mediataion = require('./meditation')
+const Mediataion = require("./meditation");
 const { body, validationResult } = require("express-validator");
-const { Mediataion } = require("./meditation");
+const { Meditation } = require("./meditation");
 
 //Routes from login - Registration
 router.post(
@@ -31,7 +31,7 @@ router.post(
   Login
 );
 
-router.get("/verify/:id", Verification);
+router.get("/auth/verify/:id", Verification);
 
 router.post(
   "/auth/forgetpassword",
@@ -42,6 +42,6 @@ router.post(
 router.post("/auth/resetpassword/:token", ResetPassword);
 
 //Routes for meditation
-router.post("/meditation", Mediataion)
+router.post("/meditation", Meditation);
 
 module.exports = router;
