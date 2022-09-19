@@ -5,7 +5,7 @@ import { Pose, POSE_CONNECTIONS } from "@mediapipe/pose";
 import { useRef } from "react";
 import squatVid from "../../assets/squats.mp4";
 import { roundRect } from "./DrawingUtility";
-import { squats } from "../ExerciseComponent";
+import { squats } from "../Exercises/Squat";
 import "./style.css";
 
 const pose = new Pose({
@@ -73,12 +73,15 @@ const Mediapipe = () => {
   const videoRef = useRef(null);
   const squatsRef = useRef(null);
   const canvasRef = useRef(null);
-  const connectorColor = "white";
+  let connectorColor = "red";
+  const changeConnectorColor = (color) => {
+    connectorColor = color;
+  };
   const sendFrames = async () => {
     console.log("frames send");
     await pose.send({ image: squatsRef.current });
   };
-  let is_live = false;
+  let is_live = true;
   useEffect(() => {
     pose.onResults(onResults);
     const camera = new Camera(videoRef.current, {
@@ -145,7 +148,7 @@ const Mediapipe = () => {
         canvasCtx.stroke();
       }
     });
-    squats(results.poseLandmarks, data);
+    // squats(results.poseLandmarks, data, changeConnectorColor);
     canvasCtx.fillStyle = "#FFFFFF";
     roundRect(canvasCtx, 150, 150, 300, 150, 10);
     canvasCtx.font = "20px sans-serif";
@@ -155,7 +158,7 @@ const Mediapipe = () => {
   }
 
   return (
-    <div className="exerciseContainer df aic">
+    <div className="exerciseContainer df aic fdc">
       <video ref={videoRef} style={{ display: "none" }}></video>
       {/* <button
         className="play"
@@ -181,7 +184,7 @@ const Mediapipe = () => {
       ></canvas>
       <video
         ref={squatsRef}
-        style={{ width: 300, height: 300 }}
+        style={{ width: 300, height: 300, display: is_live ? "none" : "" }}
         src={squatVid}
         controls
       ></video>

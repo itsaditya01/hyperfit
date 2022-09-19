@@ -3,4 +3,5 @@
   height: 100vh;
   background: black;
   justify-content: space-around;
+  flex-direction: column;
 }

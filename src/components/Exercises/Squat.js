@@ -1,9 +1,9 @@
-import { getAngleZ, knee_position, visibleCoords } from "./Logics";
+import { getAngleZ, knee_position, visibleCoords } from "../Logics";
 
 let state = -1;
 let previous_state = -1;
 
-export const squats = (poses, data) => {
+export const squats = (poses, data, changeConnectorColor) => {
   let rb_angle = getAngleZ(poses[12], poses[24], poses[26]);
   let rk_angle = getAngleZ(poses[24], poses[26], poses[28]);
   let lb_angle = getAngleZ(poses[11], poses[23], poses[25]);
@@ -44,17 +44,22 @@ export const squats = (poses, data) => {
         }
       }
     }
+    // console.log(rk_angle);
     if (poses[25].visibility < 0.5) {
       if (rk_angle > 120 && rb_angle > 120) {
         state = 0;
+        changeConnectorColor("red");
       } else if (rk_angle < 90 && rb_angle < 100) {
         state = 1;
+        changeConnectorColor("green");
       }
     } else {
       if (rk_angle > 120 && rb_angle > 120 && knee_position(poses)) {
         state = 0;
+        changeConnectorColor("red");
       } else if (rk_angle < 90 && rb_angle < 100 && knee_position(poses)) {
         state = 1;
+        changeConnectorColor("green");
       }
     }
     if ((previous_state == 1 || previous_state == 2) && state == 0) {

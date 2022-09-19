@@ -1,0 +1,20 @@
+.ec-outer{
+    background-color: #0a0a0a;
+    width: 100vw;
+    height: 100vh;
+    color: white;
+}
+
+.mediapipe-outer {
+    width: 80vw;
+}
+
+.info-outer {
+    width: 20vw;
+}
+
+.timer-outer {
+    height: 10vh;
+    width: 100%;
+    background-color: yellowgreen;
+}
