@@ -37,8 +37,12 @@
   display: flex;
 }
 
-.flex-column {
+.fc {
   flex-direction: column;
+}
+
+.fr {
+  flex-direction: row;
 }
 
 .container {

@@ -11,10 +11,45 @@
 
 .info-outer {
     width: 20vw;
+    flex-direction: column;
 }
 
 .timer-outer {
     height: 10vh;
     width: 100%;
     background-color: yellowgreen;
+}
+
+.exercise-tab{
+    background-color: aqua;
+    color: black;
+    height: 80px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.exercise-tab:hover {
+    background-color: black;
+}
+
+.exercise-tab:hover h2 {
+    color: aqua;
+}
+
+.exercise-tab:active {
+    background-color: black;
+}
+
+.exercise-tab:active h2{
+    color: aqua;
+}
+
+.exercises-outer{
+    width: 100%;
 }

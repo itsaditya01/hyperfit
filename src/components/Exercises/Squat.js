@@ -44,20 +44,20 @@ export const squats = (poses, data, changeConnectorColor) => {
         }
       }
     }
-    // console.log(rk_angle);
+    // console.log(rb_angle);
     if (poses[25].visibility < 0.5) {
-      if (rk_angle > 120 && rb_angle > 120) {
+      if (rk_angle > 150 && rb_angle > 150) {
         state = 0;
         changeConnectorColor("red");
-      } else if (rk_angle < 90 && rb_angle < 100) {
+      } else if (rk_angle < 70 && rb_angle < 70) {
         state = 1;
         changeConnectorColor("green");
       }
     } else {
-      if (rk_angle > 120 && rb_angle > 120 && knee_position(poses)) {
+      if (rk_angle > 150 && rb_angle > 150 && knee_position(poses)) {
         state = 0;
         changeConnectorColor("red");
-      } else if (rk_angle < 90 && rb_angle < 100 && knee_position(poses)) {
+      } else if (rk_angle < 70 && rb_angle < 70 && knee_position(poses)) {
         state = 1;
         changeConnectorColor("green");
       }

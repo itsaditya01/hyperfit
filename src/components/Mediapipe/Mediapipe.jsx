@@ -148,7 +148,7 @@ const Mediapipe = () => {
         canvasCtx.stroke();
       }
     });
-    // squats(results.poseLandmarks, data, changeConnectorColor);
+    squats(results.poseLandmarks, data, changeConnectorColor);
     canvasCtx.fillStyle = "#FFFFFF";
     roundRect(canvasCtx, 150, 150, 300, 150, 10);
     canvasCtx.font = "20px sans-serif";
