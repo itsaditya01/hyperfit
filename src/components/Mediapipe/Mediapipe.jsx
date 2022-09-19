@@ -65,6 +65,15 @@ const connections = [
   [30, 32],
 ];
 
+let counter;
+
+const five_second_timer = ({ data }) => {
+  counter = setTimeout(() => {
+    data.curr_guide_cnt++;
+  }, 5000);
+  if (data.curr_guide_cnt === 2) clearTimeout(counter);
+};
+
 const Mediapipe = ({ data }) => {
   const videoRef = useRef(null);
   const squatsRef = useRef(null);
@@ -78,6 +87,7 @@ const Mediapipe = ({ data }) => {
     await pose.send({ image: squatsRef.current });
   };
   let is_live = true;
+  five_second_timer(data);
   useEffect(() => {
     pose.onResults(onResults);
     const camera = new Camera(videoRef.current, {
@@ -144,9 +154,12 @@ const Mediapipe = ({ data }) => {
         canvasCtx.stroke();
       }
     });
-    if (data.curr_exercise === 0)
+    console.log(data.curr_exercise);
+    if (data.curr_exercise === 0) {
       squats(results.poseLandmarks, data, changeConnectorColor);
-    else pushUps(results.poseLandmarks, data, changeConnectorColor);
+    } else {
+      pushUps(results.poseLandmarks, data, changeConnectorColor);
+    }
     canvasCtx.fillStyle = "#FFFFFF";
     roundRect(canvasCtx, 150, 150, 300, 150, 10);
     canvasCtx.font = "20px sans-serif";

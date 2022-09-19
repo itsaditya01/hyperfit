@@ -3,14 +3,26 @@ import "./ExerciseComponent.css";
 import Mediapipe from "../Mediapipe/Mediapipe";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { useEffect } from "react";
 
 var data = {
   count: 0,
   exercises: ["Squats", "PushUps"],
   curr_exercise: 0,
+  guide_text: [
+    "Welcome to todays workout session",
+    "These AI lines will guide you about your posture",
+    "Lines will turn green indicating great posture",
+  ],
+  curr_guide_cnt: 0,
 };
 
 const ExerciseComponent = () => {
+  useEffect(() => {
+    data.curr_exercise = 0;
+    console.log("Messege", data.guide_text[data.curr_guide_cnt]);
+  }, [data.curr_guide_cnt]);
+
   const [activeTab, setActiveTab] = useState("squat");
   return (
     <div className="ec-main">
@@ -59,7 +71,7 @@ const ExerciseComponent = () => {
                   backgroundColor: activeTab !== "pushup" ? "black" : "aqua",
                 }}
                 onClick={() => {
-                  setActiveTab("squat");
+                  setActiveTab("pushup");
                   data.curr_exercise = 1;
                 }}
               >
