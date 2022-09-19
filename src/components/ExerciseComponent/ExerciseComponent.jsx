@@ -4,13 +4,19 @@ import Mediapipe from "../Mediapipe/Mediapipe";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
+var data = {
+  count: 0,
+  exercises: ["Squats", "PushUps"],
+  curr_exercise: 0,
+};
+
 const ExerciseComponent = () => {
   const [activeTab, setActiveTab] = useState("squat");
   return (
     <div className="ec-main">
       <div className="ec-outer df">
         <div className="mediapipe-outer">
-          <Mediapipe />
+          <Mediapipe data={data} />
         </div>
         <div className="info-outer df">
           <div className="timer-outer df jcc aic">
@@ -34,7 +40,10 @@ const ExerciseComponent = () => {
                 style={{
                   backgroundColor: activeTab !== "squat" ? "black" : "aqua",
                 }}
-                onClick={() => setActiveTab("squat")}
+                onClick={() => {
+                  setActiveTab("squat");
+                  data.curr_exercise = 0;
+                }}
               >
                 <h3
                   style={{
@@ -49,7 +58,10 @@ const ExerciseComponent = () => {
                 style={{
                   backgroundColor: activeTab !== "pushup" ? "black" : "aqua",
                 }}
-                onClick={() => setActiveTab("pushup")}
+                onClick={() => {
+                  setActiveTab("squat");
+                  data.curr_exercise = 1;
+                }}
               >
                 <h3
                   style={{

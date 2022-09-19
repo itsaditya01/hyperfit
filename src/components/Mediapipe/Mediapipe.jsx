@@ -6,6 +6,7 @@ import { useRef } from "react";
 import squatVid from "../../assets/squats.mp4";
 import { roundRect } from "./DrawingUtility";
 import { squats } from "../Exercises/Squat";
+import { pushUps } from "../Exercises/PushUps";
 import "./style.css";
 
 const pose = new Pose({
@@ -24,11 +25,6 @@ pose.setOptions({
 });
 
 let startTimer;
-var state = -1;
-var previous_state = -1;
-var data = {
-  count: 0,
-};
 
 const connections = [
   [0, 1],
@@ -69,7 +65,7 @@ const connections = [
   [30, 32],
 ];
 
-const Mediapipe = () => {
+const Mediapipe = ({ data }) => {
   const videoRef = useRef(null);
   const squatsRef = useRef(null);
   const canvasRef = useRef(null);
@@ -148,7 +144,9 @@ const Mediapipe = () => {
         canvasCtx.stroke();
       }
     });
-    squats(results.poseLandmarks, data, changeConnectorColor);
+    if (data.curr_exercise === 0)
+      squats(results.poseLandmarks, data, changeConnectorColor);
+    else pushUps(results.poseLandmarks, data, changeConnectorColor);
     canvasCtx.fillStyle = "#FFFFFF";
     roundRect(canvasCtx, 150, 150, 300, 150, 10);
     canvasCtx.font = "20px sans-serif";

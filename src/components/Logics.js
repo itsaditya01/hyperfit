@@ -89,3 +89,47 @@ export const knee_position = (poses) => {
     return false;
   }
 };
+
+export const getAngle = (firstPoint, midPoint, lastPoint) => {
+  if (
+    firstPoint.score <= 0.5 &&
+    midPoint.score <= 0.5 &&
+    lastPoint.score <= 0.5
+  ) {
+    return;
+  }
+
+  var result =
+    ((Math.atan2(lastPoint.y - midPoint.y, lastPoint.x - midPoint.x) -
+      Math.atan2(firstPoint.y - midPoint.y, firstPoint.x - midPoint.x)) *
+      180) /
+    Math.PI;
+
+  result = Math.abs(result);
+
+  if (result > 180) {
+    result = 360.0 - result;
+  }
+
+  return result;
+};
+
+export const is_horizontal = (frame, th) => {
+  const left_shoulder_x = frame[11].x;
+  const left_shoulder_y = frame[11].y;
+  const left_shoulder_z = frame[11].z;
+  const left_hip_x = frame[23].x;
+  const left_hip_y = frame[23].y;
+  const left_hip_z = frame[23].z;
+  const dx = left_shoulder_x - left_hip_x;
+  const dy = left_shoulder_y - left_hip_y;
+  const dz = left_shoulder_z - left_hip_z;
+  const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+  // if (isin_leftview(frame,0.8)>=100){
+  if (Math.abs(left_shoulder_y - left_hip_y) < distance / th) {
+    return true;
+  } else {
+    return false;
+  }
+  // }
+};
