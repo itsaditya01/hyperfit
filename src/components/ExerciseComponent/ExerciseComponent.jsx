@@ -18,40 +18,46 @@ const ExerciseComponent = () => {
           </div>
           <div className="calory-counter df jcc aic">
             <div className="calory-outer">
-              <CircularProgressbar percentage={66} text={"Calories Burned"} />
+              <Example label="Calories burned">
+                <CircularProgressbar value={66} text={`${66}%`} />
+              </Example>
             </div>
           </div>
-          <div className="exercise-tabs-wrapper df jcc">
+          <hr style={{ border: "2px solid #ddd" }} />
+          <div className="exercise-tabs-wrapper df jcc fc">
+            <div className="exercise-tab-title df jcc aic">
+              <h2>Exercises</h2>
+            </div>
             <div className="exercises-outer df jcc fc">
               <div
                 className="exercise-tab"
                 style={{
-                  backgroundColor: activeTab === "squat" ? "black" : "aqua",
+                  backgroundColor: activeTab !== "squat" ? "black" : "aqua",
                 }}
                 onClick={() => setActiveTab("squat")}
               >
-                <h2
+                <h3
                   style={{
-                    color: activeTab !== "squat" ? "black" : "aqua",
+                    color: activeTab === "squat" ? "black" : "aqua",
                   }}
                 >
                   Squat
-                </h2>
+                </h3>
               </div>
               <div
                 className="exercise-tab"
                 style={{
-                  backgroundColor: activeTab === "pushup" ? "black" : "aqua",
+                  backgroundColor: activeTab !== "pushup" ? "black" : "aqua",
                 }}
                 onClick={() => setActiveTab("pushup")}
               >
-                <h2
+                <h3
                   style={{
-                    color: activeTab !== "pushup" ? "black" : "aqua",
+                    color: activeTab === "pushup" ? "black" : "aqua",
                   }}
                 >
                   Pushup
-                </h2>
+                </h3>
               </div>
             </div>
           </div>
@@ -60,5 +66,28 @@ const ExerciseComponent = () => {
     </div>
   );
 };
+
+function Example(props) {
+  return (
+    <div style={{ marginBottom: 80 }}>
+      <hr style={{ border: "2px solid #ddd" }} />
+      <div
+        style={{
+          marginTop: 30,
+          display: "flex",
+          flexDirection: "column-reverse",
+        }}
+      >
+        <div style={{ width: "auto", height: "100px", padding: "0px 20%" }}>
+          {props.children}
+        </div>
+        <div style={{ width: "100%", height: "50px", textAlign: "center" }}>
+          <h3 className="h5">{props.label}</h3>
+          <p>{props.description}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default ExerciseComponent;

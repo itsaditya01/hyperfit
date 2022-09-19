@@ -10,6 +10,7 @@
 }
 
 .info-outer {
+    margin: 20px 5px;
     width: 20vw;
     flex-direction: column;
 }
@@ -18,8 +19,16 @@
     height: 10vh;
     width: 100%;
     background-color: yellowgreen;
+    margin: 20px 0px;
 }
 
+.calory-counter {
+    margin: 15px 5px;
+}
+
+.exercises-tab {
+    margin: 15px 5px;
+}
 .exercise-tab{
     background-color: aqua;
     color: black;
@@ -38,7 +47,7 @@
     background-color: black;
 }
 
-.exercise-tab:hover h2 {
+.exercise-tab:hover h3 {
     color: aqua;
 }
 
@@ -46,7 +55,7 @@
     background-color: black;
 }
 
-.exercise-tab:active h2{
+.exercise-tab:active h3{
     color: aqua;
 }
 
