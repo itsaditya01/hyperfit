@@ -67,12 +67,12 @@ const connections = [
 
 let counter;
 
-const five_second_timer = ({ data }) => {
-  counter = setTimeout(() => {
-    data.curr_guide_cnt++;
-  }, 5000);
-  if (data.curr_guide_cnt === 2) clearTimeout(counter);
-};
+// const five_second_timer = ({ data }) => {
+//   counter = setTimeout(() => {
+//     data.curr_guide_cnt++;
+//   }, 5000);
+//   if (data.curr_guide_cnt === 2) clearTimeout(counter);
+// };
 
 const Mediapipe = ({ data }) => {
   const videoRef = useRef(null);
@@ -87,7 +87,7 @@ const Mediapipe = ({ data }) => {
     await pose.send({ image: squatsRef.current });
   };
   let is_live = true;
-  five_second_timer(data);
+  // five_second_timer(data);
   useEffect(() => {
     pose.onResults(onResults);
     const camera = new Camera(videoRef.current, {

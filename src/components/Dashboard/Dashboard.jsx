@@ -19,7 +19,7 @@ const Dashboard = () => {
             {/* <div className="meditation">123</div> */}
             <div className="Exercise">
               <h1>Exercise</h1>
-              <div onClick={() => nav("/mediapipe")} className="cp startg">
+              <div onClick={() => nav("/exercises")} className="cp startg">
                 Start Grinding &#8594;
               </div>
             </div>

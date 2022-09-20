@@ -4,6 +4,7 @@ import Mediapipe from "../Mediapipe/Mediapipe";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useEffect } from "react";
+import { getAngle, getAngleZ } from "../Logics";
 
 var data = {
   count: 0,
@@ -17,7 +18,24 @@ var data = {
   curr_guide_cnt: 0,
 };
 
+const first = {
+  x: 100,
+  y: 100,
+  score: 1,
+};
+const second = {
+  x: 0,
+  y: 0,
+  score: 1,
+};
+const third = {
+  x: 200,
+  y: 0,
+  score: 1,
+};
+
 const ExerciseComponent = () => {
+  console.log("angle", getAngle(first, second, third));
   useEffect(() => {
     data.curr_exercise = 0;
     console.log("Messege", data.guide_text[data.curr_guide_cnt]);
@@ -93,16 +111,16 @@ const ExerciseComponent = () => {
 
 function Example(props) {
   return (
-    <div style={{ marginBottom: 80 }}>
+    <div style={{ marginBottom: 20 }}>
       <hr style={{ border: "2px solid #ddd" }} />
       <div
         style={{
-          marginTop: 30,
+          marginTop: 20,
           display: "flex",
           flexDirection: "column-reverse",
         }}
       >
-        <div style={{ width: "auto", height: "100px", padding: "0px 20%" }}>
+        <div style={{ width: "auto", height: "100px", padding: "0px 30%" }}>
           {props.children}
         </div>
         <div style={{ width: "100%", height: "50px", textAlign: "center" }}>

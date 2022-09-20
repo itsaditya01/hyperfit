@@ -1,4 +1,10 @@
-import { getAngleZ, knee_position, visibleCoords } from "../Logics";
+import {
+  getAngleZ,
+  is_horizontal,
+  knee_position,
+  visibleCoords,
+  getAngle,
+} from "../Logics";
 
 let state = -1;
 let previous_state = -1;
@@ -22,34 +28,72 @@ export const squats = (poses, data, changeConnectorColor) => {
       knee_position(poses)
     ) {
       state = 0;
-    } else if (
-      rb_angle < 100 &&
-      lb_angle < 100 &&
-      rk_angle < 90 &&
-      lk_angle < 90 &&
-      knee_position(poses)
-    ) {
-      state = 1;
     }
-    if (poses[26].visibility < 0.5) {
+    // else if (
+    //   rb_angle < 100 &&
+    //   lb_angle < 100 &&
+    //   rk_angle < 90 &&
+    //   lk_angle < 90 &&
+    //   knee_position(poses)
+    // ) {
+    //   state = 1;
+    // }
+    const left_third = {
+      x: poses[11].x,
+      y: poses[23].y,
+      score: 1,
+    };
+    const right_third = {
+      x: poses[12].x,
+      y: poses[24].y,
+      score: 1,
+    };
+    const right_vertical_checker_angle = getAngle(
+      poses[12],
+      poses[24],
+      right_third
+    );
+    const left_vertical_checker_angle = getAngle(
+      poses[11],
+      poses[23],
+      left_third
+    );
+    // console.log(poses[26].visibility);
+    if (poses[25].visibility < 0.5) {
       if (lk_angle > 120 && lb_angle > 120) {
         state = 0;
-      } else if (lk_angle < 90 && lb_angle < 100) {
+        changeConnectorColor("red");
+      } else if (
+        lk_angle < 90 &&
+        lb_angle < 100 &&
+        left_vertical_checker_angle < 85
+      ) {
         state = 1;
+        changeConnectorColor("green");
       } else {
         if (lk_angle > 120 && lb_angle > 120 && knee_position(poses)) {
           state = 0;
-        } else if (lk_angle < 90 && lb_angle < 100 && knee_position(poses)) {
+          changeConnectorColor("red");
+        } else if (
+          lk_angle < 90 &&
+          lb_angle < 100 &&
+          knee_position(poses) &&
+          left_vertical_checker_angle < 85
+        ) {
           state = 1;
+          changeConnectorColor("green");
         }
       }
     }
-    // console.log(rb_angle);
-    if (poses[25].visibility < 0.5) {
+    if (poses[26].visibility < 0.5) {
       if (rk_angle > 150 && rb_angle > 150) {
         state = 0;
         changeConnectorColor("red");
-      } else if (rk_angle < 70 && rb_angle < 70) {
+      } else if (
+        rk_angle < 70 &&
+        rb_angle < 70 &&
+        right_vertical_checker_angle < 85
+      ) {
         state = 1;
         changeConnectorColor("green");
       }
@@ -57,12 +101,17 @@ export const squats = (poses, data, changeConnectorColor) => {
       if (rk_angle > 150 && rb_angle > 150 && knee_position(poses)) {
         state = 0;
         changeConnectorColor("red");
-      } else if (rk_angle < 70 && rb_angle < 70 && knee_position(poses)) {
+      } else if (
+        rk_angle < 70 &&
+        rb_angle < 70 &&
+        knee_position(poses) &&
+        right_vertical_checker_angle < 85
+      ) {
         state = 1;
         changeConnectorColor("green");
       }
     }
-    if ((previous_state == 1 || previous_state == 2) && state == 0) {
+    if ((previous_state === 1 || previous_state === 2) && state === 0) {
       data.count++;
       //   data.countTime = new Date().getSeconds();
     }

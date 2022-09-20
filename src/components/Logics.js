@@ -133,3 +133,19 @@ export const is_horizontal = (frame, th) => {
   }
   // }
 };
+
+// export const is_vertical = (frame) => {
+//   const left_eye_x = frame[2].x;
+//   const left_eye_y = frame[2].y;
+//   const right_eye_x = frame[5].x;
+//   const right_eye_y = frame[5].y;
+//   const left_heel_x = frame[29].x;
+//   const left_heel_y = frame[29].y;
+//   const right_heel_x = frame[30].x;
+//   const right_heel_y = frame[30].y;
+
+//   if (frame[2].visibility < 0.5) {
+//     const vertical
+//   }
+
+// }
