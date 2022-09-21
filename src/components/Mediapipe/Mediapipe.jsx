@@ -74,7 +74,7 @@ let counter;
 //   if (data.curr_guide_cnt === 2) clearTimeout(counter);
 // };
 
-const Mediapipe = ({ data }) => {
+const Mediapipe = ({ data, setcount, setguidetext }) => {
   const videoRef = useRef(null);
   const squatsRef = useRef(null);
   const canvasRef = useRef(null);
@@ -86,7 +86,7 @@ const Mediapipe = ({ data }) => {
     console.log("frames send");
     await pose.send({ image: squatsRef.current });
   };
-  let is_live = true;
+  let is_live = false;
   // five_second_timer(data);
   useEffect(() => {
     pose.onResults(onResults);
@@ -154,17 +154,22 @@ const Mediapipe = ({ data }) => {
         canvasCtx.stroke();
       }
     });
-    console.log(data.curr_exercise);
     if (data.curr_exercise === 0) {
-      squats(results.poseLandmarks, data, changeConnectorColor);
+      squats(
+        results.poseLandmarks,
+        data,
+        changeConnectorColor,
+        setcount,
+        setguidetext
+      );
     } else {
-      pushUps(results.poseLandmarks, data, changeConnectorColor);
+      pushUps(results.poseLandmarks, data, changeConnectorColor, setguidetext);
     }
     canvasCtx.fillStyle = "#FFFFFF";
-    roundRect(canvasCtx, 150, 150, 300, 150, 10);
+    roundRect(canvasCtx, 50, 50, 200, 100, 10);
     canvasCtx.font = "20px sans-serif";
     canvasCtx.fillStyle = "#000000";
-    canvasCtx.fillText(`Squat Counter: ${data.count}`, 200, 200);
+    canvasCtx.fillText(`Squat Counter: ${data.count}`, 75, 100);
     canvasCtx.restore();
   }
 

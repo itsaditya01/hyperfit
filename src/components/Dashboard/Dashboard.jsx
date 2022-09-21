@@ -2,12 +2,17 @@ import React from "react";
 import SideBar from "../SideBar/SideBar";
 import "./Dashboard.css";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../Context/UserState";
+import { useContext } from "react";
 
 const Dashboard = () => {
+  const context = useContext(UserContext);
+  const { user } = context;
+  console.log(user);
   const nav = useNavigate();
   return (
     <div className="dash-main">
-      <h5 className="greet-user">Hello Pratham,</h5>
+      <h5 className="greet-user">Hello {user.name},</h5>
       <div className="dash-grid-contain">
         <div className="sidebar">
           <SideBar />

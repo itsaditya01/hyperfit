@@ -1,9 +1,12 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../Context/UserState";
 
 const Login = () => {
   const host = "http://localhost:5000";
+  const context = useContext(UserContext);
+  const { setuser } = context;
   const [mess, setMess] = useState("");
   const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
@@ -25,8 +28,8 @@ const Login = () => {
       }),
     });
     const data = await response.json();
-    console.log(data);
     if (data.success) {
+      setuser(data.user.id, data.user.name, data.user.email);
       navigate("/dashboard");
     } else {
       setErr(true);

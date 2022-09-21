@@ -6,6 +6,7 @@ const {
   Verification,
   ForgetPassword,
   ResetPassword,
+  UserDetails,
 } = require("./auth");
 const Mediataion = require("./meditation");
 const { body, validationResult } = require("express-validator");

@@ -16,6 +16,7 @@ var data = {
     "Lines will turn green indicating great posture",
   ],
   curr_guide_cnt: 0,
+  curr_guide_text: "",
 };
 
 const first = {
@@ -35,22 +36,38 @@ const third = {
 };
 
 const ExerciseComponent = () => {
+  const [count, setCount] = useState(0);
+  const [guideText, setGuideText] = useState("");
+
+  const setcount = (x) => {
+    setCount(x);
+  };
+
+  const setguidetext = (message) => {
+    setGuideText(message);
+  };
+
   console.log("angle", getAngle(first, second, third));
   useEffect(() => {
     data.curr_exercise = 0;
-    console.log("Messege", data.guide_text[data.curr_guide_cnt]);
-  }, [data.curr_guide_cnt]);
+    console.log("count", count);
+  }, [count]);
 
   const [activeTab, setActiveTab] = useState("squat");
   return (
     <div className="ec-main">
       <div className="ec-outer df">
         <div className="mediapipe-outer">
-          <Mediapipe data={data} />
+          <Mediapipe
+            data={data}
+            setcount={setcount}
+            setguidetext={setguidetext}
+          />
         </div>
         <div className="info-outer df">
           <div className="timer-outer df jcc aic">
-            <h1>11 : 15</h1>
+            <h2>Timer : </h2>
+            <h2 style={{ color: "black" }}> 15 sec</h2>
           </div>
           <div className="calory-counter df jcc aic">
             <div className="calory-outer">

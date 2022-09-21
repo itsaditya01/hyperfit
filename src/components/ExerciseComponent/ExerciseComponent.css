@@ -17,9 +17,10 @@
 
 .timer-outer {
     height: 10vh;
-    width: 100%;
-    background-color: yellowgreen;
-    margin: 20px 0px;
+    width: 80%;
+    background: linear-gradient(to right, blue, pink);
+    border-radius: 10px;
+    margin: 20px 10%;
 }
 
 .calory-counter {
