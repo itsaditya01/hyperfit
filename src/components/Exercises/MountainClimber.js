@@ -1,0 +1,39 @@
+import { getAngle, getAngleZ, is_horizontal } from "../Logics";
+
+var state = -1;
+var previous_state = -1;
+
+export const mountainClimber = (poses, data, changeConnectorColor) => {
+  const angle_lk = getAngleZ(poses[23], poses[25], poses[27]);
+  const angle_rk = getAngleZ(poses[24], poses[26], poses[28]);
+  const angle_lh = getAngleZ(poses[11], poses[23], poses[25]);
+  const angle_rh = getAngleZ(poses[12], poses[24], poses[26]);
+
+  if (is_horizontal(poses, 4)) {
+    if (angle_lk > 130 && angle_rk > 130 && angle_lh > 140 && angle_rh > 140) {
+      state = 0;
+      changeConnectorColor("red");
+    } else if (
+      angle_rh > 100 &&
+      angle_lh < 100 &&
+      angle_lk < 100 &&
+      angle_rk > 90
+    ) {
+      state = 1;
+      changeConnectorColor("green");
+    } else if (
+      angle_rh < 100 &&
+      angle_lh > 100 &&
+      angle_lk > 90 &&
+      angle_rk < 100
+    ) {
+      state = 2;
+      changeConnectorColor("green");
+    }
+  }
+
+  if ((previous_state == 1 || previous_state == 2) && state == 0) {
+    data.count++;
+  }
+  previous_state = state;
+};

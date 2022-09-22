@@ -8,6 +8,8 @@ import {
 
 let state = -1;
 let previous_state = -1;
+let partial_state = -1;
+let pre_partial_state = -1;
 
 export const squats = (
   poses,
@@ -20,11 +22,10 @@ export const squats = (
   let rk_angle = getAngleZ(poses[24], poses[26], poses[28]);
   let lb_angle = getAngleZ(poses[11], poses[23], poses[25]);
   let lk_angle = getAngleZ(poses[23], poses[25], poses[27]);
-
   if (
     (Math.abs(poses[0].y - poses[31].y) * 720 >= window.innerHeight * 0.5 ||
       Math.abs(poses[0].y - poses[32].y) * 720 >= window.innerHeight * 0.5) &&
-    visibleCoords({ poseLandmarks: poses }) * 100 >= 80
+    visibleCoords({ poseLandmarks: poses }) * 85 >= 80
   ) {
     if (
       lk_angle > 120 &&
@@ -35,15 +36,6 @@ export const squats = (
     ) {
       state = 0;
     }
-    // else if (
-    //   rb_angle < 100 &&
-    //   lb_angle < 100 &&
-    //   rk_angle < 90 &&
-    //   lk_angle < 90 &&
-    //   knee_position(poses)
-    // ) {
-    //   state = 1;
-    // }
     const left_third = {
       x: poses[11].x,
       y: poses[23].y,
@@ -64,89 +56,123 @@ export const squats = (
       poses[23],
       left_third
     );
-    // console.log(poses[26].visibility);
     if (poses[25].visibility < 0.5) {
       if (lk_angle > 120 && lb_angle > 120) {
         state = 0;
+        // partial_state = 0;
         changeConnectorColor("red");
       } else if (
-        lk_angle < 90 &&
-        lb_angle < 100 &&
+        lk_angle < 150 &&
+        lk_angle > 80 &&
+        lb_angle < 150 &&
+        lb_angle > 85 &&
+        left_vertical_checker_angle < 85 &&
+        state === 0
+      ) {
+        partial_state = 1;
+        state = 2;
+      } else if (
+        lk_angle < 80 &&
+        lb_angle < 85 &&
         left_vertical_checker_angle < 85
       ) {
         state = 1;
+        partial_state = 0;
+        pre_partial_state = 0;
         changeConnectorColor("green");
       } else {
         if (lk_angle > 120 && lb_angle > 120 && knee_position(poses)) {
           state = 0;
+          // partial_state = 0;
           changeConnectorColor("red");
         } else if (
-          lk_angle < 90 &&
-          lb_angle < 100 &&
+          lk_angle < 150 &&
+          lk_angle > 80 &&
+          lb_angle < 150 &&
+          lb_angle > 85 &&
+          knee_position(poses) &&
+          left_vertical_checker_angle < 85 &&
+          state === 0
+        ) {
+          partial_state = 1;
+          state = 2;
+        } else if (
+          lk_angle < 80 &&
+          lb_angle < 85 &&
           knee_position(poses) &&
           left_vertical_checker_angle < 85
         ) {
           state = 1;
+          partial_state = 0;
           changeConnectorColor("green");
         }
       }
     }
     if (poses[26].visibility < 0.5) {
       if (rk_angle > 150 && rb_angle > 150) {
+        // partial_state = 0;
         state = 0;
         changeConnectorColor("red");
       } else if (
-        rk_angle < 70 &&
-        rb_angle < 70 &&
+        rk_angle < 150 &&
+        rk_angle > 80 &&
+        rb_angle < 150 &&
+        rb_angle > 85 &&
+        left_vertical_checker_angle < 85 &&
+        state === 0
+      ) {
+        partial_state = 1;
+        state = 2;
+        console.log("hello");
+      } else if (
+        rk_angle < 80 &&
+        rb_angle < 85 &&
         right_vertical_checker_angle < 85
       ) {
+        partial_state = 0;
         state = 1;
         changeConnectorColor("green");
       }
     } else {
       if (rk_angle > 150 && rb_angle > 150 && knee_position(poses)) {
+        // partial_state = 0;
         state = 0;
         changeConnectorColor("red");
       } else if (
-        rk_angle < 70 &&
-        rb_angle < 70 &&
+        rk_angle < 150 &&
+        rk_angle > 80 &&
+        rb_angle < 150 &&
+        rb_angle > 85 &&
+        knee_position(poses) &&
+        left_vertical_checker_angle < 85 &&
+        state === 0
+      ) {
+        partial_state = 1;
+        state = 2;
+        console.log("hello");
+      } else if (
+        rk_angle < 80 &&
+        rb_angle < 85 &&
         knee_position(poses) &&
         right_vertical_checker_angle < 85
       ) {
         state = 1;
+        partial_state = 0;
+        pre_partial_state = 0;
         changeConnectorColor("green");
       }
     }
-    if ((previous_state === 1 || previous_state === 2) && state === 0) {
+    if (previous_state === 1 && state === 0) {
       data.count++;
       setcount(data.count);
-      //   data.countTime = new Date().getSeconds();
+      setguidetext("");
     }
+    if (pre_partial_state === 1 && state === 0) {
+      data.partial_count++;
+      setguidetext("Please bend you knees more and push your chest downwards");
+      partial_state = 0;
+    }
+    pre_partial_state = partial_state;
     previous_state = state;
   }
-
-  // if(data.complete)
-  // {
-  //     if((k_angle < 60))
-  //     {
-  //     data.complete = false
-  //     data.count++
-  //     data.partial = false
-
-  //     data.energy = true
-
-  //     data.countTime = new Date().getSeconds()
-
-  //     // time_limit_err = true
-
-  //     // no_guidance && hmsActions.sendBroadcastMessage(`count|${ data.count }`)
-
-  //     // console.log('count sent')
-  //     }
-  // }
-
-  // if(data.partial && (k_angle > 150 && b_angle > 150))
-  // {
-  //     data.partial = false
-  // }
 };

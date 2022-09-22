@@ -8,6 +8,10 @@ import { roundRect } from "./DrawingUtility";
 import { squats } from "../Exercises/Squat";
 import { pushUps } from "../Exercises/PushUps";
 import "./style.css";
+import { Lunges } from "../Exercises/Lunges";
+import { sprawl } from "../Exercises/sprawl";
+import { mountainClimber } from "../Exercises/MountainClimber";
+import { legRaise } from "../Exercises/Legraise";
 
 const pose = new Pose({
   locateFile: (file) => {
@@ -154,22 +158,22 @@ const Mediapipe = ({ data, setcount, setguidetext }) => {
         canvasCtx.stroke();
       }
     });
-    if (data.curr_exercise === 0) {
-      squats(
-        results.poseLandmarks,
-        data,
-        changeConnectorColor,
-        setcount,
-        setguidetext
-      );
-    } else {
-      pushUps(results.poseLandmarks, data, changeConnectorColor, setguidetext);
-    }
-    canvasCtx.fillStyle = "#FFFFFF";
-    roundRect(canvasCtx, 50, 50, 200, 100, 10);
-    canvasCtx.font = "20px sans-serif";
-    canvasCtx.fillStyle = "#000000";
-    canvasCtx.fillText(`Squat Counter: ${data.count}`, 75, 100);
+    // mountainClimber(results.poseLandmarks, data, changeConnectorColor);
+    //sprawl(results.poseLandmarks, data, changeConnectorColor);
+    //lunges(results.poseLandmarks, data, changeConnectorColor);
+    // if (data.curr_exercise === 0) {
+    squats(
+      results.poseLandmarks,
+      data,
+      changeConnectorColor,
+      setcount,
+      setguidetext
+    );
+    // legRaise(results.poseLandmarks, data, changeConnectorColor);
+    // } else {
+    //   pushUps(results.poseLandmarks, data, changeConnectorColor, setguidetext);
+    // }
+
     canvasCtx.restore();
   }
 

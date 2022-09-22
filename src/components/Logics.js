@@ -149,3 +149,17 @@ export const is_horizontal = (frame, th) => {
 //   }
 
 // }
+
+export function knee_ankle_distance(frame) {
+  const left_knee_y = frame[25].y;
+  const right_knee_y = frame[26].y;
+  const left_ankle_y = frame[27].y;
+  const right_ankle_y = frame[28].y;
+  const left = left_ankle_y - left_knee_y;
+  const right = right_ankle_y - right_knee_y;
+  if (Math.abs(left - right) / (left + right) < 0.25) {
+    return true;
+  } else {
+    return false;
+  }
+}
