@@ -90,7 +90,7 @@ const Mediapipe = ({ data, setcount, setguidetext }) => {
     console.log("frames send");
     await pose.send({ image: squatsRef.current });
   };
-  let is_live = false;
+  let is_live = true;
   // five_second_timer(data);
   useEffect(() => {
     pose.onResults(onResults);
