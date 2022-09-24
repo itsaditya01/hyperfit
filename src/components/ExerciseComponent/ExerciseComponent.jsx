@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import "./ExerciseComponent.css";
 import Mediapipe from "../Mediapipe/Mediapipe";
-import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useEffect } from "react";
-import { getAngle, getAngleZ } from "../Logics";
 import Fire from "../../assets/fire.svg";
 
 var data = {
@@ -37,10 +35,14 @@ const third = {
   score: 1,
 };
 
+var perCalorie = [0.32, 0.36, 0.35, 0.6];
+var name = ["squats", "pushups", "leg-raise", "lunges"];
+
 const ExerciseComponent = () => {
   const [count, setCount] = useState(0);
   const [guideText, setGuideText] = useState("");
   const [calories, setCalories] = useState(0);
+  const [curr, setCurr] = useState(2);
   const setcount = (x) => {
     setCount(x);
   };
@@ -50,7 +52,6 @@ const ExerciseComponent = () => {
   };
   useEffect(() => {
     setCalories(count * 0.32);
-    console.log("guideText", guideText);
   }, [guideText, count]);
 
   const [activeTab, setActiveTab] = useState("squat");
@@ -62,6 +63,7 @@ const ExerciseComponent = () => {
             data={data}
             setcount={setcount}
             setguidetext={setguidetext}
+            curr={curr}
           />
         </div>
         <div className="info-outer df">
@@ -73,7 +75,7 @@ const ExerciseComponent = () => {
             <div className="reps-outer df aic jcc">
               <div className="reps-count">{count}</div>
               <div className="reps-exercise" style={{ fontSize: 12 }}>
-                squats
+                {name[curr]}
               </div>
             </div>
           </div>
@@ -99,13 +101,14 @@ const ExerciseComponent = () => {
               style={{ width: "35%" }}
             >
               <div className="per-rep-calory" style={{ fontSize: 42 }}>
-                0.32
+                {perCalorie[curr]}
               </div>
               <div className="per-rep-calory-text" style={{ fontSize: 12 }}>
                 Per Rep
               </div>
             </div>
           </div>
+
           {guideText && <div className="guideMessege">{guideText}</div>}
         </div>
       </div>

@@ -4,14 +4,22 @@ import { Camera } from "@mediapipe/camera_utils";
 import { Pose, POSE_CONNECTIONS } from "@mediapipe/pose";
 import { useRef } from "react";
 import squatVid from "../../assets/squats.mp4";
+import pushupVid from "../../assets/pushup.mp4";
+import legVid from "../../assets/leg.mp4";
+import lungesVid from "../../assets/lunges.mp4";
 import { roundRect } from "./DrawingUtility";
 import { squats } from "../Exercises/Squat";
 import { pushUps } from "../Exercises/PushUps";
 import "./style.css";
-import { Lunges } from "../Exercises/Lunges";
+import { lunges } from "../Exercises/Lunges";
 import { sprawl } from "../Exercises/sprawl";
 import { mountainClimber } from "../Exercises/MountainClimber";
 import { legRaise } from "../Exercises/Legraise";
+
+var exercises = {
+  name: [squats, pushUps, legRaise, lunges],
+  videos: [squatVid, pushupVid, legVid, lungesVid],
+};
 
 const pose = new Pose({
   locateFile: (file) => {
@@ -78,7 +86,7 @@ let counter;
 //   if (data.curr_guide_cnt === 2) clearTimeout(counter);
 // };
 
-const Mediapipe = ({ data, setcount, setguidetext }) => {
+const Mediapipe = ({ data, setcount, setguidetext, curr }) => {
   const videoRef = useRef(null);
   const squatsRef = useRef(null);
   const canvasRef = useRef(null);
@@ -86,12 +94,7 @@ const Mediapipe = ({ data, setcount, setguidetext }) => {
   const changeConnectorColor = (color) => {
     connectorColor = color;
   };
-  const sendFrames = async () => {
-    console.log("frames send");
-    await pose.send({ image: squatsRef.current });
-  };
   let is_live = false;
-  // five_second_timer(data);
   useEffect(() => {
     pose.onResults(onResults);
     const camera = new Camera(videoRef.current, {
@@ -103,9 +106,12 @@ const Mediapipe = ({ data, setcount, setguidetext }) => {
       height: 720,
     });
     camera.start();
-    // clearInterval(startTimer);
-    startTimer = setInterval(100, sendFrames);
   }, []);
+
+  useEffect(() => {
+    setcount(0);
+    pose.onResults(onResults);
+  }, [curr]);
 
   function onResults(results) {
     if (!results.poseLandmarks) {
@@ -160,19 +166,13 @@ const Mediapipe = ({ data, setcount, setguidetext }) => {
     });
     // mountainClimber(results.poseLandmarks, data, changeConnectorColor);
     //sprawl(results.poseLandmarks, data, changeConnectorColor);
-    //lunges(results.poseLandmarks, data, changeConnectorColor);
-    // if (data.curr_exercise === 0) {
-    squats(
+    exercises.name[curr](
       results.poseLandmarks,
       data,
       changeConnectorColor,
       setcount,
       setguidetext
     );
-    // legRaise(results.poseLandmarks, data, changeConnectorColor);
-    // } else {
-    //   pushUps(results.poseLandmarks, data, changeConnectorColor, setguidetext);
-    // }
 
     canvasCtx.restore();
   }
@@ -205,7 +205,7 @@ const Mediapipe = ({ data, setcount, setguidetext }) => {
       <video
         ref={squatsRef}
         style={{ width: 300, height: 300, display: is_live ? "none" : "" }}
-        src={squatVid}
+        src={exercises.videos[curr]}
         controls
       ></video>
     </div>
