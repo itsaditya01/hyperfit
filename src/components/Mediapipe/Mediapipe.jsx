@@ -94,7 +94,7 @@ const Mediapipe = ({ data, setcount, setguidetext, curr }) => {
   const changeConnectorColor = (color) => {
     connectorColor = color;
   };
-  let is_live = false;
+  let is_live = true;
   useEffect(() => {
     pose.onResults(onResults);
     const camera = new Camera(videoRef.current, {
