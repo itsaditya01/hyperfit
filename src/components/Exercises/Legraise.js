@@ -41,7 +41,6 @@ export const legRaise = (
       state = 2;
     }
   }
-  console.log({ partial_state, state, pre_partial_state });
 
   if (previous_state == 1 && state == 0) {
     data.count++;
@@ -51,7 +50,7 @@ export const legRaise = (
     pre_partial_state = 0;
   }
   if (state === 0 && pre_partial_state === 1) {
-    setguidetext("Move your leg up until indicator turn green");
+    setguidetext("Move your legs up until indicator turns green");
     partial_state = 0;
     console.log("Entered");
   }
