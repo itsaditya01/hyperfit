@@ -16,6 +16,7 @@
 :root {
   --dark-mode-bg: black;
   --gradient: linear-gradient(to right, blue, pink);
+  /* --glow-shadow:  */
 }
 
 .cp {
@@ -53,7 +54,6 @@
   align-items: center;
   flex-wrap: wrap;
 }
-
 
 .jcc {
   justify-content: center;

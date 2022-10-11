@@ -15,11 +15,15 @@ import { lunges } from "../Exercises/Lunges";
 import { sprawl } from "../Exercises/sprawl";
 import { mountainClimber } from "../Exercises/MountainClimber";
 import { legRaise } from "../Exercises/Legraise";
+import { useState } from "react";
 
 var exercises = {
   name: [squats, pushUps, legRaise, lunges],
   videos: [squatVid, pushupVid, legVid, lungesVid],
 };
+
+const canvas_h = 650;
+const canvas_w = 1100;
 
 const pose = new Pose({
   locateFile: (file) => {
@@ -105,7 +109,7 @@ const Mediapipe = ({ data, setcount, setguidetext, curr }) => {
       width: 1280,
       height: 720,
     });
-    camera.start();
+    // camera.start();
   }, []);
 
   useEffect(() => {
@@ -159,8 +163,8 @@ const Mediapipe = ({ data, setcount, setguidetext, curr }) => {
         j > 10
       ) {
         canvasCtx.beginPath();
-        canvasCtx.moveTo(point1.x * 1100, point1.y * 650);
-        canvasCtx.lineTo(point2.x * 1100, point2.y * 650);
+        canvasCtx.moveTo(point1.x * canvas_w, point1.y * canvas_h);
+        canvasCtx.lineTo(point2.x * canvas_w, point2.y * canvas_h);
         canvasCtx.stroke();
       }
     });
@@ -191,15 +195,15 @@ const Mediapipe = ({ data, setcount, setguidetext, curr }) => {
       <button
         className="play"
         onClick={() => {
-          squatsRef.current.pause();
+          squatsRef.current.pause();                                                        
         }}
       >
         Pause Video
       </button> */}
       <canvas
         ref={canvasRef}
-        width={"1100px"}
-        height={"650px"}
+        width={canvas_w}
+        height={canvas_h}
         style={{ borderRadius: "0.75rem" }}
       ></canvas>
       <video
