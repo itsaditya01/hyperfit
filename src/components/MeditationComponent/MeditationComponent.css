@@ -1,0 +1,285 @@
+:root {
+    --primary-color: lightsteelblue;
+    --secondary-color: lightpink;
+    --large: 200px;
+    --small: 10px;
+}
+
+.meditation-outer {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    overflow: hidden;
+    background-color: white;
+    color: black;
+    align-content: center;
+}
+
+.meditation-main {
+    height: 300px;
+    width: 100%;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+
+.meditation-inner {
+    background-color: var(--primary-color);
+    width: var(--small);
+    height: var(--small);
+    border-radius: calc(var(--small) / 2);
+    display: flex;
+    animation: breath 8s ease infinite none running
+}
+
+.meditation-outer h1,p {
+    color: #5f5f5f;
+    font-family: "Work Sans", Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+@keyframes breath {
+
+    25%,
+    50% {
+        background-color: var(--secondary-color);
+        width: var(--large);
+        height: var(--large);
+        border-radius: calc(var(--large) / 2);
+    }
+}
+
+.meditation-music-outer {
+    justify-content: flex-end;
+}
+
+.control {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 5px 0 8px 0;
+}
+
+.control .btn {
+    color: #666;
+    padding: 18px;
+    font-size: 18px;
+}
+
+.control .btn:active {
+    color: var(--secondary-color);
+}
+
+.btn.active {
+    color: var(--secondary-color);
+}
+
+.control .btn:hover {
+    cursor: pointer;
+}
+
+.control .btn-toggle-play {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    font-size: 24px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--secondary-color);
+}
+
+.progress {
+    width: 100%;
+    -webkit-appearance: none;
+    height: 6px;
+    background: #d3d3d3;
+    outline: none;
+    cursor: pointer;
+    opacity: 0.7;
+    -webkit-transition: 0.2s;
+    transition: opacity 0.2s;
+    position: relative;
+}
+
+.progress::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 6px;
+    background-color: var(--primary-color);
+    cursor: pointer;
+}
+.progressBar:active::-webkit-slider-thumb {
+    transform: scale(1.2);
+    background: var(--primary-color);
+}
+.progress::before {
+    content: '';
+    height: 6px;
+    width: 12px;
+    background-color: var(--secondary-color);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.meditation-timer .minutes, .meditation-timer .seconds {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.meditation-timer {
+    padding: 10px 5px;
+        background: bisque;
+        width: 49%;
+        margin-right: 5%;
+        border-radius: 15px;
+    
+}
+
+.breathe-tester-outer {
+    width: 75vw;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    background: #f3f0f0a8;
+    margin: 50px;
+}
+
+.music-playlist-outer {
+    width: 90%;
+    margin-top: 50px;
+}
+
+.music-playlist {
+    padding: 20px 10px;
+    background: aliceblue;
+    border-radius: 15px;
+    backdrop-filter: blur(12px);   
+}
+
+.music-playlist-list .active {
+    background-color: rgb(114, 158, 197);
+}
+
+/*  */
+:root {
+    --seek-before-width: 0;
+}
+.progressBar {
+    --bar-bg: #f3f0f0a8;
+    --seek-before-color: lightpink;
+    --knobby: rgb(114, 158, 197);
+    --selectedKnobby: lightpink;
+
+    appearance: none;
+    background: var(--bar-bg);
+    border-radius: 10px;
+    position: relative;
+    width: 100%;
+    height: 11px;
+    outline: none;
+}
+
+/* progress bar - safari */
+.progressBar::-webkit-slider-runnable-track {
+    background: var(--bar-bg);
+    ;
+    border-radius: 10px;
+    position: relative;
+    width: 100%;
+    height: 11px;
+    outline: none;
+}
+
+/* progress bar - firefox */
+.progressBar::-moz-range-track {
+    background: var(--bar-bg);
+    ;
+    border-radius: 10px;
+    position: relative;
+    width: 100%;
+    height: 11px;
+    outline: none;
+}
+
+.progressBar::-moz-focus-outer {
+    border: 0;
+}
+
+/* progress bar - chrome and safari */
+.progressBar::before {
+    content: '';
+    height: 11px;
+    width: var(--seek-before-width);
+    /* width: 100px; */
+    background-color: var(--seek-before-color);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    cursor: pointer;
+}
+
+/* progress bar - firefox */
+.progressBar::-moz-range-progress {
+    background-color: var(--seek-before-color);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    height: 11px;
+}
+
+/* knobby - chrome and safari */
+.progressBar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--knobby);
+    cursor: pointer;
+    position: relative;
+    margin: -2px 0 0 0;
+    z-index: 3;
+    box-sizing: border-box;
+}
+
+/* knobby while dragging - chrome and safari */
+.progressBar:active::-webkit-slider-thumb {
+    transform: scale(1.2);
+    background: var(--selectedKnobby);
+}
+
+/* knobby - firefox */
+.progressBar::-moz-range-thumb {
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    border: transparent;
+    background-color: var(--knobby);
+    cursor: pointer;
+    position: relative;
+    z-index: 3;
+    box-sizing: border-box;
+}
+
+/* knobby while dragging - firefox */
+.progressBar:active::-moz-range-thumb {
+    transform: scale(1.2);
+    background: var(--selectedKnobby);
+}
+
+
+
+
+
