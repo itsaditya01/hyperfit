@@ -90,7 +90,7 @@ let counter;
 //   if (data.curr_guide_cnt === 2) clearTimeout(counter);
 // };
 
-const Mediapipe = ({ data, setcount, setguidetext, curr }) => {
+const Mediapipe = ({ data, setcount, setguidetext, curr, changeExercise }) => {
   const videoRef = useRef(null);
   const squatsRef = useRef(null);
   const canvasRef = useRef(null);
@@ -109,12 +109,12 @@ const Mediapipe = ({ data, setcount, setguidetext, curr }) => {
       width: 1280,
       height: 720,
     });
-    // camera.start();
+    camera.start();
   }, []);
 
   useEffect(() => {
     setcount(0);
-    pose.onResults(onResults);
+    // pose.onResults(onResults);
   }, [curr]);
 
   function onResults(results) {
@@ -175,7 +175,8 @@ const Mediapipe = ({ data, setcount, setguidetext, curr }) => {
       data,
       changeConnectorColor,
       setcount,
-      setguidetext
+      setguidetext,
+      changeExercise
     );
 
     canvasCtx.restore();
