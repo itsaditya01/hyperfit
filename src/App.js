@@ -9,6 +9,7 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import ExerciseComponent from "./components/ExerciseComponent/ExerciseComponent";
 import Signup from "./components/Signup/Signup";
 import ExerciseSummary from "./components/ExerciseSummary/ExerciseSummary";
+import { MeditationComponent } from "./components/MeditationComponent/MeditationComponent";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/exercisesummary" element={<ExerciseSummary />} />
         <Route path="/exercises" element={<ExerciseComponent />} />
+        <Route path="/meditation" element={<MeditationComponent />} />
         <Route
           path="/"
           element={

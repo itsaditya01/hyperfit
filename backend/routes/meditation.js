@@ -2,7 +2,7 @@ const { findOneAndUpdate } = require("../models/User");
 const User = require("../models/User");
 
 exports.Meditation = async (request, response) => {
-  const meditationDuration = request.body.mediataionDuration;
+  const meditationDuration = request.body.meditationDuration;
   const email = request.body.email;
   const date = Date.now();
 
@@ -12,7 +12,7 @@ exports.Meditation = async (request, response) => {
         email: email,
       },
       {
-        mediataion: {
+        meditation: {
           meditationDate: date,
           meditationDuration: meditationDuration,
         },
