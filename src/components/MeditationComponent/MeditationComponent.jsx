@@ -12,6 +12,34 @@ export const MeditationComponent = () => {
   const [isShuffling, setIsShuffling] = useState(true);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
+  const [timerHour, setTimerHour] = useState(0);
+  const [timerMinutes, setTimerMinutes] = useState(0);
+  const [timerSeconds, setTimerSeconds] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      let hour = timerHour;
+      let minutes = timerMinutes;
+      let seconds = timerSeconds;
+      if (seconds === 59) {
+        setTimerSeconds(0);
+        minutes += 1;
+      } else {
+        setTimerSeconds(seconds + 1);
+      }
+
+      if (minutes >= 59) {
+        hour += 1;
+        setTimerMinutes(0);
+      } else {
+        setTimerMinutes(minutes);
+      }
+      setTimerHour(hour);
+    }, 1000);
+    return () => {
+      clearInterval(timer);
+    };
+  }, [timerSeconds]);
 
   useEffect(() => {
     if (isPlaying) {
@@ -20,7 +48,32 @@ export const MeditationComponent = () => {
       audio.current.pause();
     }
     progressBar.current.max = songs[currentSongIndex].duration;
-  });
+  }, [isPlaying, currentSongIndex]);
+
+  useEffect(() => {
+    let timer;
+    if (isPlaying) {
+      timer = setInterval(function () {
+        progressBar.current.value = parseInt(progressBar.current.value) + 1;
+        document.documentElement.style.setProperty(
+          "--seek-before-width",
+          `${
+            (parseInt(progressBar.current.value) /
+              songs[currentSongIndex].duration) *
+            100
+          }%`
+        );
+        setCurrentTime(calculateTime(parseInt(progressBar.current.value) + 1));
+        console.log(isPlaying);
+      }, 1000);
+    } else {
+      clearInterval(timer);
+    }
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [isPlaying, currentTime, currentSongIndex]);
 
   useEffect(() => {
     setNextSongIndex(() => {
@@ -38,6 +91,7 @@ export const MeditationComponent = () => {
     document.documentElement.style.setProperty("--seek-before-width", "0%");
     setDuration(calculateTime(songs[currentSongIndex].duration));
     progressBar.current.max = songs[currentSongIndex].duration;
+    setCurrentTime(calculateTime(progressBar.current.value));
   }, [currentSongIndex, songs.length]);
 
   const calculateTime = (secs) => {
@@ -53,15 +107,11 @@ export const MeditationComponent = () => {
   };
 
   const changePlayerCurrentTime = () => {
-    // progressBar.current.style.setProperty(
-    //   "--seek-before-width",
-    //   `${(progressBar.current.value / duration) * 100}%`
-    // );
     document.documentElement.style.setProperty(
       "--seek-before-width",
       `${(progressBar.current.value / songs[currentSongIndex].duration) * 100}%`
     );
-    setCurrentTime(progressBar.current.value);
+    setCurrentTime(calculateTime(progressBar.current.value));
   };
 
   const SkipSong = (forwards = true) => {
@@ -120,9 +170,14 @@ export const MeditationComponent = () => {
             className="meditation-timer-outer df fc aic"
             style={{ width: "100%", marginTop: 50 }}
           >
-            <div className="meditation-timer df fr jcc aic">
-              <div className="minutes df">3</div>
-              <div className="seconds df">15</div>
+            <div className="counter-outer df jcc aic">
+              <div className="timer-outer df jcc">
+                <span>
+                  {timerHour < 10 ? "0" + timerHour : timerHour} :{" "}
+                  {timerMinutes < 10 ? "0" + timerMinutes : timerMinutes} :{" "}
+                  {timerSeconds < 10 ? "0" + timerSeconds : timerSeconds}
+                </span>
+              </div>
             </div>
             <div className="music-playlist-outer df fc aic">
               <div className="playlist-title" style={{ marginBottom: 20 }}>
@@ -230,15 +285,26 @@ export const MeditationComponent = () => {
           step="0.1"
           min="0"
           onChange={changeRange}
-        /> */}
-        <input
-          type="range"
-          className="progressBar"
-          defaultValue="0"
-          ref={progressBar}
-          style={{ margin: "10px 10%", width: "80%" }}
-          onChange={changeRange}
-        />
+            /> */}
+        <div
+          className="progressBar-wrapper df aic jcc"
+          style={{ width: "80%", margin: "10px 10%" }}
+        >
+          <div className="current-time" style={{ width: 50 }}>
+            {currentTime}
+          </div>
+          <input
+            type="range"
+            className="progressBar"
+            defaultValue="0"
+            ref={progressBar}
+            style={{}}
+            onChange={changeRange}
+          />
+          <div className="duration-time" style={{ width: 50 }}>
+            {duration}
+          </div>
+        </div>
         <audio id="audio" src={songs[currentSongIndex].src} ref={audio}></audio>
       </div>
     </div>
