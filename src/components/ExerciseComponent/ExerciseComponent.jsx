@@ -150,7 +150,6 @@ const ExerciseComponent = () => {
     setCalories(count * perCalorie[curr]);
   }, [guideText, count]);
 
-  const [activeTab, setActiveTab] = useState("squat");
   const carousel = useRef();
   const [width, setWidth] = useState(0);
 
@@ -175,9 +174,6 @@ const ExerciseComponent = () => {
           />
         </div>
         <div className="info-outer df">
-          <div className="curr-exercise" style={{ color: "black" }}>
-            Current Exercise {name[curr]}
-          </div>
           <div className="counter-outer df jcc aic">
             <div className="timer-outer df jcc">
               <span>
