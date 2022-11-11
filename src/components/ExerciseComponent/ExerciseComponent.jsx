@@ -5,6 +5,8 @@ import "react-circular-progressbar/dist/styles.css";
 import { useEffect } from "react";
 import Fire from "../../assets/fire.svg";
 import { AnimatePresence, motion } from "framer-motion";
+import squatImg from "../../assets/squats-illustration.jpg";
+import { useRef } from "react";
 
 var data = {
   count: 0,
@@ -19,6 +21,25 @@ var data = {
   curr_guide_text: "",
   partial_count: 0,
 };
+
+const completed = [
+  {
+    name: "Squats",
+    sets: 1,
+    reps: 0,
+    time: "1 min 20s",
+    idealTime: "1 min",
+    exe_img: squatImg,
+  },
+  {
+    name: "Squats",
+    sets: 1,
+    reps: 0,
+    time: "1 min 20s",
+    idealTime: "1 min",
+    exe_img: squatImg,
+  },
+];
 
 const first = {
   x: 100,
@@ -57,14 +78,43 @@ const PopUp = ({ text }) => {
   );
 };
 
+const ExerciseInfo = ({ name, time, idealTime, exe_img, sets, reps }) => {
+  return (
+    <div className="info-main df aic jcsb">
+      <div className="exe-img">
+        <img src={exe_img} />
+      </div>
+      <div className="exerciseInfo df fc">
+        <div className="exe-name">{name}</div>
+        <div className="info-row-1">
+          <div className="sets"> Sets: {sets}</div>
+          <br />
+          <div className="reps">Reps: {reps}</div>
+          <br />
+        </div>
+        <div className="info-row-2">
+          <div className="time">
+            Timer taken: <br /> {time}
+          </div>
+          <br />
+          <div className="idealTime">
+            IDeal time: <br />
+            {idealTime}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const ExerciseComponent = () => {
   const [count, setCount] = useState(0);
   const [guideText, setGuideText] = useState("");
   const [calories, setCalories] = useState(0);
-  const [curr, setCurr] = useState(2);
+  const [curr, setCurr] = useState(0);
   const [timerHour, setTimerHour] = useState(0);
   const [timerMinutes, setTimerMinutes] = useState(0);
-  const [timerSeconds, setTimerSeconds] = useState(55);
+  const [timerSeconds, setTimerSeconds] = useState(0);
 
   const setcount = (x) => {
     setCount(x);
@@ -97,10 +147,20 @@ const ExerciseComponent = () => {
     setGuideText(message);
   };
   useEffect(() => {
-    setCalories(count * 0.32);
+    setCalories(count * perCalorie[curr]);
   }, [guideText, count]);
 
-  const [activeTab, setActiveTab] = useState("squat");
+  const carousel = useRef();
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
+  }, []);
+
+  const changeExercise = () => {
+    setCurr((num) => num + 1);
+  };
+
   return (
     <div className="ec-main">
       <div className="ec-outer df">
@@ -108,6 +168,7 @@ const ExerciseComponent = () => {
           <Mediapipe
             data={data}
             setcount={setcount}
+            changeExercise={changeExercise}
             setguidetext={setguidetext}
             curr={curr}
           />
@@ -144,9 +205,25 @@ const ExerciseComponent = () => {
               </div>
             </div>
           </div>
-          <div className="row-3">
-            <img src="" alt="" />
-          </div>
+          <motion.div className="outer-carousel" ref={carousel}>
+            <motion.div
+              drag="x"
+              dragConstraints={{ right: 0, left: -(width + 15) }}
+              className="row-3 df"
+            >
+              {completed.map((val, key) => (
+                <ExerciseInfo
+                  name={val.name}
+                  // key={key}
+                  idealTime={val.idealTime}
+                  time={val.time}
+                  exe_img={val.exe_img}
+                  sets={val.sets}
+                  reps={val.reps}
+                />
+              ))}
+            </motion.div>
+          </motion.div>
           <AnimatePresence>
             {guideText && <PopUp text={guideText} />}
           </AnimatePresence>

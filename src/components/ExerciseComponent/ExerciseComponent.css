@@ -42,7 +42,7 @@
   align-items: center;
   justify-content: center;
   background-color: #fdd719;
-  box-shadow: 0px 35px 55px -20px #ffd500;
+  box-shadow: 0px 15px 45px -20px #ffd500;
   border-radius: 1.5rem;
   color: black;
   padding: 10px;
@@ -52,7 +52,7 @@
 
 .calory-outer {
   background-color: #06e554;
-  box-shadow: 0px 35px 65px -16px #1ed760;
+  box-shadow: 0px 15px 45px -16px #1ed760;
   color: black;
   border-radius: 1.5rem;
   height: 110px;
@@ -123,4 +123,59 @@
     transform: translateY(0px);
     opacity: 1;
   }
+}
+
+.row-3 {
+  width: 300px;
+}
+
+.outer-carousel {
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.exe-img {
+  object-fit: cover;
+  width: 150px;
+  height: 300px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+}
+
+.exe-img img {
+  width: auto;
+  height: 100%;
+  object-position: center;
+  pointer-events: none;
+}
+
+.exerciseInfo {
+  height: 300px;
+  width: 130px;
+  border-radius: 30px;
+  padding: 0px 10px;
+}
+
+.exe-name {
+  align-self: center;
+  font-size: 32px;
+  color: black;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.info-row-1,
+.info-row-2 {
+  background-color: white;
+  color: black;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 30px;
+}
+
+.info-main {
+  margin-right: 15px;
 }

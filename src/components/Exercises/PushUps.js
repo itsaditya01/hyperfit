@@ -12,6 +12,7 @@ export const pushUps = (
   setcount,
   setguidetext
 ) => {
+  console.log("PushUps");
   const angle_lk = getAngleZ(poses[23], poses[25], poses[27]);
   const angle_lh = getAngle(poses[11], poses[23], poses[25]);
   const angle_le = getAngle(poses[11], poses[13], poses[15]);
