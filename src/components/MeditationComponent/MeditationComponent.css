@@ -279,7 +279,32 @@
     background: var(--selectedKnobby);
 }
 
+.end-session button{
+    background-color: #b7fbb7;
+    box-shadow: 0px 15px 40px -16px #b7fbb7;
+    border: none;
+    border-radius: 10px;
+    padding: 5px 15px;
+    font-size: 22px;
+}
 
+.end-session {
+    opacity: 0.1;
+}
 
+.end-session:hover {
+    animation: hover 0.5s ease-in forwards;
+}
 
+@keyframes hover {
+    0% {
+        opacity: 0.1;
+    }    
+    50% {
+        opacity: 0.4;
+    }
+    100% {
+        opacity: 1;
+    }
+}
 
