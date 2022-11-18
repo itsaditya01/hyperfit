@@ -1,9 +1,35 @@
 import React, { useState, useEffect, useRef } from "react";
-import photo from "../../assets/squat.jpeg";
+import meditationVideo from "../../assets/meditation.mp4";
 import "./MeditationComponent.css";
+import { AnimatePresence, motion } from "framer-motion";
+
 import { songs } from "./songs";
 
+const PopUp = ({ text, pos }) => {
+  return (
+    <motion.div
+      exit={{
+        y: 100,
+        opacity: 0,
+        transition: {
+          duration: 0.4,
+          ease: "easeInOut",
+        },
+      }}
+      className="pop-up-meditation"
+      style={{
+        position: "absolute",
+        right: pos ? "20%" : "",
+        left: pos ? "" : "10%",
+      }}
+    >
+      <div className="pop-up-meditation-text">{text}</div>
+    </motion.div>
+  );
+};
+
 export const MeditationComponent = () => {
+  const [textIndex, setTextIndex] = useState(0);
   const audio = useRef(null);
   const progressBar = useRef(null);
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
@@ -40,6 +66,20 @@ export const MeditationComponent = () => {
       clearInterval(timer);
     };
   }, [timerSeconds]);
+
+  useEffect(() => {
+    const textTimer = setTimeout(() => {
+      if (textIndex == 9) {
+        setTextIndex(0);
+      } else {
+        setTextIndex(textIndex + 1);
+      }
+    }, 5000);
+
+    return () => {
+      clearTimeout(textTimer);
+    };
+  }, [textIndex]);
 
   useEffect(() => {
     if (isPlaying) {
@@ -141,141 +181,170 @@ export const MeditationComponent = () => {
     setDuration(songs[currentSongIndex].duration);
     progressBar.current.max = songs[currentSongIndex].duration;
   };
+  const guideText = [
+    "Meditation is linked with feeling less stressed as well as actually lowering the stress hormone cortisol.",
+    "In studies students who were trained in mindfulness meditation achieved better grades.",
+    "Some even claim that by meditating daily you can reverse the aging process.",
+    "We experience less anxiety as meditation loosens connections: to particular neural pathways.",
+    "Meditation is linked to more creativity and new ideas.",
+    "Rapid memory ecall improves with daily meditation.",
+    "Meditation linked with decreased cigarette, alcohol, and drug abuse.",
+    "Meditation helps the elderly feel less lonely and reduce genes linked to inflammation.",
+    "Meditation helps us to process emotions even when we're not actively meditating.",
+    "Meditation can result in brain changes that protect against mental health conditions.",
+  ];
 
   return (
-    <div className="meditation-outer fc">
+    <>
       <div
-        className="meditation-upper df fr"
-        style={{ width: "100vw", height: "84vh" }}
+        style={{
+          position: "fixed",
+          top: 2,
+          left: "calc(50vw - 80px)",
+        }}
       >
-        <div
-          className="breathe-tester-outer"
-          style={{
-            width: "75vw",
-            margin: "50px 50px",
-          }}
-        >
-          <h1>focused breathing</h1>
-          <div className="meditation-main">
-            <div className="meditation-inner"></div>
-          </div>
-          <p>
-            breath in through the nose as the circle expands <br />
-            hold, and release through the mouth as it contracts. <br /> repeat
-            as needed.
-          </p>
-        </div>
-        <div className="mediation-right df" style={{ width: "25vw" }}>
-          <div
-            className="meditation-timer-outer df fc aic"
-            style={{ width: "100%", marginTop: 50 }}
-          >
-            <div className="counter-outer df jcc aic">
-              <div className="timer-outer df jcc">
-                <span>
-                  {timerHour < 10 ? "0" + timerHour : timerHour} :{" "}
-                  {timerMinutes < 10 ? "0" + timerMinutes : timerMinutes} :{" "}
-                  {timerSeconds < 10 ? "0" + timerSeconds : timerSeconds}
-                </span>
-              </div>
-            </div>
-            <div className="music-playlist-outer df fc aic">
-              <div className="playlist-title" style={{ marginBottom: 20 }}>
-                <h3>Playlist</h3>
-              </div>
-              <div
-                className="music-playlist-list df fc"
-                style={{ width: "90%" }}
-              >
-                {songs.map((song, index) => {
-                  return (
-                    <div
-                      className={`music-playlist df ${
-                        index === currentSongIndex ? "active" : ""
-                      }`}
-                      style={{ marginBottom: 10 }}
-                    >
-                      <div
-                        className="music-photo"
-                        style={{
-                          width: "80px",
-                          height: "80px",
-                          position: "relative",
-                          overflow: "hidden",
-                          borderRadius: "50%",
-                        }}
-                      >
-                        <img
-                          src={song.img}
-                          alt=""
-                          style={{
-                            width: "100%",
-                            position: "absolute",
-                            objectFit: "cover",
-                          }}
-                        />
-                      </div>
-                      <div
-                        className="music-desc df fc jcc"
-                        style={{ marginLeft: 20 }}
-                      >
-                        <div className="music-name" style={{ fontSize: 18 }}>
-                          {song.title}
-                        </div>
-                        <div className="music-artist" style={{ fontSize: 12 }}>
-                          {song.desc}
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
+        <div className="end-session">
+          <button>End Session</button>
         </div>
       </div>
-      <div className="meditation-music-outer df fc" style={{}}>
-        <div className="control df jcc aic">
+      <div className="meditation-outer fc">
+        <div
+          className="meditation-upper df fr"
+          style={{ width: "100vw", height: "84vh" }}
+        >
           <div
-            className="btn btn-repeat"
-            onClick={() => setIsShuffling(!isShuffling)}
+            className="breathe-tester-outer"
+            style={{
+              width: "75vw",
+              position: "relative",
+              margin: "50px 50px",
+            }}
           >
-            <i
-              className="fas fa-redo"
-              style={{ color: !isShuffling ? "lightpink" : "#666" }}
-            ></i>
+            <AnimatePresence>
+              <PopUp
+                text={guideText[textIndex]}
+                pos={textIndex % 2 == 0 ? false : true}
+              />
+            </AnimatePresence>
+            <video
+              src={meditationVideo}
+              style={{ position: "absolute", width: "100%", borderRadius: 10 }}
+            ></video>
           </div>
-          <div className="btn btn-prev" onClick={() => SkipSong(false)}>
-            <i className="fas fa-step-backward"></i>
-          </div>
-          <div className="btn btn-toggle-play">
-            {isPlaying ? (
-              <i
-                className="fas fa-pause icon-pause"
-                onClick={() => setIsPlaying(!isPlaying)}
-              ></i>
-            ) : (
-              <i
-                className="fas fa-play icon-play"
-                onClick={() => setIsPlaying(!isPlaying)}
-              ></i>
-            )}
-          </div>
-          <div className="btn btn-new" onClick={() => SkipSong()}>
-            <i className="fas fa-step-forward"></i>
-          </div>
-          <div
-            className="btn btn-random"
-            onClick={() => setIsShuffling(!isShuffling)}
-          >
-            <i
-              className="fas fa-random"
-              style={{ color: isShuffling ? "lightpink" : "#666" }}
-            ></i>
+          <div className="mediation-right df" style={{ width: "25vw" }}>
+            <div
+              className="meditation-timer-outer df fc aic"
+              style={{ width: "100%", marginTop: 50 }}
+            >
+              <div className="counter-outer df jcc aic">
+                <div className="timer-outer df jcc">
+                  <span>
+                    {timerHour < 10 ? "0" + timerHour : timerHour} :{" "}
+                    {timerMinutes < 10 ? "0" + timerMinutes : timerMinutes} :{" "}
+                    {timerSeconds < 10 ? "0" + timerSeconds : timerSeconds}
+                  </span>
+                </div>
+              </div>
+              <div className="music-playlist-outer df fc aic">
+                <div className="playlist-title" style={{ marginBottom: 20 }}>
+                  <h3>Playlist</h3>
+                </div>
+                <div
+                  className="music-playlist-list df fc"
+                  style={{ width: "90%" }}
+                >
+                  {songs.map((song, index) => {
+                    return (
+                      <div
+                        className={`music-playlist df ${
+                          index === currentSongIndex ? "active" : ""
+                        }`}
+                        style={{ marginBottom: 10 }}
+                      >
+                        <div
+                          className="music-photo"
+                          style={{
+                            width: "80px",
+                            height: "80px",
+                            position: "relative",
+                            overflow: "hidden",
+                            borderRadius: "50%",
+                          }}
+                        >
+                          <img
+                            src={song.img}
+                            alt=""
+                            style={{
+                              width: "100%",
+                              position: "absolute",
+                              objectFit: "cover",
+                            }}
+                          />
+                        </div>
+                        <div
+                          className="music-desc df fc jcc"
+                          style={{ marginLeft: 20 }}
+                        >
+                          <div className="music-name" style={{ fontSize: 18 }}>
+                            {song.title}
+                          </div>
+                          <div
+                            className="music-artist"
+                            style={{ fontSize: 12 }}
+                          >
+                            {song.desc}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+        <div className="meditation-music-outer df fc" style={{}}>
+          <div className="control df jcc aic">
+            <div
+              className="btn btn-repeat"
+              onClick={() => setIsShuffling(!isShuffling)}
+            >
+              <i
+                className="fas fa-redo"
+                style={{ color: !isShuffling ? "lightpink" : "#666" }}
+              ></i>
+            </div>
+            <div className="btn btn-prev" onClick={() => SkipSong(false)}>
+              <i className="fas fa-step-backward"></i>
+            </div>
+            <div className="btn btn-toggle-play">
+              {isPlaying ? (
+                <i
+                  className="fas fa-pause icon-pause"
+                  onClick={() => setIsPlaying(!isPlaying)}
+                ></i>
+              ) : (
+                <i
+                  className="fas fa-play icon-play"
+                  onClick={() => setIsPlaying(!isPlaying)}
+                ></i>
+              )}
+            </div>
+            <div className="btn btn-new" onClick={() => SkipSong()}>
+              <i className="fas fa-step-forward"></i>
+            </div>
+            <div
+              className="btn btn-random"
+              onClick={() => setIsShuffling(!isShuffling)}
+            >
+              <i
+                className="fas fa-random"
+                style={{ color: isShuffling ? "lightpink" : "#666" }}
+              ></i>
+            </div>
+          </div>
 
-        {/* <input
+          {/* <input
           id="progress"
           ref={progressBar}
           className="progress"
@@ -286,27 +355,32 @@ export const MeditationComponent = () => {
           min="0"
           onChange={changeRange}
             /> */}
-        <div
-          className="progressBar-wrapper df aic jcc"
-          style={{ width: "80%", margin: "10px 10%" }}
-        >
-          <div className="current-time" style={{ width: 50 }}>
-            {currentTime}
+          <div
+            className="progressBar-wrapper df aic jcc"
+            style={{ width: "80%", margin: "10px 10%" }}
+          >
+            <div className="current-time" style={{ width: 50 }}>
+              {currentTime}
+            </div>
+            <input
+              type="range"
+              className="progressBar"
+              defaultValue="0"
+              ref={progressBar}
+              style={{}}
+              onChange={changeRange}
+            />
+            <div className="duration-time" style={{ width: 50 }}>
+              {duration}
+            </div>
           </div>
-          <input
-            type="range"
-            className="progressBar"
-            defaultValue="0"
-            ref={progressBar}
-            style={{}}
-            onChange={changeRange}
-          />
-          <div className="duration-time" style={{ width: 50 }}>
-            {duration}
-          </div>
+          <audio
+            id="audio"
+            src={songs[currentSongIndex].src}
+            ref={audio}
+          ></audio>
         </div>
-        <audio id="audio" src={songs[currentSongIndex].src} ref={audio}></audio>
       </div>
-    </div>
+    </>
   );
 };

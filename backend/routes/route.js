@@ -11,6 +11,7 @@ const {
 const Mediataion = require("./meditation");
 const { body, validationResult } = require("express-validator");
 const { Meditation } = require("./meditation");
+const { StoreExercise } = require("./exercises");
 
 //Routes from login - Registration
 router.post(
@@ -44,5 +45,8 @@ router.post("/auth/resetpassword/:token", ResetPassword);
 
 //Routes for meditation
 router.post("/meditation", Meditation);
+
+//Routes for exercise
+router.post("/storeexercise", StoreExercise);
 
 module.exports = router;

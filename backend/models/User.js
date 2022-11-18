@@ -22,11 +22,7 @@ const exerInfoSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
-});
-
-const exerSchema = mongoose.Schema({
-  day: Date,
-  data: [exerInfoSchema],
+  date: Date,
 });
 
 const userSchema = mongoose.Schema(
@@ -69,7 +65,7 @@ const userSchema = mongoose.Schema(
       type: Array,
       default: [],
     },
-    exercise: [exerSchema],
+    exercise: [exerInfoSchema],
     meditation: [meditationSchema],
     lastActive: {
       type: Date,
