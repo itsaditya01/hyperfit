@@ -118,12 +118,11 @@ const ExerciseChoices = () => {
         {/* <img src={JustDoIt} />
          */}
         <div className="exercise_info">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sed hic
-          voluptatum cupiditate officiis, nostrum totam provident tempora iusto
-          error adipisci consequuntur numquam, quisquam a, quae animi vitae eum
-          alias! Quos nam, dicta facere eos sapiente illum animi asperiores
-          deserunt accusamus voluptatem, deleniti voluptatibus unde quasi at. In
-          facilis unde modi.
+          A squat is a strength exercise in which the trainee lowers their hips
+          from a standing position and then stands back up. During the descent
+          of a squat, the hip and knee joints flex while the ankle joint
+          dorsiflexes; conversely the hip and knee joints extend and the ankle
+          joint plantarflexes when standing up.
         </div>
       </div>
       <motion.div

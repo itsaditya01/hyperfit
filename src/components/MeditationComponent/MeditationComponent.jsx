@@ -229,6 +229,9 @@ export const MeditationComponent = () => {
             <video
               src={meditationVideo}
               style={{ position: "absolute", width: "100%", borderRadius: 10 }}
+              defaultmuted
+              muted
+              autoPlay
             ></video>
           </div>
           <div className="mediation-right df" style={{ width: "25vw" }}>

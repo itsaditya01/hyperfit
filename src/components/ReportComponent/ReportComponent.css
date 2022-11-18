@@ -56,3 +56,93 @@
   font-size: 2em;
   text-shadow: 0 0 0.5em black;
 }
+.dash-main-report {
+  position: fixed;
+  background-color: #0a0a0a;
+  width: 100%;
+  height: 100%;
+  padding: 30px;
+  display: flex;
+  background-position: center;
+  background-size: cover;
+}
+
+.exercise-container {
+  position: relative;
+  object-fit: center;
+}
+
+.RightBar-report {
+  color: black;
+  height: max-content;
+  background-color: white;
+  border-radius: 30px;
+  padding: 20px;
+  width: 300px;
+  margin-top: 81px;
+}
+
+.comp-exercise-info-all {
+  color: black;
+}
+
+.dash-info-report {
+  display: flex;
+  color: white;
+  width: 66%;
+  padding: 30px;
+  overflow-y: scroll;
+}
+.dash-grid-report {
+  background: #faf8f4;
+  display: flex;
+  min-height: 40%;
+  align-items: center;
+  padding: 20px;
+  width: 100%;
+  justify-content: space-around;
+  border-radius: 30px;
+}
+.info-progressbars {
+  width: 100%;
+  margin-top: 20px;
+}
+.info-progressbar {
+  background-color: #ffeee2;
+  border-radius: 30px;
+  color: black;
+  padding: 15px 32px;
+}
+
+.first-bar {
+  background-color: rgb(251, 217, 223);
+}
+
+.second-bar {
+  background-color: rgb(188, 247, 188);
+}
+
+.third-bar {
+  background-color: rgb(192, 235, 252);
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(70, 69, 69);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #b30000;
+}

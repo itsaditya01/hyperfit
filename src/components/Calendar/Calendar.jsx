@@ -76,12 +76,10 @@ const CalendarDatesComponent = ({ getDates, day }) => (
           }}
         >
           <div
-            // className={value === new Date().getDate() && "dates"}
-            className="dates"
+            className={value === new Date().getDate() && "dates"}
             style={{
               borderRadius: "50%",
               width: 30,
-              color: "black",
             }}
           >
             <div style={{ textAlign: "center" }}>{value}</div>
