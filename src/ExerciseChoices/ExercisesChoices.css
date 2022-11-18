@@ -1,0 +1,83 @@
+.exer_drop {
+  cursor: none;
+}
+
+.exer_drop {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: row;
+  height: 100vh;
+  width: 100vw;
+  background-color: black;
+}
+
+.wrapper {
+  display: flex;
+  /* align-items: center; */
+  flex-direction: row;
+  width: max-content;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.exer_drop_title {
+  font-size: 5rem;
+  color: white;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.arrow {
+  visibility: hidden;
+  position: absolute;
+  top: -100px;
+  right: -300px;
+  height: 250px;
+  width: auto;
+}
+
+.arrow_new {
+  visibility: hidden;
+  position: absolute;
+  top: -200px;
+  right: -300px;
+  height: 250px;
+  width: auto;
+}
+
+.exer_drop_title:hover img {
+  visibility: visible;
+}
+
+.cursor {
+  background-color: black;
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrow {
+  transform: rotate(40deg);
+}
+
+.arrow_new {
+  transform: rotate(20deg);
+}
+
+.exercise_info {
+  color: white;
+  width: 250px;
+  border: 1px solid rgb(255, 255, 255, 0.3);
+  padding: 20px;
+  border-radius: 25px;
+}

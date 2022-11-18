@@ -18,7 +18,7 @@ import { legRaise } from "../Exercises/Legraise";
 import { useState } from "react";
 
 var exercises = {
-  name: [squats, pushUps, legRaise, lunges],
+  name: [squats, lunges, pushUps, legRaise],
   videos: [squatVid, pushupVid, legVid, lungesVid],
 };
 

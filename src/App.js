@@ -10,6 +10,7 @@ import ExerciseComponent from "./components/ExerciseComponent/ExerciseComponent"
 import Signup from "./components/Signup/Signup";
 import ExerciseSummary from "./components/ExerciseSummary/ExerciseSummary";
 import { MeditationComponent } from "./components/MeditationComponent/MeditationComponent";
+import ExerciseChoices from "./ExerciseChoices/ExercisesChoices";
 
 function App() {
   return (
@@ -29,11 +30,10 @@ function App() {
           }
         />
         <Route path="/dashboard" element={<Dashboard />} />
-        {/*
-         */}
         <Route path="/forgotpass" element={<ForgotPassword />} />
         <Route path="/resetpass" element={<ResetPassword />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/temp" element={<ExerciseChoices />} />
       </Routes>
     </BrowserRouter>
   );

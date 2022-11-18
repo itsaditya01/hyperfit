@@ -5,7 +5,8 @@
   height: 100%;
   padding: 30px;
   display: flex;
-  flex-direction: column;
+  background-position: center;
+  background-size: cover;
 }
 
 .greet-user {
@@ -17,23 +18,12 @@
 
 .dash-grid {
   background: black;
-  flex: 93%;
   display: flex;
   color: white;
-  width: 100%;
+  width: 70%;
   border-radius: 0.75rem;
   padding: 20px;
-}
-
-.sidebar {
-  flex: 3%;
-}
-
-.dash-grid-contain {
-  margin-top: 10px;
-  flex: 90%;
-  display: flex;
-  width: 100%;
+  border-radius: 30px;
 }
 
 .Exercise {
@@ -48,8 +38,22 @@
   justify-content: space-evenly;
 }
 
+.exercise-container {
+  position: relative;
+  object-fit: center;
+}
+
 .startg {
   background: transparent;
   color: black;
   font-weight: 600;
+}
+
+.RightBar {
+  color: white;
+  height: max-content;
+  background-color: black;
+  border-radius: 30px;
+  padding: 20px;
+  width: 300px;
 }

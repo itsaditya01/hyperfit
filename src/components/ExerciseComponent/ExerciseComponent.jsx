@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./ExerciseComponent.css";
 import Mediapipe from "../Mediapipe/Mediapipe";
 import "react-circular-progressbar/dist/styles.css";
@@ -7,7 +7,8 @@ import Fire from "../../assets/fire.svg";
 import { AnimatePresence, motion } from "framer-motion";
 import squatImg from "../../assets/squats-illustration.jpg";
 import { useRef } from "react";
-
+import { UserContext } from "../Context/UserState";
+import { useNavigate } from "react-router-dom";
 var data = {
   count: 0,
   exercises: ["Squats", "PushUps"],
@@ -58,7 +59,7 @@ const third = {
 };
 
 var perCalorie = [0.32, 0.36, 0.35, 0.6];
-var name = ["squats", "pushups", "leg-raise", "lunges"];
+var name = ["squats", "lunges", "pushUps", "leg-raise"];
 
 const PopUp = ({ text }) => {
   return (
@@ -108,6 +109,8 @@ const ExerciseInfo = ({ name, time, idealTime, exe_img, sets, reps }) => {
 };
 
 const ExerciseComponent = () => {
+  const context = useContext(UserContext);
+  const { exerciseIndex } = context;
   const [count, setCount] = useState(0);
   const [guideText, setGuideText] = useState("");
   const [calories, setCalories] = useState(0);
@@ -115,6 +118,7 @@ const ExerciseComponent = () => {
   const [timerHour, setTimerHour] = useState(0);
   const [timerMinutes, setTimerMinutes] = useState(0);
   const [timerSeconds, setTimerSeconds] = useState(0);
+  const navigate = useNavigate(null);
 
   const setcount = (x) => {
     setCount(x);
@@ -170,7 +174,7 @@ const ExerciseComponent = () => {
             setcount={setcount}
             changeExercise={changeExercise}
             setguidetext={setguidetext}
-            curr={curr}
+            curr={exerciseIndex}
           />
         </div>
         <div className="info-outer df">
@@ -188,7 +192,7 @@ const ExerciseComponent = () => {
               <div className="reps-outer df aic ">
                 <div className="reps-count">{count}</div>
                 <div className="reps-exercise" style={{ fontSize: 12 }}>
-                  {name[curr]}
+                  {name[exerciseIndex]}
                 </div>
               </div>
             </div>
@@ -227,6 +231,12 @@ const ExerciseComponent = () => {
           <AnimatePresence>
             {guideText && <PopUp text={guideText} />}
           </AnimatePresence>
+          <button
+            style={{ padding: 20, borderRadius: "1rem" }}
+            onClick={() => navigate("/temp")}
+          >
+            End session
+          </button>
         </div>
       </div>
     </div>
