@@ -1,0 +1,30 @@
+{
+	"data": [{
+		"weight": "50",
+		"date": "7"
+	}, {
+		"weight": "60",
+		"date": "15"
+	},{
+		"weight": "55",
+		"date": "16"
+	},{
+		"weight": "60",
+		"date": "18"
+	},{
+		"weight": "52",
+		"date": "19"
+	},{
+		"weight": "60",
+		"date": "21"
+	},{
+		"weight": "53",
+		"date": "25"
+	}, {
+		"weight": "51",
+		"date": "27"
+	}, {
+		"weight": "57.9",
+		"date": "31"
+	} ]
+}

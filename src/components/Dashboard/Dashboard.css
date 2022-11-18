@@ -24,23 +24,38 @@
   border-radius: 0.75rem;
   padding: 20px;
   border-radius: 30px;
+  flex-direction: column;
 }
 
-.Exercise {
-  background: linear-gradient(to right, blue, pink);
+.Exercise,
+.meditation {
   padding: 20px;
   width: 300px;
-  height: 200px;
+  height: 165px;
   border-radius: 0.75rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
+  border-radius: 30px;
+}
+
+.Exercise {
+  background: rgb(217, 249, 217);
+  color: black;
+}
+
+.meditation {
+  background: rgb(246, 208, 214);
+  color: black;
 }
 
 .exercise-container {
   position: relative;
   object-fit: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .startg {
@@ -52,8 +67,37 @@
 .RightBar {
   color: white;
   height: max-content;
-  background-color: black;
+  background-color: rgb(179, 224, 242);
   border-radius: 30px;
   padding: 20px;
   width: 300px;
+}
+
+.row-1 {
+  width: 100%;
+  height: max-content;
+}
+
+.chart {
+  background: #0a0a0a;
+  border-radius: 30px;
+  padding: 30px 50px;
+  min-width: 550px;
+}
+.water-con {
+  background: white;
+  border-radius: 30px;
+  padding-bottom: 20px;
+}
+
+.glass-btn {
+  padding: 5px;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  border: none;
+  background-color: #0a0a0a;
+  font-size: 25px;
+  color: white;
+  cursor: pointer;
 }

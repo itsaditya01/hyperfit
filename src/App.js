@@ -11,6 +11,7 @@ import Signup from "./components/Signup/Signup";
 import { MeditationComponent } from "./components/MeditationComponent/MeditationComponent";
 import ExerciseChoices from "./ExerciseChoices/ExercisesChoices";
 import ReportComponent from "./components/ReportComponent/ReportComponent";
+import ChartComponent from "./components/ChartComponent/ChartComponent";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path="/resetpass" element={<ResetPassword />} />
         <Route path="/login" element={<Login />} />
         <Route path="/temp" element={<ExerciseChoices />} />
+        <Route path="/chart" element={<ChartComponent />} />
       </Routes>
     </BrowserRouter>
   );
