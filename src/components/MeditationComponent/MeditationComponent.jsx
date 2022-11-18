@@ -1,9 +1,35 @@
 import React, { useState, useEffect, useRef } from "react";
-import photo from "../../assets/squat.jpeg";
+import meditationVideo from "../../assets/meditation.mp4";
 import "./MeditationComponent.css";
+import { AnimatePresence, motion } from "framer-motion";
+
 import { songs } from "./songs";
 
+const PopUp = ({ text, pos }) => {
+  return (
+    <motion.div
+      exit={{
+        y: 100,
+        opacity: 0,
+        transition: {
+          duration: 0.4,
+          ease: "easeInOut",
+        },
+      }}
+      className="pop-up-meditation"
+      style={{
+        position: "absolute",
+        right: pos ? "20%" : "",
+        left: pos ? "" : "10%",
+      }}
+    >
+      <div className="pop-up-meditation-text">{text}</div>
+    </motion.div>
+  );
+};
+
 export const MeditationComponent = () => {
+  const [textIndex, setTextIndex] = useState(0);
   const audio = useRef(null);
   const progressBar = useRef(null);
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
@@ -40,6 +66,20 @@ export const MeditationComponent = () => {
       clearInterval(timer);
     };
   }, [timerSeconds]);
+
+  useEffect(() => {
+    const textTimer = setTimeout(() => {
+      if (textIndex == 9) {
+        setTextIndex(0);
+      } else {
+        setTextIndex(textIndex + 1);
+      }
+    }, 5000);
+
+    return () => {
+      clearTimeout(textTimer);
+    };
+  }, [textIndex]);
 
   useEffect(() => {
     if (isPlaying) {
@@ -141,6 +181,18 @@ export const MeditationComponent = () => {
     setDuration(songs[currentSongIndex].duration);
     progressBar.current.max = songs[currentSongIndex].duration;
   };
+  const guideText = [
+    "Meditation is linked with feeling less stressed as well as actually lowering the stress hormone cortisol.",
+    "In studies students who were trained in mindfulness meditation achieved better grades.",
+    "Some even claim that by meditating daily you can reverse the aging process.",
+    "We experience less anxiety as meditation loosens connections: to particular neural pathways.",
+    "Meditation is linked to more creativity and new ideas.",
+    "Rapid memory ecall improves with daily meditation.",
+    "Meditation linked with decreased cigarette, alcohol, and drug abuse.",
+    "Meditation helps the elderly feel less lonely and reduce genes linked to inflammation.",
+    "Meditation helps us to process emotions even when we're not actively meditating.",
+    "Meditation can result in brain changes that protect against mental health conditions.",
+  ];
 
   return (
     <>
@@ -164,18 +216,20 @@ export const MeditationComponent = () => {
             className="breathe-tester-outer"
             style={{
               width: "75vw",
+              position: "relative",
               margin: "50px 50px",
             }}
           >
-            <h1>focused breathing</h1>
-            <div className="meditation-main">
-              <div className="meditation-inner"></div>
-            </div>
-            <p>
-              breath in through the nose as the circle expands <br />
-              hold, and release through the mouth as it contracts. <br /> repeat
-              as needed.
-            </p>
+            <AnimatePresence>
+              <PopUp
+                text={guideText[textIndex]}
+                pos={textIndex % 2 == 0 ? false : true}
+              />
+            </AnimatePresence>
+            <video
+              src={meditationVideo}
+              style={{ position: "absolute", width: "100%", borderRadius: 10 }}
+            ></video>
           </div>
           <div className="mediation-right df" style={{ width: "25vw" }}>
             <div

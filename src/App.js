@@ -8,15 +8,15 @@ import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import Dashboard from "./components/Dashboard/Dashboard";
 import ExerciseComponent from "./components/ExerciseComponent/ExerciseComponent";
 import Signup from "./components/Signup/Signup";
-import ExerciseSummary from "./components/ExerciseSummary/ExerciseSummary";
 import { MeditationComponent } from "./components/MeditationComponent/MeditationComponent";
+import ReportComponent from "./components/ReportComponent/ReportComponent";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/signup" element={<Signup />} />
-        <Route path="/exercisesummary" element={<ExerciseSummary />} />
+        <Route path="/report" element={<ReportComponent />} />
         <Route path="/exercises" element={<ExerciseComponent />} />
         <Route path="/meditation" element={<MeditationComponent />} />
         <Route
