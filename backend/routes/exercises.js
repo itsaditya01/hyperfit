@@ -21,6 +21,7 @@ exports.StoreExercise = async (request, response) => {
             exerciseDuration,
             repsPerformed,
             caloriesBurned,
+            date,
           },
         },
       }
@@ -32,11 +33,15 @@ exports.StoreExercise = async (request, response) => {
         severity: "success",
       });
     } else {
-      response.status(500).json({ error: "Internal Server Error" });
+      response
+        .status(500)
+        .json({ success: false, error: "Internal Server Error" });
     }
   } catch (error) {
     console.log(error.message);
-    response.status(500).json({ error: "Internal Server Error" });
+    response
+      .status(500)
+      .json({ success: false, error: "Internal Server Error" });
   }
 };
 
@@ -45,7 +50,7 @@ exports.RetrieveExercise = async (request, response) => {
   const email = request.body.email;
 
   try {
-    const user = await user.findOne({ email });
+    const user = await User.findOne({ email });
     response.json(user.exercise);
   } catch (error) {
     console.log(error.message);

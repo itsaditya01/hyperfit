@@ -1,6 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import meditationVideo from "../../assets/meditation.mp4";
 import "./MeditationComponent.css";
+import { UserContext } from "../Context/UserState";
+import { useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 
 import { songs } from "./songs";
@@ -29,6 +31,8 @@ const PopUp = ({ text, pos }) => {
 };
 
 export const MeditationComponent = () => {
+  const context = useContext(UserContext);
+  const { user } = context;
   const [textIndex, setTextIndex] = useState(0);
   const audio = useRef(null);
   const progressBar = useRef(null);
@@ -41,7 +45,29 @@ export const MeditationComponent = () => {
   const [timerHour, setTimerHour] = useState(0);
   const [timerMinutes, setTimerMinutes] = useState(0);
   const [timerSeconds, setTimerSeconds] = useState(0);
+  const nav = useNavigate(null);
 
+  const StoreMeditation = async () => {
+    //API call
+    let host = "http://localhost:5000";
+
+    const response = await fetch(`${host}/api/storemeditation`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: user.email,
+        meditationDuration: timerHour * 60 + timerMinutes,
+        meditationDate: Date.now(),
+      }),
+    });
+    const data = await response.json();
+    if (data.success) {
+      nav("/dashboard");
+    } else {
+    }
+  };
   useEffect(() => {
     const timer = setInterval(() => {
       let hour = timerHour;
@@ -196,18 +222,7 @@ export const MeditationComponent = () => {
 
   return (
     <>
-      <div
-        style={{
-          position: "fixed",
-          top: 2,
-          left: "calc(50vw - 80px)",
-        }}
-      >
-        <div className="end-session">
-          <button>End Session</button>
-        </div>
-      </div>
-      <div className="meditation-outer fc">
+      <div className="meditation-outer fc" style={{ background: "black" }}>
         <div
           className="meditation-upper df fr"
           style={{ width: "100vw", height: "84vh" }}
@@ -232,6 +247,7 @@ export const MeditationComponent = () => {
               defaultmuted
               muted
               autoPlay
+              loop
             ></video>
           </div>
           <div className="mediation-right df" style={{ width: "25vw" }}>
@@ -239,9 +255,9 @@ export const MeditationComponent = () => {
               className="meditation-timer-outer df fc aic"
               style={{ width: "100%", marginTop: 50 }}
             >
-              <div className="counter-outer df jcc aic">
-                <div className="timer-outer df jcc">
-                  <span>
+              <div className="counter-outer-meditation df jcc aic">
+                <div className="timer-outer df jcc color-black">
+                  <span className="color-black">
                     {timerHour < 10 ? "0" + timerHour : timerHour} :{" "}
                     {timerMinutes < 10 ? "0" + timerMinutes : timerMinutes} :{" "}
                     {timerSeconds < 10 ? "0" + timerSeconds : timerSeconds}
@@ -250,7 +266,7 @@ export const MeditationComponent = () => {
               </div>
               <div className="music-playlist-outer df fc aic">
                 <div className="playlist-title" style={{ marginBottom: 20 }}>
-                  <h3>Playlist</h3>
+                  <h3 style={{ color: "white" }}>Playlist</h3>
                 </div>
                 <div
                   className="music-playlist-list df fc"
@@ -313,36 +329,36 @@ export const MeditationComponent = () => {
               onClick={() => setIsShuffling(!isShuffling)}
             >
               <i
-                className="fas fa-redo"
-                style={{ color: !isShuffling ? "lightpink" : "#666" }}
+                className="fas fa-redo color-white"
+                style={{ color: !isShuffling ? "white" : "#666" }}
               ></i>
             </div>
             <div className="btn btn-prev" onClick={() => SkipSong(false)}>
-              <i className="fas fa-step-backward"></i>
+              <i className="fas fa-step-backward color-white"></i>
             </div>
             <div className="btn btn-toggle-play">
               {isPlaying ? (
                 <i
-                  className="fas fa-pause icon-pause"
+                  className="fas fa-pause icon-pause color-black"
                   onClick={() => setIsPlaying(!isPlaying)}
                 ></i>
               ) : (
                 <i
-                  className="fas fa-play icon-play"
+                  className="fas fa-play icon-play color-black"
                   onClick={() => setIsPlaying(!isPlaying)}
                 ></i>
               )}
             </div>
             <div className="btn btn-new" onClick={() => SkipSong()}>
-              <i className="fas fa-step-forward"></i>
+              <i className="fas fa-step-forward color-white"></i>
             </div>
             <div
               className="btn btn-random"
               onClick={() => setIsShuffling(!isShuffling)}
             >
               <i
-                className="fas fa-random"
-                style={{ color: isShuffling ? "lightpink" : "#666" }}
+                className="fas fa-random color-white"
+                style={{ color: isShuffling ? "white" : "#666" }}
               ></i>
             </div>
           </div>
@@ -362,7 +378,7 @@ export const MeditationComponent = () => {
             className="progressBar-wrapper df aic jcc"
             style={{ width: "80%", margin: "10px 10%" }}
           >
-            <div className="current-time" style={{ width: 50 }}>
+            <div className="current-time color-white" style={{ width: 50 }}>
               {currentTime}
             </div>
             <input
@@ -373,7 +389,7 @@ export const MeditationComponent = () => {
               style={{}}
               onChange={changeRange}
             />
-            <div className="duration-time" style={{ width: 50 }}>
+            <div className="duration-time  color-white" style={{ width: 50 }}>
               {duration}
             </div>
           </div>
@@ -382,6 +398,22 @@ export const MeditationComponent = () => {
             src={songs[currentSongIndex].src}
             ref={audio}
           ></audio>
+        </div>
+        <div style={{ position: "absolute", right: 44, bottom: 25 }}>
+          <button
+            style={{
+              padding: 20,
+              border: " none",
+              borderRadius: 15,
+              background: "#c2ffca",
+              fontSize: 18,
+            }}
+            onClick={() => {
+              StoreMeditation();
+            }}
+          >
+            End session
+          </button>
         </div>
       </div>
     </>

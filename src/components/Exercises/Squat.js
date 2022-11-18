@@ -166,13 +166,7 @@ export const squats = (
     }
     if (previous_state === 1 && state === 0) {
       data.count++;
-      if(data.count === 2) {
-        changeExercise()
-        setcount(0);
-        data.count = 0
-      }else {
-        setcount(data.count);
-      }
+      setcount(data.count);
       setguidetext("");
     }
     if (pre_partial_state === 1 && state === 0) {

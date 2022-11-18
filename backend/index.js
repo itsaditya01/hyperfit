@@ -20,4 +20,5 @@ app.use("/api", require("./routes/route"));
 
 app.listen(port, () => {
   console.log("Listening to port number " + port);
+  console.log(Date.now());
 });

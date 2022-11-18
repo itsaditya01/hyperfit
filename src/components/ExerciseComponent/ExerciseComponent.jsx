@@ -9,9 +9,10 @@ import squatImg from "../../assets/squats-illustration.jpg";
 import { useRef } from "react";
 import { UserContext } from "../Context/UserState";
 import { useNavigate } from "react-router-dom";
+
 var data = {
   count: 0,
-  exercises: ["Squats", "PushUps"],
+  exercises: ["Squats", "Lunges", "PushUps", "LegRaise"],
   curr_exercise: 0,
   guide_text: [
     "Welcome to todays workout session",
@@ -110,7 +111,7 @@ const ExerciseInfo = ({ name, time, idealTime, exe_img, sets, reps }) => {
 
 const ExerciseComponent = () => {
   const context = useContext(UserContext);
-  const { exerciseIndex } = context;
+  const { exerciseIndex, storeExercise, user } = context;
   const [count, setCount] = useState(0);
   const [guideText, setGuideText] = useState("");
   const [calories, setCalories] = useState(0);
@@ -118,7 +119,32 @@ const ExerciseComponent = () => {
   const [timerHour, setTimerHour] = useState(0);
   const [timerMinutes, setTimerMinutes] = useState(0);
   const [timerSeconds, setTimerSeconds] = useState(0);
-  const navigate = useNavigate(null);
+  const nav = useNavigate(null);
+
+  const StoreExercise = async () => {
+    //API call
+    let host = "http://localhost:5000";
+
+    const response = await fetch(`${host}/api/storeexercise`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        exerciseId: exerciseIndex,
+        exerciseName: name[exerciseIndex],
+        repsPerformed: count,
+        email: user.email,
+        exerciseDuration: timerHour * 60 + timerMinutes,
+        caloriesBurned: calories,
+      }),
+    });
+    const data = await response.json();
+    if (data.success) {
+      nav("/temp");
+    } else {
+    }
+  };
 
   const setcount = (x) => {
     setCount(x);
@@ -234,7 +260,9 @@ const ExerciseComponent = () => {
           <button
             style={{ borderRadius: "1rem" }}
             className="end-exercise"
-            onClick={() => navigate("/temp")}
+            onClick={() => {
+              StoreExercise();
+            }}
           >
             End exercise
           </button>

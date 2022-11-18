@@ -18,6 +18,10 @@ const exerInfoSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
+  partialReps: {
+    type: Number,
+    default: 0,
+  },
   caloriesBurned: {
     type: Number,
     default: 0,

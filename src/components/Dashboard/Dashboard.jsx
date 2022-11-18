@@ -86,6 +86,9 @@ const Dashboard = () => {
       <div className="dash-grid df jcsb">
         <div className="row-1 df jcsa fdc">
           <div className="exercise-container">
+            <div>
+              <button onClick={() => nav("/report")}>fetchExercise</button>
+            </div>
             <div className="Exercise">
               <h1>Exercise</h1>
               <div onClick={() => nav("/temp")} className="cp startg">

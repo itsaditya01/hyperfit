@@ -1,6 +1,6 @@
 :root {
   --primary-color: lightsteelblue;
-  --secondary-color: lightpink;
+  --secondary-color: rgb(135, 134, 134);
   --large: 200px;
   --small: 10px;
 }
@@ -51,6 +51,7 @@ p {
 
 .meditation-music-outer {
   justify-content: flex-end;
+  width: 85%;
 }
 
 .control {
@@ -162,7 +163,7 @@ p {
 
 .music-playlist {
   padding: 20px 10px;
-  background: aliceblue;
+  background: #274866;
   border-radius: 15px;
   backdrop-filter: blur(12px);
 }
@@ -176,7 +177,7 @@ p {
   --seek-before-width: 0;
 }
 .progressBar {
-  --bar-bg: #f3f0f0a8;
+  --bar-bg: #7f7a7a;
   --seek-before-color: lightpink;
   --knobby: rgb(114, 158, 197);
   --selectedKnobby: lightpink;
@@ -320,4 +321,23 @@ p {
 .pop-up-meditation-text {
   border-radius: 20px;
   color: #e2fff9;
+}
+
+.color-white {
+  color: white;
+}
+
+.color-black {
+  color: black;
+}
+
+.counter-outer-meditation {
+  height: max-content;
+  flex-direction: row;
+  background-color: #ffffff;
+  border-radius: 30px;
+  font-size: 42px;
+  width: 300px;
+  margin-bottom: 20px;
+  padding: 25px;
 }

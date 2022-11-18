@@ -10,8 +10,8 @@ const {
 } = require("./auth");
 const Mediataion = require("./meditation");
 const { body, validationResult } = require("express-validator");
-const { Meditation } = require("./meditation");
-const { StoreExercise } = require("./exercises");
+const { StoreMeditation, RetrieveMeditation } = require("./meditation");
+const { StoreExercise, RetrieveExercise } = require("./exercises");
 
 //Routes from login - Registration
 router.post(
@@ -44,9 +44,11 @@ router.post(
 router.post("/auth/resetpassword/:token", ResetPassword);
 
 //Routes for meditation
-router.post("/meditation", Meditation);
+router.post("/storemeditation", StoreMeditation);
+router.post("/fetchexercise", RetrieveMeditation);
 
 //Routes for exercise
 router.post("/storeexercise", StoreExercise);
+router.post("/fetchexercise", RetrieveExercise);
 
 module.exports = router;
