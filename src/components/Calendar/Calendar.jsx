@@ -76,7 +76,7 @@ const CalendarDatesComponent = ({ getDates, day }) => (
           }}
         >
           <div
-            className={value === new Date().getDate() && "dates"}
+            className={value === new Date().getDate() ? "dates" : "dates-norm"}
             style={{
               borderRadius: "50%",
               width: 30,

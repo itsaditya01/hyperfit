@@ -16,10 +16,8 @@ export const squats = (
   data,
   changeConnectorColor,
   setcount,
-  setguidetext,
-  changeExercise
+  setguidetext
 ) => {
-  console.log("Squats");
   let rb_angle = getAngleZ(poses[12], poses[24], poses[26]);
   let rk_angle = getAngleZ(poses[24], poses[26], poses[28]);
   let lb_angle = getAngleZ(poses[11], poses[23], poses[25]);
@@ -125,7 +123,6 @@ export const squats = (
       ) {
         partial_state = 1;
         state = 2;
-        console.log("hello");
       } else if (
         rk_angle < 80 &&
         rb_angle < 85 &&
@@ -151,7 +148,6 @@ export const squats = (
       ) {
         partial_state = 1;
         state = 2;
-        console.log("hello");
       } else if (
         rk_angle < 80 &&
         rb_angle < 85 &&
@@ -166,13 +162,8 @@ export const squats = (
     }
     if (previous_state === 1 && state === 0) {
       data.count++;
-      if(data.count === 2) {
-        changeExercise()
-        setcount(0);
-        data.count = 0
-      }else {
-        setcount(data.count);
-      }
+      setcount(data.count);
+      console.log("Count incremented");
       setguidetext("");
     }
     if (pre_partial_state === 1 && state === 0) {

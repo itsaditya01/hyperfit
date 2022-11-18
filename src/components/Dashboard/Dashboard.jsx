@@ -9,6 +9,10 @@ import ChartComponent from "../ChartComponent/ChartComponent";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { useState, useEffect } from "react";
 import glass from "../../assets/glass.svg";
+import ExerciseVid from "../../assets/mountain_climber.mp4";
+import MeditationVid from "../../assets/meditation.mp4";
+import squatsIll from "../../assets/squats-illustration.jpg";
+import diet from "../../assets/diet.jpg";
 
 const monthNames = [
   "January",
@@ -82,46 +86,105 @@ const Dashboard = () => {
   }, [water]);
 
   return (
-    <div className="dash-main jcsa">
-      <div className="dash-grid df jcsb">
-        <div className="row-1 df jcsa fdc">
-          <div className="exercise-container">
-            <div className="Exercise">
-              <h1>Exercise</h1>
+    <div className="dash-main df fc">
+      <h1 style={{ color: "white", textAlign: "left", fontSize: 42 }}>
+        Hello, {user.name}
+      </h1>
+      <div className="dash-grid df jcsa">
+        <div className="row-1-dash df jcsa">
+          <div className="Exercise">
+            <div className="info-con">
+              <h1 style={{ textAlign: "left" }}>Exercise</h1>
               <div onClick={() => nav("/temp")} className="cp startg">
                 Start Grinding &#8594;
               </div>
             </div>
-            <div className="meditation">
-              <h1>Meditate</h1>
+            <video src={ExerciseVid} className="bg-vid" />
+          </div>
+          <div className="meditation">
+            <div className="info-con">
+              <h1 style={{ textAlign: "left" }}>Meditate</h1>
               <div onClick={() => nav("/meditation")} className="cp startg">
                 Start Meditation &#8594;
               </div>
             </div>
+            <video
+              src={MeditationVid}
+              className="bg-vid"
+              // defultmuted="true"
+              // muted="true"
+              // autoPlay
+              // loop
+            />
           </div>
-          <div className="chart">
-            <div className="month">
-              <h1 style={{ textAlign: "left", marginBottom: 20 }}>
-                {monthNames[new Date().getMonth()]}
-              </h1>
+          <div className="chart df">
+            <div>
+              <div className="month" style={{ width: "max-content" }}>
+                <h1 style={{ textAlign: "left", marginBottom: 20 }}>
+                  {monthNames[new Date().getMonth()]}
+                </h1>
+              </div>
+              <ChartComponent />
             </div>
-            <ChartComponent />
+            <div className="add-weight df fc aic">
+              <p>Add Activity</p>
+              <input type="text" placeholder="Date" />
+              <input type="text" placeholder="Weight" />
+              <button>Add</button>
+            </div>
           </div>
         </div>
-        <div className="row-2 df jcc">
-          <div className="water-con df fc jcc aic" style={{ marginLeft: 25 }}>
-            <App actual={water} total={8} />
-            <button
-              className="glass-btn"
-              onClick={() => setWater((water) => water + 1)}
-            >
-              +
-            </button>
+        <div className="row-2-dash df jcsa aic">
+          <div className="water-con df jcc aic" style={{ marginLeft: 25 }}>
+            <div className="df fc jcc aic">
+              <App actual={water} total={8} />
+              <button
+                className="glass-btn"
+                onClick={() => setWater((water) => water + 1)}
+              >
+                +
+              </button>
+            </div>
+            <div style={{ color: "black", marginRight: 10 }}>
+              <h1 style={{ textAlign: "center", fontSize: 22 }}>You've had</h1>
+              <h1 style={{ textAlign: "center", fontSize: 52 }}>{water} / 8</h1>
+              <p style={{ textAlign: "center" }}>Glasses of water today</p>
+            </div>
+          </div>
+          <div className="report-con">
+            <div className="report">
+              <div className="info-con">
+                <h1 style={{ textAlign: "left" }}>Summary</h1>
+                <div onClick={() => nav("/report")} className="cp startg">
+                  View Summary &#8594;
+                </div>
+              </div>
+              <img src={squatsIll} className="bg-vid" />
+            </div>
+          </div>
+          <div className="cur-weight df aic jcc fc">
+            <h1 style={{ fontSize: 52 }}> 90kg</h1>
+            <br />
+            <p>Current Weight</p>
+          </div>
+          <div className="goal-weight df aic jcc fc">
+            <h1 style={{ fontSize: 52 }}> 60kg</h1>
+            <br />
+            <p>Target Weight</p>
+          </div>
+          <div className="articles-dash">
+            <div className="info-con">
+              <h1 style={{ textAlign: "left" }}>Diet tips</h1>
+              <a
+                href="https://www.nhs.uk/live-well/eat-well/how-to-eat-a-balanced-diet/eight-tips-for-healthy-eating/"
+                className="cp startg"
+              >
+                Articles on Healthy diet &#8594;
+              </a>
+            </div>
+            <img src={diet} className="bg-vid" />
           </div>
         </div>
-      </div>
-      <div className="RightBar">
-        <Calendar />
       </div>
     </div>
   );

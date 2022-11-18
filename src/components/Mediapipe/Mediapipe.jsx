@@ -98,7 +98,7 @@ const Mediapipe = ({ data, setcount, setguidetext, curr, changeExercise }) => {
   const changeConnectorColor = (color) => {
     connectorColor = color;
   };
-  let is_live = false;
+  let is_live = true;
   useEffect(() => {
     pose.onResults(onResults);
     const camera = new Camera(videoRef.current, {
@@ -208,7 +208,7 @@ const Mediapipe = ({ data, setcount, setguidetext, curr, changeExercise }) => {
       ></canvas>
       <video
         ref={squatsRef}
-        style={{ width: 300, height: 300 }}
+        style={{ width: 300, height: 300, display: is_live && "none" }}
         src={exercises.videos[curr]}
         controls
       ></video>
