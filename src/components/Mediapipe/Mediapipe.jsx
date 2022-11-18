@@ -19,7 +19,7 @@ import { useState } from "react";
 
 var exercises = {
   name: [squats, lunges, pushUps, legRaise],
-  videos: [squatVid, pushupVid, legVid, lungesVid],
+  videos: [squatVid, lungesVid, pushupVid, legVid],
 };
 
 const canvas_h = 650;
@@ -98,7 +98,7 @@ const Mediapipe = ({ data, setcount, setguidetext, curr, changeExercise }) => {
   const changeConnectorColor = (color) => {
     connectorColor = color;
   };
-  let is_live = true;
+  let is_live = false;
   useEffect(() => {
     pose.onResults(onResults);
     const camera = new Camera(videoRef.current, {
@@ -178,7 +178,6 @@ const Mediapipe = ({ data, setcount, setguidetext, curr, changeExercise }) => {
       setguidetext,
       changeExercise
     );
-
     canvasCtx.restore();
   }
 
@@ -209,7 +208,7 @@ const Mediapipe = ({ data, setcount, setguidetext, curr, changeExercise }) => {
       ></canvas>
       <video
         ref={squatsRef}
-        style={{ width: 300, height: 300, display: is_live ? "none" : "" }}
+        style={{ width: 300, height: 300 }}
         src={exercises.videos[curr]}
         controls
       ></video>

@@ -179,3 +179,14 @@
 .info-main {
   margin-right: 15px;
 }
+
+.end-exercise {
+  background-color: black;
+  border: none;
+  color: white;
+  font-size: 22px;
+  margin-top: 20px;
+  width: 60%;
+  padding: 15px 5px;
+  cursor: pointer;
+}

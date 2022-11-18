@@ -88,13 +88,13 @@ const Dashboard = () => {
           <div className="exercise-container">
             <div className="Exercise">
               <h1>Exercise</h1>
-              <div onClick={() => nav("/exercises")} className="cp startg">
+              <div onClick={() => nav("/temp")} className="cp startg">
                 Start Grinding &#8594;
               </div>
             </div>
             <div className="meditation">
               <h1>Meditate</h1>
-              <div onClick={() => nav("/exercises")} className="cp startg">
+              <div onClick={() => nav("/meditation")} className="cp startg">
                 Start Meditation &#8594;
               </div>
             </div>
@@ -109,7 +109,7 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="row-2 df jcc">
-          <div className="water-con df fc jcc aic">
+          <div className="water-con df fc jcc aic" style={{ marginLeft: 25 }}>
             <App actual={water} total={8} />
             <button
               className="glass-btn"

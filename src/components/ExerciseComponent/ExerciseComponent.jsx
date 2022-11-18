@@ -177,7 +177,7 @@ const ExerciseComponent = () => {
             curr={exerciseIndex}
           />
         </div>
-        <div className="info-outer df">
+        <div className="info-outer df jcc aic">
           <div className="counter-outer df jcc aic">
             <div className="timer-outer df jcc">
               <span>
@@ -232,10 +232,11 @@ const ExerciseComponent = () => {
             {guideText && <PopUp text={guideText} />}
           </AnimatePresence>
           <button
-            style={{ padding: 20, borderRadius: "1rem" }}
+            style={{ borderRadius: "1rem" }}
+            className="end-exercise"
             onClick={() => navigate("/temp")}
           >
-            End session
+            End exercise
           </button>
         </div>
       </div>
