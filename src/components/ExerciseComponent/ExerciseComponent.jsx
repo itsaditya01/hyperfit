@@ -232,7 +232,7 @@ const ExerciseComponent = () => {
             {guideText && <PopUp text={guideText} />}
           </AnimatePresence>
           <button
-            style={{ padding: 20, borderRadius: "1rem" }}
+            style={{ padding: 20, borderRadius: "1rem", marginTop: 20 }}
             onClick={() => navigate("/temp")}
           >
             End session
