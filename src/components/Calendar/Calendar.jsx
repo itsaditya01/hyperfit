@@ -49,7 +49,7 @@ const CalendarDatesComponent = ({ getDates, day }) => (
     <div
       style={{
         // width: 50,
-        color: "#00F0FF",
+        color: "#111",
         textAlign: "center",
       }}
     >
@@ -81,7 +81,7 @@ const CalendarDatesComponent = ({ getDates, day }) => (
             style={{
               borderRadius: "50%",
               width: 30,
-              fontFamily: "system-ui",
+              color: "black",
             }}
           >
             <div style={{ textAlign: "center" }}>{value}</div>
@@ -99,11 +99,10 @@ const Calendar = () => {
         style={{
           display: "flex",
           flexDirection: "row",
-          fontSize: 30,
           fontWeight: 300,
         }}
       >
-        <div style={{ flex: 1, marginLeft: 19 }}>
+        <div style={{ flex: 1, fontSize: 40, fontWeight: 700, color: "black" }}>
           {months[new Date().getMonth()].name}
         </div>
       </div>
