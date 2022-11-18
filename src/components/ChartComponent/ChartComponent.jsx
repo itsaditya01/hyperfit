@@ -1,4 +1,5 @@
 import { Line } from "react-chartjs-2";
+import "./ChartComponent.css";
 import data from "./data.json";
 
 import {
@@ -54,12 +55,12 @@ const ChartComponent = () => {
       datasets: [
         {
           data: dataset,
-          borderColor: "purple",
+          borderColor: "#3352E7",
           borderWidth: 4,
           lineTension: 0.4,
           pointRadius: 0,
           fill: true,
-          backgroundColor: "rgb(128, 0, 128, 0.1)",
+          backgroundColor: "rgb(51, 82, 231, 0.1)",
         },
       ],
     };
@@ -77,36 +78,30 @@ const ChartComponent = () => {
     },
     scales: {
       y: {
+        grid: {
+          color: "rgba(255, 255, 255, 0.1)",
+        },
         min: 0,
         max: 150,
         beginAtZero: true,
-        ticks: {
-          color: "white",
-          stepSize: 50,
-          font: {
-            size: 16,
-          },
-          crossAlign: "center",
-        },
+        // ticks: {
+        //   color: "white",
+        //   stepSize: 50,
+        //   font: {
+        //     size: 16,
+        //   },
+        //   crossAlign: "center",
+        // },
       },
       x: {
-        // grid: {
-        //   color: "rgba(255, 255, 255, 0.35)",
-        // },
-        ticks: {
-          crossAlign: "near",
-          color: "white",
-          maxRotation: 0,
-          minRotation: 0,
-          font: {
-            size: 16,
-          },
+        grid: {
+          color: "rgba(255, 255, 255, 0.1)",
         },
       },
     },
   };
   return (
-    <div className="chartdiv" style={{ width: "100%", height: 250 }}>
+    <div className="chartdiv df" style={{ width: 300, height: "max-content" }}>
       <Line ref={chartRef} data={chartData()} options={option} />
     </div>
   );

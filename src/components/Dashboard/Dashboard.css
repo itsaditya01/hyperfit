@@ -3,7 +3,7 @@
   background-color: #0a0a0a;
   width: 100%;
   height: 100%;
-  padding: 30px;
+  padding: 30px 50px;
   display: flex;
   background-position: center;
   background-size: cover;
@@ -20,7 +20,8 @@
   background: black;
   display: flex;
   color: white;
-  width: 70%;
+  width: 100%;
+  height: 100%;
   border-radius: 0.75rem;
   padding: 20px;
   border-radius: 30px;
@@ -29,15 +30,35 @@
 
 .Exercise,
 .meditation {
-  padding: 20px;
-  width: 300px;
-  height: 165px;
+  width: 350px;
   border-radius: 0.75rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
   border-radius: 30px;
+  position: relative;
+  height: 270px;
+  overflow: hidden;
+  border: none;
+  outline: none;
+}
+
+.info-con {
+  position: absolute;
+  z-index: 11;
+  width: 100%;
+  bottom: 0;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.2);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  color: white;
+}
+
+.bg-vid {
+  height: 270px;
+  width: auto;
 }
 
 .Exercise {
@@ -54,13 +75,12 @@
   position: relative;
   object-fit: center;
   display: flex;
-  flex-direction: column;
   justify-content: space-around;
 }
 
 .startg {
   background: transparent;
-  color: black;
+  color: white;
   font-weight: 600;
 }
 
@@ -73,7 +93,7 @@
   width: 300px;
 }
 
-.row-1 {
+.row-1-dash {
   width: 100%;
   height: max-content;
 }
@@ -81,13 +101,15 @@
 .chart {
   background: #0a0a0a;
   border-radius: 30px;
-  padding: 30px 50px;
-  min-width: 550px;
+  padding: 20px;
+  max-width: 550px;
+  height: max-content;
 }
 .water-con {
   background: white;
   border-radius: 30px;
   padding-bottom: 20px;
+  width: max-content;
 }
 
 .glass-btn {
@@ -100,4 +122,60 @@
   font-size: 25px;
   color: white;
   cursor: pointer;
+}
+
+.add-weight p {
+  font-size: 32px;
+}
+
+.add-weight input {
+  font-size: 18px;
+  background-color: black;
+  width: 80%;
+  margin: 10px;
+  border: none;
+  border-radius: 30px;
+  padding: 10px;
+}
+
+.add-weight button {
+  background: #3352e7;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: white;
+  font-size: 18px;
+  padding: 10px 20px;
+  border-radius: 30px;
+}
+
+.report,
+.articles-dash {
+  width: 250px;
+  border-radius: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  border-radius: 30px;
+  position: relative;
+  height: 190px;
+  overflow: hidden;
+  border: none;
+  outline: none;
+}
+
+.goal-weight,
+.cur-weight {
+  height: 190px;
+  padding: 20px;
+  border-radius: 30px;
+}
+
+.goal-weight {
+  background-color: #3352e7;
+}
+
+.cur-weight {
+  background-color: #0a0a0a;
 }

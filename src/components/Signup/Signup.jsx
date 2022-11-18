@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import SignUpInfo from "./SignUpInfo";
 import PersonalInfo from "./PersonalInfo";
 import { useNavigate } from "react-router-dom";
-import "../styles.css";
+import "./styles.css";
 import "./Signup.css";
 
 function Signup() {
