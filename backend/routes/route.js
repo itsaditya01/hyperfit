@@ -7,11 +7,22 @@ const {
   ForgetPassword,
   ResetPassword,
   UserDetails,
+  GetUser,
 } = require("./auth");
 const Mediataion = require("./meditation");
 const { body, validationResult } = require("express-validator");
 const { StoreMeditation, RetrieveMeditation } = require("./meditation");
-const { StoreExercise, RetrieveExercise } = require("./exercises");
+const {
+  StoreExercise,
+  RetrieveExercise,
+  StoreWeight,
+  RetrieveWeight,
+  StoreHydration,
+  RetrieveHydration,
+} = require("./exercises");
+
+//to get user information
+router.post("/auth/getuser", GetUser);
 
 //Routes from login - Registration
 router.post(
@@ -33,7 +44,7 @@ router.post(
   Login
 );
 
-router.get("/auth/verify/:id", Verification);
+// router.get("/auth/verify/:id", Verification);
 
 router.post(
   "/auth/forgetpassword",
@@ -45,10 +56,18 @@ router.post("/auth/resetpassword/:token", ResetPassword);
 
 //Routes for meditation
 router.post("/storemeditation", StoreMeditation);
-router.post("/fetchexercise", RetrieveMeditation);
+router.post("/fetchmeditation", RetrieveMeditation);
 
 //Routes for exercise
 router.post("/storeexercise", StoreExercise);
 router.post("/fetchexercise", RetrieveExercise);
+
+//Routes for weight
+router.post("/storeweight", StoreWeight);
+router.post("/fetchweight", RetrieveWeight);
+
+//Routes for hydration
+router.post("/storehydration", StoreHydration);
+router.post("/fetchhydration", RetrieveHydration);
 
 module.exports = router;

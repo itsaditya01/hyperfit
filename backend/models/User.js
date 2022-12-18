@@ -29,6 +29,16 @@ const exerInfoSchema = mongoose.Schema({
   date: Date,
 });
 
+const weightInfoSchema = mongoose.Schema({
+  weightValue: Number,
+  date: Date,
+});
+
+const hydrationInfoSchema = mongoose.Schema({
+  hydrationValue: Number,
+  date: Date,
+});
+
 const userSchema = mongoose.Schema(
   {
     name: {
@@ -45,10 +55,7 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    weight: {
-      type: Number,
-      required: true,
-    },
+    weight: [weightInfoSchema],
     height: {
       type: Number,
       required: true,
@@ -74,10 +81,6 @@ const userSchema = mongoose.Schema(
     lastActive: {
       type: Date,
     },
-    isVerified: {
-      type: Boolean,
-      default: false,
-    },
     resetPasswordToken: {
       type: String,
     },
@@ -91,6 +94,7 @@ const userSchema = mongoose.Schema(
     token: {
       type: String,
     },
+    hydration: hydrationInfoSchema,
   },
   { timestamps: true }
 );

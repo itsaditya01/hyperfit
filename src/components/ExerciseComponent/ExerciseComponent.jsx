@@ -59,7 +59,7 @@ const third = {
   score: 1,
 };
 
-var perCalorie = [0.32, 0.36, 0.35, 0.6];
+var perCalorie = [0.32, 0.6, 0.36, 0.35];
 var name = ["squats", "lunges", "pushUps", "leg-raise"];
 
 const PopUp = ({ text }) => {
@@ -96,11 +96,11 @@ const ExerciseInfo = ({ name, time, idealTime, exe_img, sets, reps }) => {
         </div>
         <div className="info-row-2">
           <div className="time">
-            Timer taken: <br /> {time}
+            Time taken: <br /> {time}
           </div>
           <br />
           <div className="idealTime">
-            IDeal time: <br />
+            Ideal time: <br />
             {idealTime}
           </div>
         </div>
@@ -113,6 +113,7 @@ const ExerciseComponent = () => {
   const context = useContext(UserContext);
   const { exerciseIndex, storeExercise, user } = context;
   const [count, setCount] = useState(0);
+  const [partialCount, setPartialCount] = useState(0);
   const [guideText, setGuideText] = useState("");
   const [calories, setCalories] = useState(0);
   const [curr, setCurr] = useState(0);
@@ -134,6 +135,7 @@ const ExerciseComponent = () => {
         exerciseId: exerciseIndex,
         exerciseName: name[exerciseIndex],
         repsPerformed: count,
+        partialReps: partialCount,
         email: user.email,
         exerciseDuration: timerHour * 60 + timerMinutes,
         caloriesBurned: calories,
@@ -141,13 +143,20 @@ const ExerciseComponent = () => {
     });
     const data = await response.json();
     if (data.success) {
-      nav("/temp");
+      // setcount(0);
+      // data.count = 0;
+      // data.partial_count = 0;
+      // setpartialcount(0);
+      // nav("/temp");
     } else {
     }
   };
 
   const setcount = (x) => {
     setCount(x);
+  };
+  const setpartialcount = (x) => {
+    setPartialCount(x);
   };
   useEffect(() => {
     const timer = setInterval(() => {
@@ -177,7 +186,7 @@ const ExerciseComponent = () => {
     setGuideText(message);
   };
   useEffect(() => {
-    setCalories(count * perCalorie[curr]);
+    setCalories(count * perCalorie[exerciseIndex]);
   }, [guideText, count]);
 
   const carousel = useRef();
@@ -201,6 +210,7 @@ const ExerciseComponent = () => {
             changeExercise={changeExercise}
             setguidetext={setguidetext}
             curr={exerciseIndex}
+            setpartialcount={setpartialcount}
           />
         </div>
         <div className="info-outer df jcc aic">
@@ -227,7 +237,10 @@ const ExerciseComponent = () => {
               style={{ width: "50%" }}
             >
               <div className="calory df jcc aic">
-                <p style={{ fontSize: 42, marginTop: 0 }}> {calories}</p>
+                <p style={{ fontSize: 42, marginTop: 0 }}>
+                  {" "}
+                  {parseFloat(calories).toFixed(1)}
+                </p>
                 <img src={Fire} style={{ width: 52, height: 52 }} />
               </div>
               <div className="calory-text" style={{ fontSize: 12 }}>
@@ -261,10 +274,14 @@ const ExerciseComponent = () => {
             style={{ borderRadius: "1rem" }}
             className="end-exercise"
             onClick={() => {
-              StoreExercise();
+              setcount(0);
+              data.count = 0;
+              data.partial_count = 0;
+              setpartialcount(0);
+              nav("/temp");
             }}
           >
-            End exercise
+            Change exercise &#8594;
           </button>
         </div>
       </div>

@@ -90,7 +90,14 @@ let counter;
 //   if (data.curr_guide_cnt === 2) clearTimeout(counter);
 // };
 
-const Mediapipe = ({ data, setcount, setguidetext, curr, changeExercise }) => {
+const Mediapipe = ({
+  data,
+  setcount,
+  setguidetext,
+  curr,
+  changeExercise,
+  setpartialcount,
+}) => {
   const videoRef = useRef(null);
   const squatsRef = useRef(null);
   const canvasRef = useRef(null);
@@ -176,7 +183,8 @@ const Mediapipe = ({ data, setcount, setguidetext, curr, changeExercise }) => {
       changeConnectorColor,
       setcount,
       setguidetext,
-      changeExercise
+      changeExercise,
+      setpartialcount
     );
     canvasCtx.restore();
   }

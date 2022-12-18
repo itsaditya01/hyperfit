@@ -13,6 +13,8 @@ import pushupIll from "../../assets/pushup_ill.png";
 import legraiseIll from "../../assets/legraise_ill.png";
 import lungesIll from "../../assets/lunges_ill.png";
 
+const avgDuration = [0.26, 0.1, 0.75, 0.2];
+
 const completed = [
   {
     name: "Squats",
@@ -71,8 +73,7 @@ const ExerciseInfo = ({ name, time, idealTime, exe_img, sets, reps }) => {
 };
 
 const App = ({ actual, total }) => {
-  const percentage = (actual / total) * 100;
-  const [valueEnd, setValueEnd] = React.useState(percentage);
+  const percentage = parseInt((actual / total) * 100);
   return (
     <div>
       <div
@@ -82,7 +83,7 @@ const App = ({ actual, total }) => {
           height: 160,
         }}
       >
-        <ProgressProvider valueStart={0} valueEnd={valueEnd}>
+        <ProgressProvider valueStart={0} valueEnd={percentage}>
           {(value) => (
             <CircularProgressbar
               value={value}
@@ -102,11 +103,47 @@ const App = ({ actual, total }) => {
   );
 };
 
+let exercise1 = [
+  {
+    exerciseDuration: 0,
+    exerciseId: 0,
+    exerciseName: "squats",
+    repsPerformed: 5,
+    partialReps: 1,
+    caloriesBurned: 1,
+  },
+  {
+    exerciseDuration: 0,
+    exerciseId: 1,
+    exerciseName: "lunges",
+    repsPerformed: 5,
+    partialReps: 0,
+    caloriesBurned: 3,
+  },
+  {
+    exerciseDuration: 0,
+    exerciseId: 2,
+    exerciseName: "pushUps",
+    repsPerformed: 5,
+    partialReps: 0,
+    caloriesBurned: 1,
+  },
+
+  {
+    exerciseDuration: 0,
+    exerciseId: 3,
+    exerciseName: "legRaise",
+    repsPerformed: 5,
+    partialReps: 1,
+    caloriesBurned: 1,
+  },
+];
 const ReportComponent = () => {
+  const [, updateState] = React.useState();
+  const forceUpdate = React.useCallback(() => updateState({}), []);
   const context = useContext(UserContext);
-  const { user, exercise, meditation, fetchExercise, fetchMeditation } =
-    context;
-  console.log(user);
+  const { exercise, meditation, fetchExercise, fetchMeditation } = context;
+  console.log(exercise);
   const nav = useNavigate();
   const carousel = useRef();
   const [width, setWidth] = useState(0);
@@ -139,6 +176,7 @@ const ReportComponent = () => {
         cnt++;
       }
     }
+    console.log(cnt);
     avgExerciseDuration = totalDuration / cnt;
     setTotal({
       totalDuration,
@@ -148,12 +186,19 @@ const ReportComponent = () => {
       cnt,
       avgExerciseDuration,
     });
+    forceUpdate();
   };
+
   useEffect(() => {
-    fetchExercise();
-    fetchMeditation();
-    console.log(exercise);
-    first();
+    const temp = async () => {
+      fetchExercise().then((data) => {
+        first();
+      });
+      await fetchMeditation();
+      setWidth(width + 1);
+      // first();
+    };
+    temp();
   }, []);
   const percentage = 54;
   return (
@@ -170,9 +215,7 @@ const ReportComponent = () => {
           </div>
           <div className="comp-exercise-info-all df fc">
             <div style={{ fontSize: 12 }}>Total duration of meditation</div>
-            <div style={{ fontSize: 50 }}>
-              {meditation[0].meditationDuration}
-            </div>
+            <div style={{ fontSize: 50 }}>{meditation.meditationDuration}</div>
             <div style={{ fontSize: 16 }}>min/day</div>
           </div>
           <div className="comp-exercise-info-all df fc">
@@ -200,7 +243,9 @@ const ReportComponent = () => {
               <div style={{ fontSize: 11, marginBottom: 5, width: 176 }}>
                 Total calories burned today
               </div>
-              <div style={{ fontSize: 38 }}>{total.totalCaloriesBurned}</div>
+              <div style={{ fontSize: 38 }}>
+                {parseFloat(total.totalCaloriesBurned).toFixed(1)}
+              </div>
             </div>
             <div>
               <App total={500} actual={300} />
@@ -215,12 +260,15 @@ const ReportComponent = () => {
                 Accuracy of exercise performed today
               </div>
               <div style={{ fontSize: 38 }}>
-                {(total.totalPartialReps / total.totalRepsPerformed) * 100}
+                {parseInt(
+                  (total.totalPartialReps / total.totalRepsPerformed) * 100
+                )}
+                %
               </div>
             </div>
             <div>
               <App
-                total={total.totalPartialReps}
+                total={total.totalRepsPerformed}
                 actual={total.totalPartialReps}
               />
             </div>
@@ -271,24 +319,26 @@ const ReportComponent = () => {
               <div className="comp-exercise-info-all df fc">
                 <div style={{ fontSize: 12 }}>Reps performed</div>
                 <div style={{ fontSize: 50 }}>{ex.repsPerformed}</div>
-                <div style={{ fontSize: 16 }}>min/day</div>
+                <div style={{ fontSize: 16 }}>reps</div>
               </div>
               <div className="comp-exercise-info-all df fc">
                 <div style={{ fontSize: 12 }}>Partial reps performed</div>
                 <div style={{ fontSize: 50 }}>{ex.partialReps}</div>
-                <div style={{ fontSize: 16 }}>min/day</div>
+                <div style={{ fontSize: 16 }}>reps</div>
               </div>
               <div className="comp-exercise-info-all df fc">
                 <div style={{ fontSize: 12 }}>calories burned</div>
-                <div style={{ fontSize: 50 }}>{ex.caloriesBurned}</div>
-                <div style={{ fontSize: 16 }}>min/day</div>
+                <div style={{ fontSize: 50 }}>
+                  {parseFloat(ex.caloriesBurned).toFixed(1)}
+                </div>
+                <div style={{ fontSize: 16 }}>cal/day</div>
               </div>
               <div className="comp-exercise-info-all df fc">
                 <div style={{ fontSize: 12 }}>Accuracy achieved</div>
                 <div style={{ fontSize: 50 }}>
-                  {(ex.partialReps / ex.repsPerformed) * 100}
+                  {parseInt((ex.partialReps / ex.repsPerformed) * 100)}%
                 </div>
-                <div style={{ fontSize: 16 }}>min/day</div>
+                <div style={{ fontSize: 16 }}>percentage</div>
               </div>
             </div>
           );

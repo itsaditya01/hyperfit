@@ -16,7 +16,8 @@ export const squats = (
   data,
   changeConnectorColor,
   setcount,
-  setguidetext
+  setguidetext,
+  setpartialcount
 ) => {
   let rb_angle = getAngleZ(poses[12], poses[24], poses[26]);
   let rk_angle = getAngleZ(poses[24], poses[26], poses[28]);
@@ -167,7 +168,8 @@ export const squats = (
     }
     if (pre_partial_state === 1 && state === 0) {
       data.partial_count++;
-      setguidetext("Please bend you knees more and push your chest downwards");
+      setguidetext("Please bend your knees more and push your chest downwards");
+      setpartialcount(data.partial_count);
       partial_state = 0;
     }
     pre_partial_state = partial_state;

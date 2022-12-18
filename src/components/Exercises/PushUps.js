@@ -10,7 +10,8 @@ export const pushUps = (
   data,
   changeConnectorColor,
   setcount,
-  setguidetext
+  setguidetext,
+  setpartialcount
 ) => {
   console.log("PushUps");
   const angle_lk = getAngleZ(poses[23], poses[25], poses[27]);
@@ -55,7 +56,9 @@ export const pushUps = (
     console.log("increase");
   }
   if (state === 0 && pre_partial_state === 1) {
-    setguidetext("Please go down until indicator turn green");
+    data.partial_count++;
+    setguidetext("Please go down until indicator turns green");
+    setpartialcount(data.partial_count);
     partial_state = 0;
   }
   previous_state = state;

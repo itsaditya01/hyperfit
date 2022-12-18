@@ -196,6 +196,18 @@ const ExerciseChoices = () => {
           loop
         />
       </motion.div>
+      <div
+        style={{
+          color: "white",
+          position: "absolute",
+          right: 50,
+          bottom: 35,
+          fontSize: 30,
+        }}
+        onClick={() => navigate("/report")}
+      >
+        End Session &#8594;
+      </div>
     </div>
   );
 };

@@ -4,16 +4,11 @@ import { useState } from "react";
 export const UserContext = createContext();
 
 export const UserState = (props) => {
-  const [user, setUser] = useState({ id: "", name: "", email: "" });
   const [exerciseIndex, setExerciseIndex] = useState();
+  const [user, setUser] = useState({});
   const [exercise, setExercise] = useState([{}]);
-  const [meditation, setMeditation] = useState([{}]);
+  const [meditation, setMeditation] = useState({ meditationDuration: 0 });
   const host = "http://localhost:5000";
-
-  const setuser = (id, name, email) => {
-    console.log(user.name);
-    setUser({ id, name, email });
-  };
 
   const fetchExercise = async (date = "2022-11-18") => {
     //API call
@@ -22,7 +17,7 @@ export const UserState = (props) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email: user.email }),
+      body: JSON.stringify({ email: localStorage.getItem("email") }),
     });
     const data = await response.json();
     console.log(data);
@@ -55,34 +50,49 @@ export const UserState = (props) => {
     setExercise(newData);
   };
 
-  const fetchMeditation = async (date = Date.now()) => {
+  const fetchMeditation = async (date = "2022-11-18") => {
     //API call
     const response = await fetch(`${host}/api/fetchmeditation`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email: user.email }),
+      body: JSON.stringify({ email: localStorage.getItem("email") }),
     });
     const data = await response.json();
     console.log(data);
 
     let newData = data.filter((d) => {
-      return d.meditationDate.slice(0, 10) === date;
+      if (d.meditationDate.slice(0, 10) === date) {
+        setMeditation(meditation.meditationDuration + d.meditationDuration);
+      }
     });
     console.log(newData);
-    setExercise(newData);
+  };
+
+  const getUser = async () => {
+    //API call
+    const response = await fetch(`${host}/api/auth/getuser`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: localStorage.getItem("email") }),
+    });
+    const data = await response.json();
+    setUser(data);
   };
 
   return (
     <UserContext.Provider
       value={{
-        user,
-        setuser,
         exerciseIndex,
         setExerciseIndex,
         fetchExercise,
+        user,
+        getUser,
         exercise,
+        meditation,
         fetchMeditation,
       }}
     >

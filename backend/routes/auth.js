@@ -31,9 +31,10 @@ exports.Registration = async (request, response) => {
     //Check whether user with this email exists or not
     const findUser = await User.findOne({ email: email });
     if (findUser) {
-      return response
-        .status(400)
-        .json({ error: "User with this Email-id already exists" });
+      return response.status(400).json({
+        success: false,
+        message: "User with this Email-id already exists",
+      });
     }
 
     //Create Hashing of password
@@ -45,7 +46,7 @@ exports.Registration = async (request, response) => {
       name,
       email,
       password: secPass,
-      weight,
+      weight: [{ weightValue: weight, date: Date }],
       height,
       age,
       goalWeight,
@@ -60,14 +61,14 @@ exports.Registration = async (request, response) => {
         });
       }
 
-      var link = process.env.BASE_SERVER_URL + `/api/auth/verify/${user._id}`;
+      // var link = process.env.BASE_SERVER_URL + `/api/auth/verify/${user._id}`;
 
-      var message = {
-        subject: "signup-authentication",
-        text: `Hi ${user.name} ! Here is your link to verify your account ${link}`,
-      };
+      // var message = {
+      //   subject: "signup-authentication",
+      //   text: `Hi ${user.name} ! Here is your link to verify your account ${link}`,
+      // };
 
-      await nodemailer.sendEmail(user.email, message);
+      // await nodemailer.sendEmail(user.email, message);
 
       const data = {
         user: {
@@ -81,13 +82,15 @@ exports.Registration = async (request, response) => {
         success: true,
         email: user.email,
         uid: user._id,
-        message: `Your registration has been received. Please check the email sent at ${user.email}.`,
+        message: `Registration is done successfully.`,
         severity: "success",
       });
     });
   } catch (error) {
     console.log(error.message);
-    response.status(500).json({ error: "Internal Server Error" });
+    response
+      .status(500)
+      .json({ success: false, message: "Internal Server Error" });
   }
 };
 
@@ -111,13 +114,13 @@ exports.Login = async (request, response) => {
       });
     }
 
-    if (!user.isVerified) {
-      return response.status(200).json({
-        success: false,
-        message: `Please verify your account by clicking on the email sent at ${email}. Be sure to check the spam box too!  Or, click here to resend verification email.`,
-        severity: "info",
-      });
-    }
+    // if (!user.isVerified) {
+    //   return response.status(200).json({
+    //     success: false,
+    //     message: `Please verify your account by clicking on the email sent at ${email}. Be sure to check the spam box too!  Or, click here to resend verification email.`,
+    //     severity: "info",
+    //   });
+    // }
 
     bcrypt.compare(password, user.password).then((isMatch) => {
       if (isMatch) {
@@ -147,25 +150,25 @@ exports.Login = async (request, response) => {
   });
 };
 
-// verify email of registered user
-exports.Verification = async (request, response) => {
-  const user = await User.findById(request.params.id);
-  // console.log(user);
+// // verify email of registered user
+// exports.Verification = async (request, response) => {
+//   const user = await User.findById(request.params.id);
+//   // console.log(user);
 
-  if (user) {
-    user.isVerified = true;
-    await user.save();
-    var link = process.env.BASE_CLIENT_URL + `/login`;
-    const Filepath = path.join(__dirname, "../views/verified.html");
-    console.log(Filepath);
-    response.sendFile(Filepath);
-    // response.status(200).json({ sucess: true });
-  } else {
-    response
-      .status(200)
-      .json({ success: false, error: "Could not find User." });
-  }
-};
+//   if (user) {
+//     user.isVerified = true;
+//     await user.save();
+//     var link = process.env.BASE_CLIENT_URL + `/login`;
+//     const Filepath = path.join(__dirname, "../views/verified.html");
+//     console.log(Filepath);
+//     response.sendFile(Filepath);
+//     // response.status(200).json({ sucess: true });
+//   } else {
+//     response
+//       .status(200)
+//       .json({ success: false, error: "Could not find User." });
+//   }
+// };
 
 // forget the password
 exports.ForgetPassword = async (request, response) => {
@@ -275,4 +278,25 @@ exports.ResetPassword = async (request, response) => {
       });
     }
   );
+};
+
+exports.GetUser = async (request, response) => {
+  const email = request.body.email;
+
+  try {
+    const user = await User.findOne({ email });
+    response.json({
+      success: true,
+      name: user.name,
+      weight: user.weight,
+      height: user.height,
+      goalWeight: user.goalWeight,
+      bmi: user.bmi,
+      age: user.age,
+    });
+  } catch (error) {
+    response
+      .status(500)
+      .json({ success: false, message: "Internal Server Error" });
+  }
 };

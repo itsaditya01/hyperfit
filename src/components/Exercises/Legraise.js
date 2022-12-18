@@ -16,7 +16,8 @@ export const legRaise = (
   data,
   changeConnectorColor,
   setcount,
-  setguidetext
+  setguidetext,
+  setpartialcount
 ) => {
   const angle_lk = getAngleZ(poses[23], poses[25], poses[27]);
   const angle_rk = getAngleZ(poses[24], poses[26], poses[28]);
@@ -52,7 +53,8 @@ export const legRaise = (
   if (state === 0 && pre_partial_state === 1) {
     setguidetext("Move your legs up until indicator turns green");
     partial_state = 0;
-    console.log("Entered");
+    data.partial_count++;
+    setpartialcount(data.partial_count);
   }
   previous_state = state;
   pre_partial_state = partial_state;

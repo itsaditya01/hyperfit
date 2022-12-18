@@ -2,8 +2,6 @@ import React from "react";
 import SideBar from "../SideBar/SideBar";
 import "./Dashboard.css";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../Context/UserState";
-import { useContext } from "react";
 import Calendar from "../Calendar/Calendar";
 import ChartComponent from "../ChartComponent/ChartComponent";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
@@ -13,6 +11,8 @@ import ExerciseVid from "../../assets/mountain_climber.mp4";
 import MeditationVid from "../../assets/meditation.mp4";
 import squatsIll from "../../assets/squats-illustration.jpg";
 import diet from "../../assets/diet.jpg";
+import { UserContext } from "../Context/UserState";
+import { useContext } from "react";
 
 const monthNames = [
   "January",
@@ -77,19 +77,43 @@ const App = ({ text, actual, total }) => {
 };
 
 const Dashboard = () => {
-  const context = useContext(UserContext);
-  const { user } = context;
   const [water, setWater] = useState(0);
   const nav = useNavigate();
+  const context = useContext(UserContext);
+  const { getUser, user } = context;
   useEffect(() => {
     console.log(water);
   }, [water]);
 
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  const logout = async () => {
+    localStorage.removeItem("email");
+    localStorage.removeItem("name");
+    nav("/");
+  };
   return (
     <div className="dash-main df fc">
-      <h1 style={{ color: "white", textAlign: "left", fontSize: 42 }}>
-        Hello, {user.name}
-      </h1>
+      <div className="df jcsb aic">
+        <h1 style={{ color: "white", textAlign: "left", fontSize: 42 }}>
+          Hello, {localStorage.getItem("name")}
+        </h1>
+        <button
+          className="cp"
+          style={{
+            background: "#3352e7",
+            padding: "10px 20px",
+            color: "white",
+            fontSize: 18,
+            borderRadius: 20,
+          }}
+          onClick={() => logout()}
+        >
+          Logout
+        </button>
+      </div>
       <div className="dash-grid df jcsa">
         <div className="row-1-dash df jcsa">
           <div className="Exercise">
@@ -163,12 +187,12 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="cur-weight df aic jcc fc">
-            <h1 style={{ fontSize: 52 }}> 90kg</h1>
+            <h1 style={{ fontSize: 52 }}>{user.weight}</h1>
             <br />
             <p>Current Weight</p>
           </div>
           <div className="goal-weight df aic jcc fc">
-            <h1 style={{ fontSize: 52 }}> 60kg</h1>
+            <h1 style={{ fontSize: 52 }}> {user.goalWeight}</h1>
             <br />
             <p>Target Weight</p>
           </div>
@@ -178,6 +202,7 @@ const Dashboard = () => {
               <a
                 href="https://www.nhs.uk/live-well/eat-well/how-to-eat-a-balanced-diet/eight-tips-for-healthy-eating/"
                 className="cp startg"
+                target="_blank"
               >
                 Articles on Healthy diet &#8594;
               </a>

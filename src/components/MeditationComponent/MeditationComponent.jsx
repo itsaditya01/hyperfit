@@ -59,7 +59,6 @@ export const MeditationComponent = () => {
       body: JSON.stringify({
         email: user.email,
         meditationDuration: timerHour * 60 + timerMinutes,
-        meditationDate: Date.now(),
       }),
     });
     const data = await response.json();

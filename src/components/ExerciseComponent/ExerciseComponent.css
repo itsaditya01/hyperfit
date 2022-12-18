@@ -1,5 +1,5 @@
 .ec-outer {
-  background-color: #fafafa;
+  background-color: #0a0a0a;
   width: 100%;
   height: 100vh;
   color: white;
@@ -162,15 +162,14 @@
 .exe-name {
   align-self: center;
   font-size: 32px;
-  color: black;
+  color: white;
   font-weight: 600;
   margin-bottom: 15px;
 }
 
 .info-row-1,
 .info-row-2 {
-  background-color: white;
-  color: black;
+  color: white;
   font-size: 16px;
   font-weight: 500;
   border-radius: 20px;
@@ -180,13 +179,17 @@
   margin-right: 15px;
 }
 
+.exerciseContainer {
+  background-color: #0a0a0a;
+}
+
 .end-exercise {
-  background-color: black;
+  background-color: rgb(114, 199, 255);
   border: none;
   color: white;
   font-size: 22px;
   margin-top: 20px;
-  width: 60%;
+  width: 80%;
   padding: 15px 5px;
   cursor: pointer;
 }

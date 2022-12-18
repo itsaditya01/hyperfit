@@ -10,7 +10,8 @@ export const lunges = (
   data,
   changeConnectorColor,
   setcount,
-  setguidetext
+  setguidetext,
+  setpartialcount
 ) => {
   const angle_lk = getAngleZ(poses[23], poses[25], poses[27]);
   const angle_rk = getAngleZ(poses[24], poses[26], poses[28]);
@@ -54,6 +55,8 @@ export const lunges = (
   }
 
   if (state === 0 && pre_partial_state === 1) {
+    data.partial_count++;
+    setpartialcount(data.partial_count);
     // setguidetext("Please go down until indicator turn green");
     partial_state = 0;
   }

@@ -1,7 +1,7 @@
 .exerciseContainer {
   width: 100%;
   height: 100vh;
-  background: #fafafa;
+  background: #0a0a0a;
   justify-content: space-around;
   flex-direction: column;
 }
