@@ -321,8 +321,8 @@ const ExerciseComponent = () => {
             className="end-exercise"
             onClick={() => {
               StoreExercise();
-              setcount(0);
               data.count = 0;
+              setcount(0);
             }}
           >
             Change exercise &#8594;

@@ -5,7 +5,7 @@ import { Pose, POSE_CONNECTIONS } from "@mediapipe/pose";
 import { useRef } from "react";
 import squatVid from "../../assets/squats.mp4";
 import pushupVid from "../../assets/pushup.mp4";
-import legVid from "../../assets/leg.mp4";
+import legVid from "../../assets/leg-raise.mp4";
 import lungesVid from "../../assets/lunges.mp4";
 import { roundRect } from "./DrawingUtility";
 import { squats } from "../Exercises/Squat";
@@ -105,7 +105,7 @@ const Mediapipe = ({
   const changeConnectorColor = (color) => {
     connectorColor = color;
   };
-  let is_live = true;
+  let is_live = false;
   useEffect(() => {
     pose.onResults(onResults);
     const camera = new Camera(videoRef.current, {

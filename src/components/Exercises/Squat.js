@@ -26,8 +26,9 @@ export const squats = (
   if (
     (Math.abs(poses[0].y - poses[31].y) * 720 >= window.innerHeight * 0.5 ||
       Math.abs(poses[0].y - poses[32].y) * 720 >= window.innerHeight * 0.5) &&
-    visibleCoords({ poseLandmarks: poses }) * 85 >= 80
+    visibleCoords({ poseLandmarks: poses }) * 75 >= 70
   ) {
+    console.log({ lk_angle, lb_angle, rk_angle, rb_angle, state });
     if (
       lk_angle > 120 &&
       rk_angle > 120 &&
@@ -64,18 +65,18 @@ export const squats = (
         changeConnectorColor("red");
       } else if (
         lk_angle < 150 &&
-        lk_angle > 80 &&
+        lk_angle > 70 &&
         lb_angle < 150 &&
-        lb_angle > 85 &&
+        lb_angle > 75 &&
         left_vertical_checker_angle < 85 &&
         state === 0
       ) {
         partial_state = 1;
         state = 2;
       } else if (
-        lk_angle < 80 &&
-        lb_angle < 85 &&
-        left_vertical_checker_angle < 85
+        lk_angle < 70 &&
+        left_vertical_checker_angle < 85 &&
+        lb_angle < 75
       ) {
         state = 1;
         partial_state = 0;
@@ -88,9 +89,9 @@ export const squats = (
           changeConnectorColor("red");
         } else if (
           lk_angle < 150 &&
-          lk_angle > 80 &&
+          lk_angle > 70 &&
           lb_angle < 150 &&
-          lb_angle > 85 &&
+          lb_angle > 75 &&
           knee_position(poses) &&
           left_vertical_checker_angle < 85 &&
           state === 0
@@ -98,8 +99,8 @@ export const squats = (
           partial_state = 1;
           state = 2;
         } else if (
-          lk_angle < 80 &&
-          lb_angle < 85 &&
+          lk_angle < 70 &&
+          lb_angle < 75 &&
           knee_position(poses) &&
           left_vertical_checker_angle < 85
         ) {
@@ -116,17 +117,17 @@ export const squats = (
         changeConnectorColor("red");
       } else if (
         rk_angle < 150 &&
-        rk_angle > 80 &&
+        rk_angle > 70 &&
         rb_angle < 150 &&
-        rb_angle > 85 &&
-        right_vertical_checker_angle < 85 &&
+        rb_angle > 75 &&
+        left_vertical_checker_angle < 85 &&
         state === 0
       ) {
         partial_state = 1;
         state = 2;
       } else if (
-        rk_angle < 80 &&
-        rb_angle < 85 &&
+        rk_angle < 70 &&
+        rb_angle < 75 &&
         right_vertical_checker_angle < 85
       ) {
         partial_state = 0;
@@ -140,9 +141,9 @@ export const squats = (
         changeConnectorColor("red");
       } else if (
         rk_angle < 150 &&
-        rk_angle > 80 &&
+        rk_angle > 70 &&
         rb_angle < 150 &&
-        rb_angle > 85 &&
+        rb_angle > 75 &&
         knee_position(poses) &&
         right_vertical_checker_angle < 85 &&
         state === 0
@@ -150,8 +151,8 @@ export const squats = (
         partial_state = 1;
         state = 2;
       } else if (
-        rk_angle < 80 &&
-        rb_angle < 85 &&
+        rk_angle < 70 &&
+        rb_angle < 75 &&
         knee_position(poses) &&
         right_vertical_checker_angle < 85
       ) {
