@@ -125,6 +125,14 @@ const ExerciseComponent = () => {
   const StoreExercise = async () => {
     //API call
     let host = "http://localhost:5000";
+    const exerciseD = timerHour * 3600 + timerMinutes * 60 + timerSeconds;
+    console.log({
+      exerciseIndex,
+      name: name[exerciseIndex],
+      count,
+      partialCount,
+      calories,
+    });
 
     const response = await fetch(`${host}/api/storeexercise`, {
       method: "POST",
@@ -136,18 +144,19 @@ const ExerciseComponent = () => {
         exerciseName: name[exerciseIndex],
         repsPerformed: count,
         partialReps: partialCount,
-        email: user.email,
-        exerciseDuration: timerHour * 60 + timerMinutes,
+        email: localStorage.getItem("email"),
+        exerciseDuration: exerciseD,
         caloriesBurned: calories,
       }),
     });
     const data = await response.json();
+    console.log(data);
     if (data.success) {
-      // setcount(0);
-      // data.count = 0;
-      // data.partial_count = 0;
-      // setpartialcount(0);
-      // nav("/temp");
+      setcount(0);
+      data.count = 0;
+      data.partial_count = 0;
+      setpartialcount(0);
+      nav("/temp");
     } else {
     }
   };
@@ -274,11 +283,7 @@ const ExerciseComponent = () => {
             style={{ borderRadius: "1rem" }}
             className="end-exercise"
             onClick={() => {
-              setcount(0);
-              data.count = 0;
-              data.partial_count = 0;
-              setpartialcount(0);
-              nav("/temp");
+              StoreExercise();
             }}
           >
             Change exercise &#8594;

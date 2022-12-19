@@ -9,8 +9,11 @@ export const UserState = (props) => {
   const [exercise, setExercise] = useState([{}]);
   const [meditation, setMeditation] = useState({ meditationDuration: 0 });
   const host = "http://localhost:5000";
+  const [weight, setWeight] = useState([{}]);
+  const [currentWeight, setCurrentWeight] = useState(0);
 
-  const fetchExercise = async (date = "2022-11-18") => {
+  const fetchExercise = async (date = Date.now().slice(0, 10)) => {
+    console.log(Date.now().slice(0, 10));
     //API call
     const response = await fetch(`${host}/api/fetchexercise`, {
       method: "POST",
@@ -81,6 +84,8 @@ export const UserState = (props) => {
     });
     const data = await response.json();
     setUser(data);
+    setWeight(data.weight);
+    setCurrentWeight(data.weight[weight.length - 1].weightValue);
   };
 
   return (
@@ -88,6 +93,8 @@ export const UserState = (props) => {
       value={{
         exerciseIndex,
         setExerciseIndex,
+        weight,
+        currentWeight,
         fetchExercise,
         user,
         getUser,

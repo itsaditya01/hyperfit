@@ -46,7 +46,7 @@ exports.Registration = async (request, response) => {
       name,
       email,
       password: secPass,
-      weight: [{ weightValue: weight, date: Date }],
+      weight: [{ weightValue: weight, date: Date.now() }],
       height,
       age,
       goalWeight,
@@ -293,6 +293,7 @@ exports.GetUser = async (request, response) => {
       goalWeight: user.goalWeight,
       bmi: user.bmi,
       age: user.age,
+      hydration: user.hydration,
     });
   } catch (error) {
     response

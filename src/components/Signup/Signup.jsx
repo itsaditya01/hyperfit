@@ -14,11 +14,13 @@ function Signup() {
 
   useEffect(() => {
     console.log(formData);
+    if (success) {
+      setLoader(false);
+    }
   }, []);
 
   useEffect(() => {
     console.log(loader);
-    return () => {};
   }, [loader]);
 
   const host = "http://localhost:5000";
@@ -79,11 +81,12 @@ function Signup() {
   return (
     <div className="form">
       <div className="form-container">
-        {loader ? (
+        {loader && (
           <div style={{ height: 497 }} className="df aic jcc">
             <div className="spinner df"></div>
           </div>
-        ) : success ? (
+        )}
+        {success && !loader && (
           <div style={{ height: 497 }} className="df aic jcc fc">
             <div className="df jcc ">
               <h2 style={{ textAlign: "center" }}>
@@ -100,7 +103,8 @@ function Signup() {
               <p style={{ marginLeft: 4 }}>to go to dashboard.</p>
             </div>
           </div>
-        ) : err.isError ? (
+        )}
+        {err.isError && !success && !loader && (
           <div style={{ height: 497 }} className="df aic jcc fc">
             <div className="df jcc ">
               <h2 style={{ textAlign: "center" }}>{err.ErrMessage}</h2>
@@ -115,7 +119,8 @@ function Signup() {
               <p style={{ marginLeft: 4 }}> to try again.</p>
             </div>
           </div>
-        ) : (
+        )}
+        {!success && !loader && !err.isError && (
           <form method="POST" className="" onSubmit={createUser}>
             <div className="header">
               <h1 style={{ textAlign: "center" }}>{FormTitles[page]}</h1>

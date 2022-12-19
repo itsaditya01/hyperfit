@@ -80,13 +80,49 @@ const Dashboard = () => {
   const [water, setWater] = useState(0);
   const nav = useNavigate();
   const context = useContext(UserContext);
-  const { getUser, user } = context;
+  const { getUser, user, weight, currentWeight } = context;
+  const host = "http://localhost:5000";
+  const [weightValue, setWeightValue] = useState("");
+
+  const addWeight = async () => {
+    //API call
+    const response = await fetch(`${host}/api/storeweight`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: localStorage.getItem("email"),
+        weight: parseInt(weightValue),
+      }),
+    });
+    const data = await response.json();
+    console.log(data);
+    setWeightValue("");
+  };
+  const addHydration = async () => {
+    //API call
+    const response = await fetch(`${host}/api/storehydration`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: localStorage.getItem("email"),
+        weight: parseInt(water),
+      }),
+    });
+    const data = await response.json();
+    console.log(data);
+    setWeightValue("");
+  };
   useEffect(() => {
     console.log(water);
   }, [water]);
 
   useEffect(() => {
     getUser();
+    console.log(weight);
   }, []);
 
   const logout = async () => {
@@ -151,10 +187,15 @@ const Dashboard = () => {
               <ChartComponent />
             </div>
             <div className="add-weight df fc aic">
-              <p>Add Activity</p>
-              <input type="text" placeholder="Date" />
-              <input type="text" placeholder="Weight" />
-              <button>Add</button>
+              <p>Update Weight</p>
+              <input
+                type="text"
+                placeholder="Weight"
+                style={{ color: "white" }}
+                value={weightValue}
+                onChange={(e) => setWeightValue(e.target.value)}
+              />
+              <button onClick={() => addWeight()}>Add</button>
             </div>
           </div>
         </div>
@@ -164,7 +205,10 @@ const Dashboard = () => {
               <App actual={water} total={8} />
               <button
                 className="glass-btn"
-                onClick={() => setWater((water) => water + 1)}
+                onClick={() => {
+                  setWater((water) => water + 1);
+                  addHydration();
+                }}
               >
                 +
               </button>
@@ -187,7 +231,7 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="cur-weight df aic jcc fc">
-            <h1 style={{ fontSize: 52 }}>{user.weight}</h1>
+            <h1 style={{ fontSize: 52 }}>{currentWeight}</h1>
             <br />
             <p>Current Weight</p>
           </div>

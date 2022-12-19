@@ -177,6 +177,7 @@ const ReportComponent = () => {
       }
     }
     console.log(cnt);
+    totalDuration /= 60;
     avgExerciseDuration = totalDuration / cnt;
     setTotal({
       totalDuration,
@@ -291,6 +292,7 @@ const ReportComponent = () => {
             <div
               className="dash-grid-report df jcsb fr"
               style={{ marginTop: 20 }}
+              key={ex.date}
             >
               <div style={{ position: "relative" }}>
                 <img
