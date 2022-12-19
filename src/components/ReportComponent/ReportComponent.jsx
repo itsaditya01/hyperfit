@@ -83,7 +83,7 @@ const App = ({ actual, total }) => {
           height: 160,
         }}
       >
-        <ProgressProvider valueStart={0} valueEnd={percentage}>
+        <ProgressProvider valueStart={0} valueEnd={actual}>
           {(value) => (
             <CircularProgressbar
               value={value}
@@ -142,64 +142,77 @@ const ReportComponent = () => {
   const [, updateState] = React.useState();
   const forceUpdate = React.useCallback(() => updateState({}), []);
   const context = useContext(UserContext);
-  const { exercise, meditation, fetchExercise, fetchMeditation } = context;
+  const { exercise, meditation, fetchExercise, fetchMeditation, total } =
+    context;
   console.log(exercise);
   const nav = useNavigate();
   const carousel = useRef();
   const [width, setWidth] = useState(0);
-  const [total, setTotal] = useState({
-    totalDuration: 0,
-    totalRepsPerformed: 0,
-    totalPartialReps: 0,
-    totalCaloriesBurned: 0,
-    cnt: 0,
-    avgExerciseDuration: 0,
-  });
+  // const [total, setTotal] = useState({
+  //   totalDuration: 0,
+  //   totalRepsPerformed: 0,
+  //   totalPartialReps: 0,
+  //   totalCaloriesBurned: 0,
+  //   cnt: 0,
+  //   avgExerciseDuration: 0,
+  // });
 
-  let first = () => {
-    let totalDuration = 0,
-      totalRepsPerformed = 0,
-      totalPartialReps = 0,
-      totalCaloriesBurned = 0,
-      cnt = 0,
-      avgExerciseDuration = 0;
-    let exerciseDone = [0, 0, 0, 0];
-    for (let i = 0; i < exercise.length; i++) {
-      totalDuration += exercise[i].exerciseDuration;
-      totalRepsPerformed += exercise[i].repsPerformed;
-      totalPartialReps += exercise[i].partialReps;
-      totalCaloriesBurned += exercise[i].caloriesBurned;
-      exerciseDone[exercise[i].exerciseId]++;
-    }
-    for (let i = 0; i < 4; i++) {
-      if (exerciseDone[i] > 0) {
-        cnt++;
-      }
-    }
-    console.log(cnt);
-    totalDuration /= 60;
-    avgExerciseDuration = totalDuration / cnt;
-    setTotal({
-      totalDuration,
-      totalRepsPerformed,
-      totalPartialReps,
-      totalCaloriesBurned,
-      cnt,
-      avgExerciseDuration,
-    });
-    forceUpdate();
-  };
+  // let first = () => {
+  //   let totalDuration = 0,
+  //     totalRepsPerformed = 0,
+  //     totalPartialReps = 0,
+  //     totalCaloriesBurned = 0,
+  //     cnt = 0,
+  //     avgExerciseDuration = 0;
+  //   let exerciseDone = [0, 0, 0, 0];
+  //   for (let i = 0; i < exercise.length; i++) {
+  //     totalDuration += exercise[i].exerciseDuration;
+  //     totalRepsPerformed += exercise[i].repsPerformed;
+  //     totalPartialReps += exercise[i].partialReps;
+  //     totalCaloriesBurned += exercise[i].caloriesBurned;
+  //     exerciseDone[exercise[i].exerciseId]++;
+  //   }
+  //   for (let i = 0; i < 4; i++) {
+  //     if (exerciseDone[i] > 0) {
+  //       cnt++;
+  //     }
+  //   }
+  //   console.log(cnt);
+  //   totalDuration /= 60;
+  //   avgExerciseDuration = totalDuration / cnt;
+  //   setTotal({
+  //     totalDuration,
+  //     totalRepsPerformed,
+  //     totalPartialReps,
+  //     totalCaloriesBurned,
+  //     cnt,
+  //     avgExerciseDuration,
+  //   });
+  //   forceUpdate();
+  // };
 
   useEffect(() => {
-    const temp = async () => {
-      fetchExercise().then((data) => {
-        first();
-      });
-      await fetchMeditation();
-      setWidth(width + 1);
-      // first();
-    };
-    temp();
+    // const temp = async () => {
+    let objectDate = new Date();
+
+    let day = objectDate.getDate();
+    console.log(day); // 23
+
+    let month = objectDate.getMonth() + 1;
+    console.log(month + 1); // 8
+
+    let year = objectDate.getFullYear();
+    console.log(year); // 2022
+
+    let datestr = year + "-" + month + "-" + day;
+
+    console.log(datestr);
+    fetchExercise(datestr);
+    fetchMeditation();
+    setWidth(width + 1);
+    // first();
+    // };
+    // temp();
   }, []);
   const percentage = 54;
   return (
@@ -262,14 +275,16 @@ const ReportComponent = () => {
               </div>
               <div style={{ fontSize: 38 }}>
                 {parseInt(
-                  (total.totalPartialReps / total.totalRepsPerformed) * 100
+                  (total.totalRepsPerformed /
+                    (total.totalRepsPerformed + total.totalPartialReps)) *
+                    100
                 )}
                 %
               </div>
             </div>
             <div>
               <App
-                total={total.totalRepsPerformed}
+                total={total.totalRepsPerformed + total.totalPartialReps}
                 actual={total.totalPartialReps}
               />
             </div>

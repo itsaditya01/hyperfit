@@ -122,8 +122,8 @@ const Dashboard = () => {
 
   useEffect(() => {
     getUser();
-    console.log(weight);
-  }, []);
+    // console.log(weight);
+  }, [currentWeight, weight]);
 
   const logout = async () => {
     localStorage.removeItem("email");
