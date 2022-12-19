@@ -9,6 +9,9 @@ import squatImg from "../../assets/squats-illustration.jpg";
 import { useRef } from "react";
 import { UserContext } from "../Context/UserState";
 import { useNavigate } from "react-router-dom";
+import pushupImg from "../../assets/pushup.jpg";
+import lungesImg from "../../assets/lunges-illustration.jpg";
+import legraiseImg from "../../assets/leg-raise-illustration.jpg";
 
 var data = {
   count: 0,
@@ -80,16 +83,31 @@ const PopUp = ({ text }) => {
   );
 };
 
-const ExerciseInfo = ({ name, time, idealTime, exe_img, sets, reps }) => {
+const ExerciseInfo = ({
+  name,
+  time,
+  idealTime,
+  sets,
+  reps,
+  caloriesBurned,
+}) => {
   return (
     <div className="info-main df aic jcsb">
       <div className="exe-img">
-        <img src={exe_img} />
+        {name == "squats" ? (
+          <img src={squatImg} />
+        ) : name == "pushUps" ? (
+          <img src={pushupImg} />
+        ) : name == "lunges" ? (
+          <img src={lungesImg} />
+        ) : (
+          <img src={legraiseImg} />
+        )}
       </div>
       <div className="exerciseInfo df fc">
         <div className="exe-name">{name}</div>
         <div className="info-row-1">
-          <div className="sets"> Sets: {sets}</div>
+          <div className="sets"> Sets: {parseInt(sets / 12)}</div>
           <br />
           <div className="reps">Reps: {reps}</div>
           <br />
@@ -100,8 +118,8 @@ const ExerciseInfo = ({ name, time, idealTime, exe_img, sets, reps }) => {
           </div>
           <br />
           <div className="idealTime">
-            Ideal time: <br />
-            {idealTime}
+            Calories Burned: <br />
+            {caloriesBurned} kcal
           </div>
         </div>
       </div>
@@ -111,7 +129,8 @@ const ExerciseInfo = ({ name, time, idealTime, exe_img, sets, reps }) => {
 
 const ExerciseComponent = () => {
   const context = useContext(UserContext);
-  const { exerciseIndex, storeExercise, user } = context;
+  const { exerciseIndex, storeExercise, user, exercise, fetchExercise } =
+    context;
   const [count, setCount] = useState(0);
   const [partialCount, setPartialCount] = useState(0);
   const [guideText, setGuideText] = useState("");
@@ -121,6 +140,23 @@ const ExerciseComponent = () => {
   const [timerMinutes, setTimerMinutes] = useState(0);
   const [timerSeconds, setTimerSeconds] = useState(0);
   const nav = useNavigate(null);
+
+  useEffect(() => {
+    let objectDate = new Date();
+
+    let day = objectDate.getDate();
+    console.log(day); // 23
+
+    let month = objectDate.getMonth() + 1;
+    console.log(month + 1); // 8
+
+    let year = objectDate.getFullYear();
+    console.log(year); // 2022
+
+    let datestr = year + "-" + month + "-" + day;
+    fetchExercise(datestr);
+    console.log({ exercise });
+  }, []);
 
   const StoreExercise = async () => {
     //API call
@@ -196,6 +232,7 @@ const ExerciseComponent = () => {
   };
   useEffect(() => {
     setCalories(count * perCalorie[exerciseIndex]);
+    console.log({ calories });
   }, [guideText, count]);
 
   const carousel = useRef();
@@ -247,7 +284,6 @@ const ExerciseComponent = () => {
             >
               <div className="calory df jcc aic">
                 <p style={{ fontSize: 42, marginTop: 0 }}>
-                  {" "}
                   {parseFloat(calories).toFixed(1)}
                 </p>
                 <img src={Fire} style={{ width: 52, height: 52 }} />
@@ -263,15 +299,16 @@ const ExerciseComponent = () => {
               dragConstraints={{ right: 0, left: -(width + 15) }}
               className="row-3 df"
             >
-              {completed.map((val, key) => (
+              {exercise.map((val, key) => (
                 <ExerciseInfo
-                  name={val.name}
+                  name={val.exerciseName}
                   // key={key}
                   idealTime={val.idealTime}
-                  time={val.time}
-                  exe_img={val.exe_img}
-                  sets={val.sets}
-                  reps={val.reps}
+                  time={val.exerciseDuration}
+                  sets={val.repsPerformed}
+                  reps={val.repsPerformed}
+                  caloriesBurned={val.caloriesBurned}
+                  key={key}
                 />
               ))}
             </motion.div>

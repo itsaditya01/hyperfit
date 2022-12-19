@@ -8,3 +8,7 @@
 .dates-norm {
   color: black;
 }
+.coloured {
+  background-color: blue;
+  color: white;
+}

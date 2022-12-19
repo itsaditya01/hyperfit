@@ -1,6 +1,8 @@
 import { Line } from "react-chartjs-2";
 import "./ChartComponent.css";
 import data from "./data.json";
+import { UserContext } from "../Context/UserState";
+import { useContext } from "react";
 
 import {
   Chart as ChartJS,
@@ -41,12 +43,15 @@ const monthNames = [
   "December",
 ];
 
-const ChartComponent = () => {
+const ChartComponent = ({ weight }) => {
   const chartRef = useRef(null);
+  // const context = useContext(UserContext);
+  // const { weight } = context;
+  console.log(weight[0]);
 
-  const label = data.data.map((val) => val.date);
-  const dataset = data.data.map((val) => {
-    return parseInt(val.weight) + 30;
+  const label = weight.map((val) => val.date.substr(8, 2));
+  const dataset = weight.map((val) => {
+    return parseInt(val.weightValue);
   });
   let gradient = null;
   const chartData = () => {

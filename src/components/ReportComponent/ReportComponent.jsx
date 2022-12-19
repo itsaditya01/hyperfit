@@ -1,38 +1,12 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./ReportComponent.css";
-import { motion } from "framer-motion";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import squatImg from "../../assets/squats-illustration.jpg";
 import "react-circular-progressbar/dist/styles.css";
 import Calendar from "../Calendar/Calendar";
-import { useNavigate } from "react-router-dom";
 import { UserContext } from "../Context/UserState";
 import { useContext } from "react";
 import squatIll from "../../assets/squat_ill.png";
-import pushupIll from "../../assets/pushup_ill.png";
-import legraiseIll from "../../assets/legraise_ill.png";
-import lungesIll from "../../assets/lunges_ill.png";
-
-const avgDuration = [0.26, 0.1, 0.75, 0.2];
-
-const completed = [
-  {
-    name: "Squats",
-    sets: 1,
-    reps: 0,
-    time: "1 min 20s",
-    idealTime: "1 min",
-    exe_img: squatImg,
-  },
-  {
-    name: "Squats",
-    sets: 1,
-    reps: 0,
-    time: "1 min 20s",
-    idealTime: "1 min",
-    exe_img: squatImg,
-  },
-];
+import { useNavigate } from "react-router-dom";
 
 const ProgressProvider = ({ valueStart, valueEnd, children }) => {
   const [value, setValue] = React.useState(valueStart);
@@ -41,35 +15,6 @@ const ProgressProvider = ({ valueStart, valueEnd, children }) => {
   }, [valueEnd]);
 
   return children(value);
-};
-
-const ExerciseInfo = ({ name, time, idealTime, exe_img, sets, reps }) => {
-  return (
-    <div className="info-main df aic jcsb">
-      <div className="exe-img">
-        <img src={exe_img} />
-      </div>
-      <div className="exerciseInfo df fc" style={{ textSize: 12 }}>
-        <div className="exe-name">{name}</div>
-        <div className="info-row-1" style={{ marginBottom: 5 }}>
-          <div className="sets tc"> Sets: {sets}</div>
-          <br />
-          <div className="reps tc">Reps: {reps}</div>
-          <br />
-        </div>
-        <div className="info-row-2">
-          <div className="time tc">
-            Time taken: <br /> {time}
-          </div>
-          <br />
-          <div className="idealTime tc">
-            IDeal time: <br />
-            {idealTime}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
 };
 
 const App = ({ actual, total }) => {
@@ -103,96 +48,14 @@ const App = ({ actual, total }) => {
   );
 };
 
-let exercise1 = [
-  {
-    exerciseDuration: 0,
-    exerciseId: 0,
-    exerciseName: "squats",
-    repsPerformed: 5,
-    partialReps: 1,
-    caloriesBurned: 1,
-  },
-  {
-    exerciseDuration: 0,
-    exerciseId: 1,
-    exerciseName: "lunges",
-    repsPerformed: 5,
-    partialReps: 0,
-    caloriesBurned: 3,
-  },
-  {
-    exerciseDuration: 0,
-    exerciseId: 2,
-    exerciseName: "pushUps",
-    repsPerformed: 5,
-    partialReps: 0,
-    caloriesBurned: 1,
-  },
-
-  {
-    exerciseDuration: 0,
-    exerciseId: 3,
-    exerciseName: "legRaise",
-    repsPerformed: 5,
-    partialReps: 1,
-    caloriesBurned: 1,
-  },
-];
 const ReportComponent = () => {
-  const [, updateState] = React.useState();
-  const forceUpdate = React.useCallback(() => updateState({}), []);
   const context = useContext(UserContext);
   const { exercise, meditation, fetchExercise, fetchMeditation, total } =
     context;
   console.log(exercise);
-  const nav = useNavigate();
-  const carousel = useRef();
+  const navigate = useNavigate(null);
   const [width, setWidth] = useState(0);
-  // const [total, setTotal] = useState({
-  //   totalDuration: 0,
-  //   totalRepsPerformed: 0,
-  //   totalPartialReps: 0,
-  //   totalCaloriesBurned: 0,
-  //   cnt: 0,
-  //   avgExerciseDuration: 0,
-  // });
-
-  // let first = () => {
-  //   let totalDuration = 0,
-  //     totalRepsPerformed = 0,
-  //     totalPartialReps = 0,
-  //     totalCaloriesBurned = 0,
-  //     cnt = 0,
-  //     avgExerciseDuration = 0;
-  //   let exerciseDone = [0, 0, 0, 0];
-  //   for (let i = 0; i < exercise.length; i++) {
-  //     totalDuration += exercise[i].exerciseDuration;
-  //     totalRepsPerformed += exercise[i].repsPerformed;
-  //     totalPartialReps += exercise[i].partialReps;
-  //     totalCaloriesBurned += exercise[i].caloriesBurned;
-  //     exerciseDone[exercise[i].exerciseId]++;
-  //   }
-  //   for (let i = 0; i < 4; i++) {
-  //     if (exerciseDone[i] > 0) {
-  //       cnt++;
-  //     }
-  //   }
-  //   console.log(cnt);
-  //   totalDuration /= 60;
-  //   avgExerciseDuration = totalDuration / cnt;
-  //   setTotal({
-  //     totalDuration,
-  //     totalRepsPerformed,
-  //     totalPartialReps,
-  //     totalCaloriesBurned,
-  //     cnt,
-  //     avgExerciseDuration,
-  //   });
-  //   forceUpdate();
-  // };
-
   useEffect(() => {
-    // const temp = async () => {
     let objectDate = new Date();
 
     let day = objectDate.getDate();
@@ -210,11 +73,7 @@ const ReportComponent = () => {
     fetchExercise(datestr);
     fetchMeditation(datestr);
     setWidth(width + 1);
-    // first();
-    // };
-    // temp();
   }, []);
-  const percentage = 54;
   return (
     <div className="dash-main-report jcsa">
       <div className="dash-info-report df fc">
@@ -368,6 +227,9 @@ const ReportComponent = () => {
             </div>
           );
         })}
+        <button className="return-btn" onClick={() => navigate("/dashboard")}>
+          Return to Dashboard
+        </button>
       </div>
       <div className="RightBar-report">
         <Calendar />
@@ -377,38 +239,3 @@ const ReportComponent = () => {
 };
 
 export default ReportComponent;
-// <div className="report-outer df aic jcc">
-//   <div className="report-inner df fc">
-//     <div className="report-all df">
-//       <App text="Exercises performed" total={4} actual={3} />
-//       <App text="Accuracy" total={4} actual={3} />
-//       <App text="Efficiency" total={4} actual={3} />
-//       <App text="Total calories burned" total={4} actual={3} />
-//     </div>
-//     <div className="report-individual">
-//       <div className="exercise-report-outer">
-//         <div className="exercise-report-inner">
-//           <motion.div className="outer-carousel" ref={carousel}>
-//             <motion.div
-//               drag="x"
-//               dragConstraints={{ right: 0, left: -(width + 15) }}
-//               className="row-3 df"
-//             >
-//               {completed.map((val, key) => (
-//                 <ExerciseInfo
-//                   name={val.name}
-//                   // key={key}
-//                   idealTime={val.idealTime}
-//                   time={val.time}
-//                   exe_img={val.exe_img}
-//                   sets={val.sets}
-//                   reps={val.reps}
-//                 />
-//               ))}
-//             </motion.div>
-//           </motion.div>
-//         </div>
-//       </div>
-//     </div>
-//   </div>
-// </div>
