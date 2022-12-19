@@ -80,159 +80,171 @@ const ReportComponent = () => {
         <div style={{ fontSize: 30, margin: "0px 0px 10px 10px" }}>
           Workout Summary
         </div>
-        <div className="dash-grid-report df jcsb fr">
-          <div className="comp-exercise-info-all df fc">
-            <div style={{ fontSize: 12 }}>Total duration of exercise</div>
-            <div style={{ fontSize: 50 }}>
-              {parseFloat(total.totalDuration).toFixed(2)}
-            </div>
-            <div style={{ fontSize: 16 }}>min/day</div>
-          </div>
-          <div className="comp-exercise-info-all df fc">
-            <div style={{ fontSize: 12 }}>Total duration of meditation</div>
-            <div style={{ fontSize: 50 }}>{meditation}</div>
-            <div style={{ fontSize: 16 }}>min/day</div>
-          </div>
-          <div className="comp-exercise-info-all df fc">
-            <div style={{ fontSize: 12 }}>Average duration of exercise</div>
-            <div style={{ fontSize: 50 }}>
-              {parseFloat(total.avgExerciseDuration).toFixed(2)}
-            </div>
-            <div style={{ fontSize: 16 }}>min/exercise</div>
-          </div>
-        </div>
-        <div className="info-progressbars df fr jcsb">
-          <div className="info-progressbar df fr ">
-            <div className="text-info-report df fc jcc">
-              <div style={{ fontSize: 28 }}>Exercise</div>
-              <div style={{ fontSize: 11, marginBottom: 5, width: 176 }}>
-                Total exercise performed today
-              </div>
-              <div style={{ fontSize: 38 }}>{total.cnt}/4</div>
-            </div>
-            <div>
-              <App total={4} actual={total.cnt} />
-            </div>
-          </div>
-          <div className="info-progressbar first-bar df fr">
-            <div className="text-info-report df fc jcc">
-              <div style={{ fontSize: 28 }}>Calory</div>
-              <div style={{ fontSize: 11, marginBottom: 5, width: 176 }}>
-                Total calories burned today
-              </div>
-              <div style={{ fontSize: 38 }}>
-                {parseFloat(total.totalCaloriesBurned).toFixed(1)}
-              </div>
-            </div>
-            <div>
-              <App total={500} actual={300} />
-            </div>
-          </div>
-        </div>
-        <div className="info-progressbars df fr jcsb">
-          <div className="info-progressbar second-bar df fr ">
-            <div className="text-info-report df fc jcc">
-              <div style={{ fontSize: 28 }}>Accuracy</div>
-              <div style={{ fontSize: 11, marginBottom: 5, width: 176 }}>
-                Accuracy of exercise performed today
-              </div>
-              <div style={{ fontSize: 38 }}>
-                {parseInt(
-                  (total.totalRepsPerformed /
-                    (total.totalRepsPerformed + total.totalPartialReps)) *
-                    100
-                )}
-                %
-              </div>
-            </div>
-            <div>
-              <App
-                total={total.totalRepsPerformed + total.totalPartialReps}
-                actual={total.totalRepsPerformed}
-              />
-            </div>
-          </div>
-          <div className="info-progressbar third-bar df fr">
-            <div className="text-info-report df fc jcc">
-              <div style={{ fontSize: 28 }}>Efficiency</div>
-              <div style={{ fontSize: 11, marginBottom: 5, width: 176 }}>
-                Efficiency of exercise performed today
-              </div>
-              <div style={{ fontSize: 38 }}>80%</div>
-            </div>
-            <div>
-              <App total={10} actual={8} />
-            </div>
-          </div>
-        </div>
-        {exercise.map((ex) => {
-          return (
-            <div
-              className="dash-grid-report df jcsb fr"
-              style={{ marginTop: 20 }}
-              key={ex.date}
-            >
-              <div style={{ position: "relative" }}>
-                <img
-                  src={squatIll}
-                  alt=""
-                  style={{ width: 150, overflow: "visible" }}
-                />
-                <div
-                  style={{
-                    fontSize: 20,
-                    position: "absolute",
-                    bottom: "5%",
-                    color: "black",
-                    zIndex: 99,
-                    left: "25%",
-                  }}
-                >
-                  {ex.exerciseName}
-                </div>
-              </div>
+        {total.cnt > 0 && (
+          <>
+            <div className="dash-grid-report df jcsb fr">
               <div className="comp-exercise-info-all df fc">
-                <div style={{ fontSize: 12 }}>Duration of exercise</div>
-                <div style={{ fontSize: 50 }}>{ex.exerciseDuration}</div>
+                <div style={{ fontSize: 12 }}>Total duration of exercise</div>
+                <div style={{ fontSize: 50 }}>
+                  {parseFloat(total.totalDuration).toFixed(2)}
+                </div>
                 <div style={{ fontSize: 16 }}>min/day</div>
               </div>
               <div className="comp-exercise-info-all df fc">
-                <div style={{ fontSize: 12 }}>Reps performed</div>
-                <div style={{ fontSize: 50 }}>{ex.repsPerformed}</div>
-                <div style={{ fontSize: 16 }}>reps</div>
+                <div style={{ fontSize: 12 }}>Total duration of meditation</div>
+                <div style={{ fontSize: 50 }}>{meditation}</div>
+                <div style={{ fontSize: 16 }}>min/day</div>
               </div>
               <div className="comp-exercise-info-all df fc">
-                <div style={{ fontSize: 12 }}>Partial reps performed</div>
-                <div style={{ fontSize: 50 }}>{ex.partialReps}</div>
-                <div style={{ fontSize: 16 }}>reps</div>
-              </div>
-              <div className="comp-exercise-info-all df fc">
-                <div style={{ fontSize: 12 }}>calories burned</div>
+                <div style={{ fontSize: 12 }}>Average duration of exercise</div>
                 <div style={{ fontSize: 50 }}>
-                  {parseFloat(ex.caloriesBurned).toFixed(1)}
+                  {parseFloat(total.avgExerciseDuration).toFixed(2)}
                 </div>
-                <div style={{ fontSize: 16 }}>cal/day</div>
-              </div>
-              <div className="comp-exercise-info-all df fc">
-                <div style={{ fontSize: 12 }}>Accuracy achieved</div>
-                <div style={{ fontSize: 50 }}>
-                  {parseInt(
-                    (ex.repsPerformed / (ex.repsPerformed + ex.partialReps)) *
-                      100
-                  )}
-                  %
-                </div>
-                <div style={{ fontSize: 16 }}>percentage</div>
+                <div style={{ fontSize: 16 }}>min/exercise</div>
               </div>
             </div>
-          );
-        })}
-        <button className="return-btn" onClick={() => navigate("/dashboard")}>
-          Return to Dashboard
-        </button>
+            <div className="info-progressbars df fr jcsb">
+              <div className="info-progressbar df fr ">
+                <div className="text-info-report df fc jcc">
+                  <div style={{ fontSize: 28 }}>Exercise</div>
+                  <div style={{ fontSize: 11, marginBottom: 5, width: 176 }}>
+                    Total exercise performed today
+                  </div>
+                  <div style={{ fontSize: 38 }}>{total.cnt}/4</div>
+                </div>
+                <div>
+                  <App total={4} actual={total.cnt} />
+                </div>
+              </div>
+              <div className="info-progressbar first-bar df fr">
+                <div className="text-info-report df fc jcc">
+                  <div style={{ fontSize: 28 }}>Calory</div>
+                  <div style={{ fontSize: 11, marginBottom: 5, width: 176 }}>
+                    Total calories burned today
+                  </div>
+                  <div style={{ fontSize: 38 }}>
+                    {parseFloat(total.totalCaloriesBurned).toFixed(1)}
+                  </div>
+                </div>
+                <div>
+                  <App total={500} actual={300} />
+                </div>
+              </div>
+            </div>
+            <div className="info-progressbars df fr jcsb">
+              <div className="info-progressbar second-bar df fr ">
+                <div className="text-info-report df fc jcc">
+                  <div style={{ fontSize: 28 }}>Accuracy</div>
+                  <div style={{ fontSize: 11, marginBottom: 5, width: 176 }}>
+                    Accuracy of exercise performed today
+                  </div>
+                  <div style={{ fontSize: 38 }}>
+                    {parseInt(
+                      (total.totalRepsPerformed /
+                        (total.totalRepsPerformed + total.totalPartialReps)) *
+                        100
+                    )}
+                    %
+                  </div>
+                </div>
+                <div>
+                  <App
+                    total={total.totalRepsPerformed + total.totalPartialReps}
+                    actual={total.totalRepsPerformed}
+                  />
+                </div>
+              </div>
+              <div className="info-progressbar third-bar df fr">
+                <div className="text-info-report df fc jcc">
+                  <div style={{ fontSize: 28 }}>Efficiency</div>
+                  <div style={{ fontSize: 11, marginBottom: 5, width: 176 }}>
+                    Efficiency of exercise performed today
+                  </div>
+                  <div style={{ fontSize: 38 }}>80%</div>
+                </div>
+                <div>
+                  <App total={10} actual={8} />
+                </div>
+              </div>
+            </div>
+            {exercise.map((ex) => {
+              return (
+                <div
+                  className="dash-grid-report df jcsb fr"
+                  style={{ marginTop: 20 }}
+                  key={ex.date}
+                >
+                  <div style={{ position: "relative" }}>
+                    <img
+                      src={squatIll}
+                      alt=""
+                      style={{ width: 150, overflow: "visible" }}
+                    />
+                    <div
+                      style={{
+                        fontSize: 20,
+                        position: "absolute",
+                        bottom: "5%",
+                        color: "black",
+                        zIndex: 99,
+                        left: "25%",
+                      }}
+                    >
+                      {ex.exerciseName}
+                    </div>
+                  </div>
+                  <div className="comp-exercise-info-all df fc">
+                    <div style={{ fontSize: 12 }}>Duration of exercise</div>
+                    <div style={{ fontSize: 50 }}>{ex.exerciseDuration}</div>
+                    <div style={{ fontSize: 16 }}>min/day</div>
+                  </div>
+                  <div className="comp-exercise-info-all df fc">
+                    <div style={{ fontSize: 12 }}>Reps performed</div>
+                    <div style={{ fontSize: 50 }}>{ex.repsPerformed}</div>
+                    <div style={{ fontSize: 16 }}>reps</div>
+                  </div>
+                  <div className="comp-exercise-info-all df fc">
+                    <div style={{ fontSize: 12 }}>Partial reps performed</div>
+                    <div style={{ fontSize: 50 }}>{ex.partialReps}</div>
+                    <div style={{ fontSize: 16 }}>reps</div>
+                  </div>
+                  <div className="comp-exercise-info-all df fc">
+                    <div style={{ fontSize: 12 }}>calories burned</div>
+                    <div style={{ fontSize: 50 }}>
+                      {parseFloat(ex.caloriesBurned).toFixed(1)}
+                    </div>
+                    <div style={{ fontSize: 16 }}>cal/day</div>
+                  </div>
+                  <div className="comp-exercise-info-all df fc">
+                    <div style={{ fontSize: 12 }}>Accuracy achieved</div>
+                    <div style={{ fontSize: 50 }}>
+                      {parseInt(
+                        (ex.repsPerformed /
+                          (ex.repsPerformed + ex.partialReps)) *
+                          100
+                      )}
+                      %
+                    </div>
+                    <div style={{ fontSize: 16 }}>percentage</div>
+                  </div>
+                </div>
+              );
+            })}
+          </>
+        )}
+        {total.cnt == 0 && (
+          <div style={{ height: "100vh", fontSize: 32 }} className="df aic jcc">
+            No data avialable.
+          </div>
+        )}
       </div>
-      <div className="RightBar-report">
-        <Calendar />
+      <div className="df aic jcsb fc">
+        <div className="RightBar-report">
+          <Calendar />
+        </div>
+        <button className="return-btn" onClick={() => navigate("/dashboard")}>
+          Return to Dashboard &#8594;
+        </button>
       </div>
     </div>
   );
