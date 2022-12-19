@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./Calendar.css";
 
 const months = [
@@ -36,59 +37,66 @@ const getDates = (day) => {
   return dates;
 };
 
-const CalendarDatesComponent = ({ getDates, day }) => (
-  <div
-    style={{
-      display: "flex",
-      flex: 6,
-      flexDirection: "column",
-      fontSize: 20,
-      alignItems: "center",
-    }}
-  >
+const CalendarDatesComponent = ({ getDates, day }) => {
+  const navigate = useNavigate(null);
+  return (
     <div
       style={{
-        // width: 50,
-        color: "#111",
-        textAlign: "center",
+        display: "flex",
+        flex: 6,
+        flexDirection: "column",
+        fontSize: 20,
+        alignItems: "center",
       }}
     >
-      {day}
-    </div>
+      <div
+        style={{
+          // width: 50,
+          color: "#111",
+          textAlign: "center",
+        }}
+      >
+        {day}
+      </div>
 
-    {getDates().map((value) => {
-      if (value === -1) {
-        return <div style={{ height: 50, visibility: "collapse" }}>-1</div>;
-      }
+      {getDates().map((value) => {
+        if (value === -1) {
+          return <div style={{ height: 50, visibility: "collapse" }}>-1</div>;
+        }
 
-      return (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            width: "100%",
-            maxWidth: 50,
-            height: 50,
-            borderRadius: 25,
-            justifyContent: "center",
-            alignItems: "center",
-            textAlign: "center",
-          }}
-        >
+        return (
           <div
-            className={value === new Date().getDate() ? "dates" : "dates-norm"}
             style={{
-              borderRadius: "50%",
-              width: 30,
+              display: "flex",
+              flexDirection: "column",
+              width: "100%",
+              maxWidth: 50,
+              height: 50,
+              borderRadius: 25,
+              justifyContent: "center",
+              alignItems: "center",
+              textAlign: "center",
             }}
           >
-            <div style={{ textAlign: "center" }}>{value}</div>
+            <div
+              className={
+                value === new Date().getDate() ? "dates" : "dates-norm"
+              }
+              style={{
+                borderRadius: "50%",
+                width: 30,
+                cursor: "pointer",
+              }}
+              onClick={() => navigate("/report")}
+            >
+              <div style={{ textAlign: "center" }}>{value}</div>
+            </div>
           </div>
-        </div>
-      );
-    })}
-  </div>
-);
+        );
+      })}
+    </div>
+  );
+};
 
 const Calendar = () => {
   return (

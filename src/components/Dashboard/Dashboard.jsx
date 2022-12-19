@@ -137,7 +137,7 @@ const Dashboard = () => {
           Hello, {localStorage.getItem("name")}
         </h1>
         <button
-          className="cp"
+          className="cp logout-btn"
           style={{
             background: "#3352e7",
             padding: "10px 20px",
@@ -186,7 +186,7 @@ const Dashboard = () => {
               </div>
               <ChartComponent />
             </div>
-            <div className="add-weight df fc aic">
+            <div className="add-weight df fc aic jcc">
               <p>Update Weight</p>
               <input
                 type="text"
