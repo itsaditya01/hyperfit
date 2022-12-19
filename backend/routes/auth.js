@@ -26,6 +26,7 @@ exports.Registration = async (request, response) => {
   const height = request.body.height;
   const age = request.body.age;
   const goalWeight = request.body.goalWeight;
+  const bmi = request.body.bmi;
 
   try {
     //Check whether user with this email exists or not
@@ -50,6 +51,7 @@ exports.Registration = async (request, response) => {
       height,
       age,
       goalWeight,
+      bmi,
     });
 
     user.save(async (err, user) => {

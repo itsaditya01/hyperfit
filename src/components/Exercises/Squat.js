@@ -119,7 +119,7 @@ export const squats = (
         rk_angle > 80 &&
         rb_angle < 150 &&
         rb_angle > 85 &&
-        left_vertical_checker_angle < 85 &&
+        right_vertical_checker_angle < 85 &&
         state === 0
       ) {
         partial_state = 1;
@@ -144,7 +144,7 @@ export const squats = (
         rb_angle < 150 &&
         rb_angle > 85 &&
         knee_position(poses) &&
-        left_vertical_checker_angle < 85 &&
+        right_vertical_checker_angle < 85 &&
         state === 0
       ) {
         partial_state = 1;

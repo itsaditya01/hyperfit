@@ -35,6 +35,7 @@ function Signup() {
     e.preventDefault();
     setLoader(true);
     const { name, email, password, weight, height, age, goalWeight } = formData;
+    const bmi = parseFloat(weight / (height * height * 0.00001)).toFixed(2);
     const response = await fetch(`${host}/api/auth/register`, {
       method: "POST",
       headers: {
@@ -48,6 +49,7 @@ function Signup() {
         height: parseInt(height),
         age: parseInt(age),
         goalWeight: parseInt(goalWeight),
+        bmi,
       }),
     });
     const data = await response.json();

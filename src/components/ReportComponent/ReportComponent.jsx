@@ -193,7 +193,9 @@ const ReportComponent = () => {
               </div>
               <div className="comp-exercise-info-all df fc">
                 <div style={{ fontSize: 12 }}>Duration of exercise</div>
-                <div style={{ fontSize: 50 }}>{ex.exerciseDuration}</div>
+                <div style={{ fontSize: 50 }}>
+                  {parseFloat(ex.exerciseDuration / 60).toFixed(1)}
+                </div>
                 <div style={{ fontSize: 16 }}>min/day</div>
               </div>
               <div className="comp-exercise-info-all df fc">
