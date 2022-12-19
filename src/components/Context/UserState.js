@@ -7,7 +7,7 @@ export const UserState = (props) => {
   const [exerciseIndex, setExerciseIndex] = useState();
   const [user, setUser] = useState({});
   const [exercise, setExercise] = useState([{}]);
-  const [meditation, setMeditation] = useState({ meditationDuration: 0 });
+  const [meditation, setMeditation] = useState(0);
   const host = "http://localhost:5000";
   const [weight, setWeight] = useState([{}]);
   const [currentWeight, setCurrentWeight] = useState(0);
@@ -22,7 +22,6 @@ export const UserState = (props) => {
 
   const fetchExercise = async (dateInfo) => {
     //API call
-    console.log(dateInfo);
     const response = await fetch(`${host}/api/fetchexercise`, {
       method: "POST",
       headers: {
@@ -31,7 +30,6 @@ export const UserState = (props) => {
       body: JSON.stringify({ email: localStorage.getItem("email") }),
     });
     const data = await response.json();
-    console.log(data);
 
     let newData = data.filter((d) => {
       return d.date.slice(0, 10) === dateInfo;
@@ -55,7 +53,6 @@ export const UserState = (props) => {
         cnt++;
       }
     }
-    console.log(cnt);
     totalDuration /= 60;
     avgExerciseDuration = totalDuration / cnt;
     setTotal({
@@ -90,7 +87,7 @@ export const UserState = (props) => {
     setExercise(newData);
   };
 
-  const fetchMeditation = async (date = "2022-11-18") => {
+  const fetchMeditation = async (date) => {
     //API call
     const response = await fetch(`${host}/api/fetchmeditation`, {
       method: "POST",
@@ -101,12 +98,13 @@ export const UserState = (props) => {
     });
     const data = await response.json();
     console.log(data);
-
+    let da = 0;
     let newData = data.filter((d) => {
       if (d.meditationDate.slice(0, 10) === date) {
-        setMeditation(meditation.meditationDuration + d.meditationDuration);
+        da += d.meditationDuration;
       }
     });
+    setMeditation(parseFloat(da / 60).toFixed(2));
     console.log(newData);
   };
 

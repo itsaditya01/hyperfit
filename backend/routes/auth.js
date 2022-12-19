@@ -81,6 +81,7 @@ exports.Registration = async (request, response) => {
         authtoken,
         success: true,
         email: user.email,
+        name: user.name,
         uid: user._id,
         message: `Registration is done successfully.`,
         severity: "success",

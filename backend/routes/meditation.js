@@ -12,9 +12,11 @@ exports.StoreMeditation = async (request, response) => {
         email: email,
       },
       {
-        meditation: {
-          meditationDate: date,
-          meditationDuration: meditationDuration,
+        $push: {
+          meditation: {
+            meditationDate: date,
+            meditationDuration: meditationDuration,
+          },
         },
       }
     );
