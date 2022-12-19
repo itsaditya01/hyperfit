@@ -30,6 +30,7 @@ const Login = () => {
     if (data.success) {
       localStorage.setItem("email", data.user.email);
       localStorage.setItem("name", data.user.name);
+      localStorage.setItem("water", "0");
       console.log(localStorage.getItem("email"));
       navigate("/dashboard");
     } else {

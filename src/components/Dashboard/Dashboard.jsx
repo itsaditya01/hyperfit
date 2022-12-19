@@ -81,7 +81,7 @@ const App = ({ text, actual, total, water }) => {
 };
 
 const Dashboard = () => {
-  const [water, setWater] = useState(0);
+  const [water, setWater] = useState(parseInt(localStorage.getItem("water")));
   const nav = useNavigate();
   const context = useContext(UserContext);
   const { getUser, user, weight, currentWeight } = context;
@@ -121,16 +121,12 @@ const Dashboard = () => {
   //   setWeightValue("");
   // };
   useEffect(() => {
-    if (water === 0) {
-      setWater(parseInt(localStorage.getItem("water")));
-    } else {
-      localStorage.setItem("water", water);
-    }
+    localStorage.setItem("water", water);
   }, [water]);
 
   useEffect(() => {
     getUser();
-    // console.log(weight);
+    console.log(weight);
   }, [currentWeight, weight]);
 
   const logout = async () => {

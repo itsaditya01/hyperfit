@@ -55,6 +55,7 @@ function Signup() {
     if (data.success) {
       localStorage.setItem("email", data.email);
       localStorage.setItem("name", data.name);
+      localStorage.setItem("water", "0");
       setSuccess(true);
     } else {
       setErr({ isError: true, ErrMessage: data.message });
