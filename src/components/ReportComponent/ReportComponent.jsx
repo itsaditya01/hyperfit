@@ -83,7 +83,9 @@ const ReportComponent = () => {
         <div className="dash-grid-report df jcsb fr">
           <div className="comp-exercise-info-all df fc">
             <div style={{ fontSize: 12 }}>Total duration of exercise</div>
-            <div style={{ fontSize: 50 }}>{total.totalDuration}</div>
+            <div style={{ fontSize: 50 }}>
+              {parseFloat(total.totalDuration).toFixed(2)}
+            </div>
             <div style={{ fontSize: 16 }}>min/day</div>
           </div>
           <div className="comp-exercise-info-all df fc">
@@ -93,7 +95,9 @@ const ReportComponent = () => {
           </div>
           <div className="comp-exercise-info-all df fc">
             <div style={{ fontSize: 12 }}>Average duration of exercise</div>
-            <div style={{ fontSize: 50 }}>{total.avgExerciseDuration}</div>
+            <div style={{ fontSize: 50 }}>
+              {parseFloat(total.avgExerciseDuration).toFixed(2)}
+            </div>
             <div style={{ fontSize: 16 }}>min/exercise</div>
           </div>
         </div>

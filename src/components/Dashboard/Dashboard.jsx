@@ -130,7 +130,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     getUser();
-    // console.log(weight);
+    console.log(weight);
   }, [currentWeight, weight]);
 
   const logout = async () => {
@@ -193,7 +193,7 @@ const Dashboard = () => {
                   {monthNames[new Date().getMonth()]}
                 </h1>
               </div>
-              <ChartComponent />
+              {weight[0] != {} && <ChartComponent weight={weight} />}
             </div>
             <div className="add-weight df fc aic jcc">
               <p>Update Weight</p>

@@ -9,7 +9,7 @@ export const UserState = (props) => {
   const [exercise, setExercise] = useState([{}]);
   const [meditation, setMeditation] = useState(0);
   const host = "http://localhost:5000";
-  const [weight, setWeight] = useState([{}]);
+  const [weight, setWeight] = useState([]);
   const [currentWeight, setCurrentWeight] = useState(0);
   const [total, setTotal] = useState({
     totalDuration: 0,
@@ -118,9 +118,9 @@ export const UserState = (props) => {
       body: JSON.stringify({ email: localStorage.getItem("email") }),
     });
     const data = await response.json();
+    setWeight(data.weight);
     setUser(data);
     setCurrentWeight(data.weight[weight.length - 1].weightValue);
-    setWeight(data.weight);
   };
 
   return (
