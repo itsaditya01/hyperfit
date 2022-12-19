@@ -38,7 +38,11 @@ const ProgressProvider = ({ valueStart, valueEnd, children }) => {
   return children(value);
 };
 
-const App = ({ text, actual, total }) => {
+const App = ({ text, actual, total, water }) => {
+  // useEffect(() => {
+  //   const percentage = (actual / total) * 100;
+  // }, [water]);
+
   const percentage = (actual / total) * 100;
   const [valueEnd, setValueEnd] = React.useState(percentage);
   return (
@@ -57,19 +61,19 @@ const App = ({ text, actual, total }) => {
           src={glass}
           style={{ position: "absolute", top: 40, left: 50, width: 32 }}
         />
-        <ProgressProvider valueStart={0} valueEnd={valueEnd}>
-          {(value) => (
-            <CircularProgressbar
-              value={value}
-              styles={buildStyles({
-                pathTransitionDuration: 0.8,
-                pathColor: `#1aa7ec`,
-                textColor: "#f88",
-                trailColor: "#d6d6d6",
-              })}
-            />
-          )}
-        </ProgressProvider>
+        {/* <ProgressProvider valueStart={0} valueEnd={valueEnd}>
+          {(value) => ( */}
+        <CircularProgressbar
+          value={percentage}
+          styles={buildStyles({
+            pathTransitionDuration: 0.8,
+            pathColor: `#1aa7ec`,
+            textColor: "#f88",
+            trailColor: "#d6d6d6",
+          })}
+        />
+        {/* )} */}
+        {/* </ProgressProvider> */}
       </div>
       <div style={{ fontSize: 14, textAlign: "center" }}>{text}</div>
     </div>
@@ -100,24 +104,28 @@ const Dashboard = () => {
     console.log(data);
     setWeightValue("");
   };
-  const addHydration = async () => {
-    //API call
-    const response = await fetch(`${host}/api/storehydration`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: localStorage.getItem("email"),
-        weight: parseInt(water),
-      }),
-    });
-    const data = await response.json();
-    console.log(data);
-    setWeightValue("");
-  };
+  // const addHydration = async () => {
+  //   //API call
+  //   const response = await fetch(`${host}/api/storehydration`, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       email: localStorage.getItem("email"),
+  //       weight: parseInt(water),
+  //     }),
+  //   });
+  //   const data = await response.json();
+  //   console.log(data);
+  //   setWeightValue("");
+  // };
   useEffect(() => {
-    console.log(water);
+    if (water === 0) {
+      setWater(parseInt(localStorage.getItem("water")));
+    } else {
+      localStorage.setItem("water", water);
+    }
   }, [water]);
 
   useEffect(() => {
@@ -128,6 +136,7 @@ const Dashboard = () => {
   const logout = async () => {
     localStorage.removeItem("email");
     localStorage.removeItem("name");
+    localStorage.removeItem("water");
     nav("/");
   };
   return (
@@ -202,12 +211,13 @@ const Dashboard = () => {
         <div className="row-2-dash df jcsa aic">
           <div className="water-con df jcc aic" style={{ marginLeft: 25 }}>
             <div className="df fc jcc aic">
-              <App actual={water} total={8} />
+              <App actual={water} total={8} water={water} />
               <button
                 className="glass-btn"
                 onClick={() => {
-                  setWater((water) => water + 1);
-                  addHydration();
+                  if (water <= 7) {
+                    setWater(water + 1);
+                  }
                 }}
               >
                 +

@@ -19,10 +19,6 @@ function Signup() {
     }
   }, []);
 
-  useEffect(() => {
-    console.log(loader);
-  }, [loader]);
-
   const host = "http://localhost:5000";
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -57,14 +53,13 @@ function Signup() {
     const data = await response.json();
     console.log(data);
     if (data.success) {
-      localStorage.setItem("email", data.user.email);
-      localStorage.setItem("name", data.user.name);
-      setLoader(false);
+      localStorage.setItem("email", data.email);
+      localStorage.setItem("name", data.name);
       setSuccess(true);
     } else {
-      setLoader(false);
       setErr({ isError: true, ErrMessage: data.message });
     }
+    setLoader(false);
     console.log(loader);
   };
 

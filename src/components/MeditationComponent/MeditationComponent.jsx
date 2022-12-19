@@ -57,11 +57,12 @@ export const MeditationComponent = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: user.email,
-        meditationDuration: timerHour * 60 + timerMinutes,
+        email: localStorage.getItem("email"),
+        meditationDuration: timerHour * 3600 + timerMinutes * 60 + timerSeconds,
       }),
     });
     const data = await response.json();
+    console.log(data);
     if (data.success) {
       nav("/dashboard");
     } else {

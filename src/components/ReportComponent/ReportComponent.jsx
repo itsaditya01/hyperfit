@@ -28,7 +28,7 @@ const App = ({ actual, total }) => {
           height: 160,
         }}
       >
-        <ProgressProvider valueStart={0} valueEnd={actual}>
+        <ProgressProvider valueStart={0} valueEnd={percentage}>
           {(value) => (
             <CircularProgressbar
               value={value}
@@ -71,7 +71,7 @@ const ReportComponent = () => {
 
     console.log(datestr);
     fetchExercise(datestr);
-    fetchMeditation();
+    fetchMeditation(datestr);
     setWidth(width + 1);
   }, []);
   return (
@@ -88,7 +88,7 @@ const ReportComponent = () => {
           </div>
           <div className="comp-exercise-info-all df fc">
             <div style={{ fontSize: 12 }}>Total duration of meditation</div>
-            <div style={{ fontSize: 50 }}>{meditation.meditationDuration}</div>
+            <div style={{ fontSize: 50 }}>{meditation}</div>
             <div style={{ fontSize: 16 }}>min/day</div>
           </div>
           <div className="comp-exercise-info-all df fc">
@@ -144,7 +144,7 @@ const ReportComponent = () => {
             <div>
               <App
                 total={total.totalRepsPerformed + total.totalPartialReps}
-                actual={total.totalPartialReps}
+                actual={total.totalRepsPerformed}
               />
             </div>
           </div>
@@ -212,7 +212,11 @@ const ReportComponent = () => {
               <div className="comp-exercise-info-all df fc">
                 <div style={{ fontSize: 12 }}>Accuracy achieved</div>
                 <div style={{ fontSize: 50 }}>
-                  {parseInt((ex.partialReps / ex.repsPerformed) * 100)}%
+                  {parseInt(
+                    (ex.repsPerformed / (ex.repsPerformed + ex.partialReps)) *
+                      100
+                  )}
+                  %
                 </div>
                 <div style={{ fontSize: 16 }}>percentage</div>
               </div>
