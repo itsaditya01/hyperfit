@@ -1,5 +1,7 @@
-import React from "react";
+import { React, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../Context/UserState";
+import { useContext } from "react";
 import "./Calendar.css";
 
 const months = [
@@ -37,8 +39,17 @@ const getDates = (day) => {
   return dates;
 };
 
-const CalendarDatesComponent = ({ getDates, day }) => {
-  const navigate = useNavigate(null);
+const CalendarDatesComponent = ({
+  getDates,
+  day,
+  fetchExercise,
+  fetchMeditation,
+  clicked,
+  setClicked,
+}) => {
+  // useEffect(() => {
+  //   console.log(clicked);
+  // }, [clicked]);
   return (
     <div
       style={{
@@ -80,16 +91,37 @@ const CalendarDatesComponent = ({ getDates, day }) => {
           >
             <div
               className={
-                value === new Date().getDate() ? "dates" : "dates-norm"
+                (value === new Date().getDate() && "dates") ||
+                (clicked === value && "coloured") ||
+                "dates-norm"
               }
               style={{
                 borderRadius: "50%",
                 width: 30,
                 cursor: "pointer",
               }}
-              onClick={() => navigate("/report")}
+              onClick={() => {
+                if (value <= new Date().getDate()) {
+                  let objectDate = new Date();
+                  let year = objectDate.getFullYear();
+                  let month = months[new Date().getMonth()].id + 1;
+                  let day = value;
+                  let datestr = year + "-" + month + "-" + day;
+                  fetchExercise(datestr);
+                  fetchMeditation();
+                  setClicked(value);
+                }
+              }}
             >
-              <div style={{ textAlign: "center" }}>{value}</div>
+              <div
+                style={{
+                  textAlign: "center",
+                  color: new Date().getDate() < value && "gray",
+                  cursor: new Date().getDate() < value && "initial",
+                }}
+              >
+                {value}
+              </div>
             </div>
           </div>
         );
@@ -99,6 +131,9 @@ const CalendarDatesComponent = ({ getDates, day }) => {
 };
 
 const Calendar = () => {
+  const context = useContext(UserContext);
+  const { fetchExercise, fetchMeditation } = context;
+  const [clicked, setClicked] = useState(0);
   return (
     <>
       <div
@@ -108,7 +143,18 @@ const Calendar = () => {
           fontWeight: 300,
         }}
       >
-        <div style={{ flex: 1, fontSize: 40, fontWeight: 700, color: "black" }}>
+        <div
+          style={{
+            flex: 1,
+            fontSize: 40,
+            fontWeight: 700,
+            background: "black",
+            color: "white",
+            padding: 20,
+            borderTopLeftRadius: 27,
+            borderTopRightRadius: 27,
+          }}
+        >
           {months[new Date().getMonth()].name}
         </div>
       </div>
@@ -117,15 +163,65 @@ const Calendar = () => {
           display: "flex",
           flexDirection: "row",
           marginTop: 30,
+          padding: "0px 20px",
         }}
       >
-        <CalendarDatesComponent getDates={() => getDates(0)} day="S" />
-        <CalendarDatesComponent getDates={() => getDates(1)} day="M" />
-        <CalendarDatesComponent getDates={() => getDates(2)} day="T" />
-        <CalendarDatesComponent getDates={() => getDates(3)} day="W" />
-        <CalendarDatesComponent getDates={() => getDates(4)} day="T" />
-        <CalendarDatesComponent getDates={() => getDates(5)} day="F" />
-        <CalendarDatesComponent getDates={() => getDates(6)} day="S" />
+        <CalendarDatesComponent
+          getDates={() => getDates(0)}
+          day="S"
+          fetchExercise={fetchExercise}
+          fetchMeditation={fetchMeditation}
+          setClicked={setClicked}
+          clicked={clicked}
+        />
+        <CalendarDatesComponent
+          getDates={() => getDates(1)}
+          day="M"
+          fetchExercise={fetchExercise}
+          fetchMeditation={fetchMeditation}
+          setClicked={setClicked}
+          clicked={clicked}
+        />
+        <CalendarDatesComponent
+          getDates={() => getDates(2)}
+          day="T"
+          fetchExercise={fetchExercise}
+          fetchMeditation={fetchMeditation}
+          setClicked={setClicked}
+          clicked={clicked}
+        />
+        <CalendarDatesComponent
+          getDates={() => getDates(3)}
+          day="W"
+          fetchExercise={fetchExercise}
+          fetchMeditation={fetchMeditation}
+          setClicked={setClicked}
+          clicked={clicked}
+        />
+        <CalendarDatesComponent
+          getDates={() => getDates(4)}
+          day="T"
+          fetchExercise={fetchExercise}
+          fetchMeditation={fetchMeditation}
+          setClicked={setClicked}
+          clicked={clicked}
+        />
+        <CalendarDatesComponent
+          getDates={() => getDates(5)}
+          day="F"
+          fetchExercise={fetchExercise}
+          fetchMeditation={fetchMeditation}
+          setClicked={setClicked}
+          clicked={clicked}
+        />
+        <CalendarDatesComponent
+          getDates={() => getDates(6)}
+          day="S"
+          fetchExercise={fetchExercise}
+          fetchMeditation={fetchMeditation}
+          setClicked={setClicked}
+          clicked={clicked}
+        />
       </div>
     </>
   );

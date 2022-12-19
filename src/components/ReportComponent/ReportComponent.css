@@ -77,7 +77,6 @@
   height: max-content;
   background-color: white;
   border-radius: 30px;
-  padding: 20px;
   width: 300px;
   margin-top: 81px;
 }
@@ -145,4 +144,18 @@
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #b30000;
+}
+
+.return-btn {
+  width: max-content;
+  margin-left: auto;
+  margin-top: 30px;
+  font-size: 20px;
+  border-radius: 18px;
+  padding: 10px;
+  outline: none;
+  border: none;
+  background-color: #3352e7;
+  color: white;
+  cursor: pointer;
 }
