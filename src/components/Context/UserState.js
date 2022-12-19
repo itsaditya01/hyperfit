@@ -11,10 +11,18 @@ export const UserState = (props) => {
   const host = "http://localhost:5000";
   const [weight, setWeight] = useState([{}]);
   const [currentWeight, setCurrentWeight] = useState(0);
+  const [total, setTotal] = useState({
+    totalDuration: 0,
+    totalRepsPerformed: 0,
+    totalPartialReps: 0,
+    totalCaloriesBurned: 0,
+    cnt: 0,
+    avgExerciseDuration: 0,
+  });
 
-  const fetchExercise = async (date = Date.now().slice(0, 10)) => {
-    console.log(Date.now().slice(0, 10));
+  const fetchExercise = async (dateInfo) => {
     //API call
+    console.log(dateInfo);
     const response = await fetch(`${host}/api/fetchexercise`, {
       method: "POST",
       headers: {
@@ -26,9 +34,38 @@ export const UserState = (props) => {
     console.log(data);
 
     let newData = data.filter((d) => {
-      return d.date.slice(0, 10) === date;
+      return d.date.slice(0, 10) === dateInfo;
     });
-
+    let totalDuration = 0,
+      totalRepsPerformed = 0,
+      totalPartialReps = 0,
+      totalCaloriesBurned = 0,
+      cnt = 0,
+      avgExerciseDuration = 0;
+    let exerciseDone = [0, 0, 0, 0];
+    for (let i = 0; i < newData.length; i++) {
+      totalDuration += newData[i].exerciseDuration;
+      totalRepsPerformed += newData[i].repsPerformed;
+      totalPartialReps += newData[i].partialReps;
+      totalCaloriesBurned += newData[i].caloriesBurned;
+      exerciseDone[newData[i].exerciseId]++;
+    }
+    for (let i = 0; i < 4; i++) {
+      if (exerciseDone[i] > 0) {
+        cnt++;
+      }
+    }
+    console.log(cnt);
+    totalDuration /= 60;
+    avgExerciseDuration = totalDuration / cnt;
+    setTotal({
+      totalDuration,
+      totalRepsPerformed,
+      totalPartialReps,
+      totalCaloriesBurned,
+      cnt,
+      avgExerciseDuration,
+    });
     // let readyData = [];
     // let repeat = [0, 0, 0, 0];
     // for (let i = 0; i < newData.length - 1; i++) {
@@ -84,14 +121,15 @@ export const UserState = (props) => {
     });
     const data = await response.json();
     setUser(data);
-    setWeight(data.weight);
     setCurrentWeight(data.weight[weight.length - 1].weightValue);
+    setWeight(data.weight);
   };
 
   return (
     <UserContext.Provider
       value={{
         exerciseIndex,
+        total,
         setExerciseIndex,
         weight,
         currentWeight,
