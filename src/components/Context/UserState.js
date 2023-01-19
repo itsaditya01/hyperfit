@@ -53,7 +53,7 @@ export const UserState = (props) => {
         cnt++;
       }
     }
-    totalDuration /= 60;
+    // totalDuration /= 60;
     avgExerciseDuration = totalDuration / cnt;
     setTotal({
       totalDuration,
@@ -104,7 +104,7 @@ export const UserState = (props) => {
         da += d.meditationDuration;
       }
     });
-    setMeditation(parseFloat(da / 60).toFixed(2));
+    setMeditation(da);
     console.log(newData);
   };
 

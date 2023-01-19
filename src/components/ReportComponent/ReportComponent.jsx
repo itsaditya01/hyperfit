@@ -6,7 +6,12 @@ import Calendar from "../Calendar/Calendar";
 import { UserContext } from "../Context/UserState";
 import { useContext } from "react";
 import squatIll from "../../assets/squat_ill.png";
+import legRaiseIll from "../../assets/legraise_ill.png";
+import pushUpsIll from "../../assets/pushup_ill.png";
+import lungesIll from "../../assets/lunges_ill.png";
 import { useNavigate } from "react-router-dom";
+
+const img = [squatIll, lungesIll, pushUpsIll, legRaiseIll];
 
 const ProgressProvider = ({ valueStart, valueEnd, children }) => {
   const [value, setValue] = React.useState(valueStart);
@@ -85,22 +90,46 @@ const ReportComponent = () => {
             <div className="dash-grid-report df jcsb fr">
               <div className="comp-exercise-info-all df fc">
                 <div style={{ fontSize: 12 }}>Duration of exercise</div>
-                <div style={{ fontSize: 50 }}>
-                  {parseFloat(ex.exerciseDuration / 60).toFixed(1)}
+                <div className="df" style={{ alignItems: "baseline" }}>
+                  <div style={{ fontSize: 50 }}>
+                    {parseInt(total.totalDuration / 60)}
+                  </div>
+                  <div>min</div>
+                  <div style={{ fontSize: 50 }}>
+                    {parseInt(total.totalDuration) % 60}
+                  </div>
+                  <div>sec</div>
                 </div>
-                <div style={{ fontSize: 16 }}>min/day</div>
+                <div style={{ fontSize: 16 }}>per day</div>
               </div>
               <div className="comp-exercise-info-all df fc">
                 <div style={{ fontSize: 12 }}>Total duration of meditation</div>
-                <div style={{ fontSize: 50 }}>{meditation}</div>
-                <div style={{ fontSize: 16 }}>min/day</div>
+                <div className="df" style={{ alignItems: "baseline" }}>
+                  <div style={{ fontSize: 50 }}>
+                    {parseInt(meditation / 60)}
+                  </div>
+                  <div>min</div>
+                  <div style={{ fontSize: 50 }}>
+                    {parseInt(meditation) % 60}
+                  </div>
+                  <div>sec</div>
+                </div>
+                <div style={{ fontSize: 16 }}>per day</div>
               </div>
               <div className="comp-exercise-info-all df fc">
-                <div style={{ fontSize: 12 }}>Average duration of exercise</div>
-                <div style={{ fontSize: 50 }}>
-                  {parseFloat(total.avgExerciseDuration).toFixed(2)}
+                <div style={{ fontSize: 12 }}>Average duration </div>
+                <div className="df" style={{ alignItems: "baseline" }}>
+                  <div style={{ fontSize: 50 }}>
+                    {parseInt(total.avgExerciseDuration / 60)}
+                  </div>
+                  <div>min</div>
+                  <div style={{ fontSize: 50 }}>
+                    {parseInt(total.avgExerciseDuration) % 60}
+                  </div>
+                  <div>sec</div>
                 </div>
-                <div style={{ fontSize: 16 }}>min/exercise</div>
+
+                <div style={{ fontSize: 16 }}>per exercise</div>
               </div>
             </div>
             <div className="info-progressbars df fr jcsb">
@@ -174,20 +203,23 @@ const ReportComponent = () => {
                   style={{ marginTop: 20 }}
                   key={ex.date}
                 >
-                  <div style={{ position: "relative" }}>
-                    <img
-                      src={squatIll}
-                      alt=""
-                      style={{ width: 150, overflow: "visible" }}
-                    />
+                  <div
+                    style={{ position: "relative" }}
+                    className="df fc aic jcc"
+                  >
+                    <div>
+                      <img
+                        src={img[ex.exerciseId]}
+                        alt=""
+                        style={{ width: 150, overflow: "visible" }}
+                      />
+                    </div>
                     <div
                       style={{
                         fontSize: 20,
-                        position: "absolute",
-                        bottom: "5%",
+
                         color: "black",
                         zIndex: 99,
-                        left: "25%",
                       }}
                     >
                       {ex.exerciseName}
@@ -195,7 +227,9 @@ const ReportComponent = () => {
                   </div>
                   <div className="comp-exercise-info-all df fc">
                     <div style={{ fontSize: 12 }}>Duration of exercise</div>
-                    <div style={{ fontSize: 50 }}>{ex.exerciseDuration}</div>
+                    <div style={{ fontSize: 50 }}>
+                      {parseFloat(ex.exerciseDuration / 60).toFixed(1)}
+                    </div>
                     <div style={{ fontSize: 16 }}>min/day</div>
                   </div>
                   <div className="comp-exercise-info-all df fc">
